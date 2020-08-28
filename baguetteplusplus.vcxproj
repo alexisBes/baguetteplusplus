@@ -140,6 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="baguetteplusplus.cpp" />
+    <ClCompile Include="lexer\mainLexer.cpp" />
+    <ClCompile Include="parser\mainParser.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="lexer\mainLexer.h" />
+    <ClInclude Include="parser\mainParser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
