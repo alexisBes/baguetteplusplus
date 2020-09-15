@@ -12,6 +12,7 @@ int main(int argc, char* argv[])
 	{
 		std::ifstream fileBaguette;
 		fileBaguette.open(argv[1]);
+		if(fileBaguette.good())
 		firstLine = parsing(fileBaguette);
 		fileBaguette.close();
 	}

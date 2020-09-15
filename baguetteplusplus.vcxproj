@@ -142,10 +142,12 @@
     <ClCompile Include="baguetteplusplus.cpp" />
     <ClCompile Include="lexer\mainLexer.cpp" />
     <ClCompile Include="parser\mainParser.cpp" />
+    <ClCompile Include="tools\stringTool.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lexer\mainLexer.h" />
     <ClInclude Include="parser\mainParser.h" />
+    <ClInclude Include="tools\stringTool.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
