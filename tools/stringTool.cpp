@@ -6,7 +6,6 @@ void splitString(std::vector<std::string>&spliteString,std::string s,const char 
 	std::stringstream ss = std::stringstream(s);
 	std::string temp;
 	char curentChar;
-	int nbChar = ss.gcount();
 	while (ss.get(curentChar))
 	{
 		if (curentChar != '\t')//ignore tabulation
@@ -15,7 +14,8 @@ void splitString(std::vector<std::string>&spliteString,std::string s,const char 
 				temp.push_back(curentChar);//not the easiest way
 			else
 			{
-				spliteString.push_back(temp);
+				if(temp != " " && !temp.empty())
+					spliteString.push_back(temp);
 				temp.clear();
 			}
 		}
