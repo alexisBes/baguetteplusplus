@@ -16,9 +16,5 @@ int main(int argc, char* argv[])
 		firstLine = parsing(fileBaguette);
 		fileBaguette.close();
 	}
-	std::ofstream testFile;
-	testFile.open("coucou.txt");
-	testFile << "coucou dans un fichier texte \n" << firstLine << std::endl;
-	testFile.close();
 	return 0;
 }
