@@ -1,7 +1,7 @@
 #include "stringTool.h"
 #include <sstream>
 
-void splitString(std::vector<std::string>&spliteString,std::string s,const char c)
+void splitString(std::vector<std::string>& spliteString, std::string s, const char c)
 {
 	std::stringstream ss = std::stringstream(s);
 	std::string temp;
@@ -14,10 +14,23 @@ void splitString(std::vector<std::string>&spliteString,std::string s,const char 
 				temp.push_back(curentChar);//not the easiest way
 			else
 			{
-				if(temp != " " && !temp.empty())
+				if (temp != " " && !temp.empty())
 					spliteString.push_back(temp);
 				temp.clear();
 			}
 		}
 	}
+}
+
+std::string cleanString(std::string str)
+{
+	std::stringstream ss = std::stringstream(str);
+	char c;
+	std::string newString;
+	while (ss.get(c))
+	{
+		if (c != '\t' && c != '\r' && c != ' ')
+			newString.append(c, 1);
+	}
+	return std::string();
 }

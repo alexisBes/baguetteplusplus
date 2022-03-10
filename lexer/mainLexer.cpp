@@ -11,8 +11,23 @@ bool sortDocument(std::ifstream& f) {
 		getline(f, line);
 		std::vector<std::string> splitLine;
 		splitString(splitLine, line, ' ');
-		if (!splitLine.empty() && splitLine[0] == loopGrammar[0][0])
-			logFile << "boucle pour detecte\n";
+		if (!splitLine.empty())
+		{
+			if (splitLine[0] == "POUR")
+			{
+				if(splitLine[1] == "CHAQUE")
+					logFile << "boucle pour chaque detecte\n";
+				else
+					logFile << "boucle pour detecte\n";
+			}
+			if (splitLine[0] == "TANT")
+				logFile << "boucle tant que detecte\n";
+			if(splitLine[0] == "SI")
+				logFile << "condition si detecte\n";
+			if(splitLine[0] == "ANALYSER")
+				logFile << "condition switch detecte\n";
+		}
+
 	}
 	logFile.close();
 	return true;
