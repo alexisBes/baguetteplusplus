@@ -10,7 +10,7 @@ static std::string loopGrammar[3][6] = {
 
 static std::string conditionGrammar[2][4] = {
 	{"SI","ALORS","SINON","FSI"},
-	{""}//TODO add switch keyword here
+	{"DANS LE CAS OU", "EST", "ALORS", "FCAS"}
 };
 
 bool sortDocument(std::ifstream& f);
