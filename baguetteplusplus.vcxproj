@@ -141,11 +141,13 @@
   <ItemGroup>
     <ClCompile Include="baguetteplusplus.cpp" />
     <ClCompile Include="lexer\mainLexer.cpp" />
+    <ClCompile Include="ListUtils.cpp" />
     <ClCompile Include="parser\mainParser.cpp" />
     <ClCompile Include="tools\stringTool.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lexer\mainLexer.h" />
+    <ClInclude Include="ListUtils.h" />
     <ClInclude Include="parser\mainParser.h" />
     <ClInclude Include="storage.h" />
     <ClInclude Include="tools\stringTool.h" />
