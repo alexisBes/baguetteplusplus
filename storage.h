@@ -4,14 +4,24 @@
 
 enum class VariableType
 {
-	ALPHANUMERIQUE, NOMBRE, ENTIER, BOOLEEN
+	ALPHANUMERIQUE, NOMBRE, ENTIER, BOOLEEN, CHAINEDECARACTERE, VariableType_COUNT
 };
 
 
-struct Variable{
-	Variable(std::string name, VariableType type):name(name), type(type) {};
+typedef struct Variable{
+	Variable(std::string name, std::string type):name(name), type(VariableType::NOMBRE)
+	{
+		if (type == "ALPHANUMERIQUE")
+			this->type = VariableType::ALPHANUMERIQUE;
+		if (type == "NOMBRE")
+			this->type = VariableType::NOMBRE;
+		if (type == "ENTIER")
+			this->type = VariableType::ENTIER;
+		if (type == "BOOLEEN")
+			this->type = VariableType::BOOLEEN;
+		if (type == "CHAINEDECARACTERE")
+			this->type = VariableType::CHAINEDECARACTERE;
+	};
 	std::string name;
 	VariableType type;
-} ;
-
-std::vector<Variable> allVariable;
+} VARIABLE;

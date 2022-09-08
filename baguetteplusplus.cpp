@@ -2,7 +2,6 @@
 //
 
 #include <iostream>
-#include <iostream>
 #include "parser/mainParser.h"
 
 int main(int argc, char* argv[])

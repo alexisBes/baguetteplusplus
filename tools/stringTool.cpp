@@ -20,6 +20,7 @@ void splitString(std::vector<std::string>& spliteString, std::string s, const ch
 			}
 		}
 	}
+	spliteString.push_back(temp);
 }
 
 std::string cleanString(std::string str)
