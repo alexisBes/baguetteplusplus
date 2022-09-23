@@ -44,10 +44,20 @@ void removeNode(Node* nodeList, int index)
 
 Node* pop(Node* nodeList)
 {
-	return nullptr;
+	Node* nodeToRemove =(Node *) nodeList->prevNode;
+	Node* prevNode = (Node*)nodeToRemove->prevNode;
+	nodeList->prevNode = prevNode;
+	prevNode->nextNode = nodeList;
+	
+	return nodeToRemove;
 }
 
 Node* getNode(Node* nodeList, int index)
 {
-	return nullptr;
+	Node* wantNode = nodeList;
+	for (int i = 0; i < index; i++)
+	{
+		wantNode = (Node*)wantNode->nextNode;
+	}
+	return wantNode;
 }
