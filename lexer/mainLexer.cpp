@@ -8,7 +8,7 @@ bool findInVariable(std::string potentialVariable);
 
 bool sortDocument(std::ifstream& f) {
 	std::ofstream logFile;//THIS is temporary
-	logFile.open("logLexer.txt");
+	logFile.open("logLexer.log");
 	while (f)
 	{
 		std::string line;
