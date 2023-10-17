@@ -42,7 +42,6 @@ bool sortDocument(std::ifstream& f) {
 			if (splitLine[0] == "ECRIRE")
 				logFile << "ecrire detecte\n";
 		}
-
 	}
 	logFile.close();
 	return true;
