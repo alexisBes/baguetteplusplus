@@ -2,4 +2,4 @@
 #include "storage.h"
 #include <fstream>
 
-bool sortDocument(std::ifstream& f);
+bool sortDocument(std::ifstream& input, DocContext *output);

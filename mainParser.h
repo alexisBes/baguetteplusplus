@@ -1,5 +1,5 @@
 #pragma once
-#include <string>
+#include <storage.h>
 #include <fstream>
 
-std::string parsing(std::ifstream& s);
+void parsing(std::ifstream& input, DocContext* output);

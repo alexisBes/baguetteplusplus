@@ -2,6 +2,8 @@
 //
 
 #include <iostream>
+#include "storage.h"
+#include "mainLexer.h"
 #include "mainParser.h"
 
 int main(int argc, char* argv[])
@@ -12,7 +14,15 @@ int main(int argc, char* argv[])
 		std::ifstream fileBaguette;
 		fileBaguette.open(argv[1]);
 		if(fileBaguette.good())
-		firstLine = parsing(fileBaguette);
+		{
+			DocContext* docContext = (DocContext*) malloc(sizeof(DocContext));
+			sortDocument(fileBaguette, docContext);
+			parsing(fileBaguette, docContext);
+
+
+
+			delete docContext;
+		}
 		fileBaguette.close();
 	}
 	return 0;
