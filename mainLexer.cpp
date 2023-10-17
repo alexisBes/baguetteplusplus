@@ -1,6 +1,7 @@
 #include "mainLexer.h"
 #include <fstream>
-#include "../tools/stringTool.h"
+#include <stringTool.h>
+#include "type.h"
 
 std::vector<VARIABLE> allVariable;
 

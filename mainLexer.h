@@ -1,4 +1,4 @@
 #pragma once
-#include "../storage.h"
+#include "storage.h"
 
 bool sortDocument(std::ifstream& f);
