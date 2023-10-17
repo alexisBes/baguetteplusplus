@@ -1,6 +1,6 @@
 #include "mainParser.h"
 
-#include "../lexer/mainLexer.h"
+#include "mainLexer.h"
 
 std::string parsing(std::ifstream& f)
 {

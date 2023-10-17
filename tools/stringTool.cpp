@@ -14,9 +14,24 @@ void splitString(std::vector<std::string>& spliteString, std::string s, const ch
 				temp.push_back(curentChar);//not the easiest way
 			else
 			{
-				spliteString.push_back(temp);
+				if (temp != " " && !temp.empty())
+					spliteString.push_back(temp);
 				temp.clear();
 			}
 		}
 	}
+	spliteString.push_back(temp);
+}
+
+std::string cleanString(std::string str)
+{
+	std::stringstream ss = std::stringstream(str);
+	char c;
+	std::string newString;
+	while (ss.get(c))
+	{
+		if (c != '\t' && c != '\r' && c != ' ')
+			newString.append(c, 1);
+	}
+	return std::string();
 }
