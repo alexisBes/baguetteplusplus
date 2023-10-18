@@ -1,4 +1,6 @@
 # ignore build path
 build/
+out/
 
 .vscode/
+.vs/
