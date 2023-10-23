@@ -1,6 +1,6 @@
 #include "mainParser.h"
 
-std::string parsing(std::ifstream& f)
+void parsing(std::ifstream& f, DocContext *output)
 {
 	//TODO add parsing logic here
 }

@@ -1,5 +1,4 @@
 #include "mainLexer.h"
-#include <fstream>
 #include <stringTool.h>
 #include "type.h"
 
@@ -7,13 +6,13 @@ std::vector<VARIABLE> allVariable;
 
 bool findInVariable(std::string potentialVariable);
 
-bool sortDocument(std::ifstream& f) {
+bool sortDocument(std::ifstream& input, DocContext *output) {
 	std::ofstream logFile;//THIS is temporary
 	logFile.open("logLexer.log");
-	while (f)
+	while (input)
 	{
 		std::string line;
-		getline(f, line);
+		getline(input, line);
 		std::vector<std::string> splitLine;
 		splitString(splitLine, line, ' ');
 		if (!splitLine.empty())
