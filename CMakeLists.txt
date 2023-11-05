@@ -15,15 +15,12 @@ add_executable(baguetteplusplus
     mainLexer.cpp
     mainParser.cpp)
 
-add_subdirectory(utils) 
 add_subdirectory(tools)
 
 target_link_libraries(baguetteplusplus PUBLIC 
-    ListUtils
-    StringTool)
+    Tools)
 
-target_include_directories(baguetteplusplus PRIVATE 
-    ${SOURCE_DIR}/utils
+target_include_directories(baguetteplusplus PRIVATE
     ${SOURCE_DIR}/tools)
 
 target_include_directories(baguetteplusplus PUBLIC ${BINARY_DIR})
