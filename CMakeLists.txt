@@ -11,9 +11,9 @@ target_compile_features(bpp_compiler_flag INTERFACE cxx_std_11)
 configure_file(constante.h.in constante.h)
 
 add_executable(baguetteplusplus 
-    main.cpp
-    mainLexer.cpp
-    mainParser.cpp)
+    main.c
+    mainLexer.c
+    mainParser.c)
 
 add_subdirectory(tools)
 

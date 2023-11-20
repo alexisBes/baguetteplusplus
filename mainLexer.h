@@ -1,5 +1,4 @@
 #pragma once
 #include "storage.h"
-#include <fstream>
 
-int tokenizeDocument(char* input, int length, DocContext *output);
+int tokenizeDocument(char* input,long int length, DocContext *output);

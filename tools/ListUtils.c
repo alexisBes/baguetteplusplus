@@ -1,9 +1,9 @@
 #include "ListUtils.h"
-#include <cstdlib>
+#include <stdlib.h>
 
 Node* createNodeList(void* node)
 {
-	Node* nodeList = new Node();
+	Node* nodeList = (Node*) malloc( sizeof(Node));
 	nodeList->content = node;
 	return nodeList;
 }
@@ -11,7 +11,7 @@ Node* createNodeList(void* node)
 int listSize(Node* nodeList)
 {
 	int nb = 0;
-	while (nodeList->nextNode != nullptr)
+	while (nodeList->nextNode != NULL)
 		nb++;
 	return nb;
 }
@@ -19,9 +19,9 @@ int listSize(Node* nodeList)
 void addNode(Node* nodeList, void* node)
 {
 	Node* lastNode = nodeList;
-	while (lastNode->nextNode != nullptr)
+	while (lastNode->nextNode != NULL)
 		lastNode = (Node*)lastNode->nextNode;
-	Node* nodeToAdd = new Node();
+	Node* nodeToAdd =(Node*) malloc( sizeof(Node));
 	nodeToAdd->content = node;
 	nodeToAdd->prevNode = lastNode;
 	lastNode->nextNode = nodeToAdd;
@@ -40,7 +40,7 @@ void removeNode(Node* nodeList, int index)
 	prevNode->nextNode = nexNode;
 	nexNode->prevNode = prevNode;
 	free(wantNode->content);
-	delete wantNode;
+	free(wantNode);
 }
 
 Node* pop(Node* nodeList)
