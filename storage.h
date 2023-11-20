@@ -1,8 +1,14 @@
 #pragma once
-#include <vector>
 #include "type.h"
+#include <ListUtils.h>
+
+typedef struct {
+    std::string value;
+    std::string token;
+}Token;
+
 
 typedef struct
 {
-    std::vector<VARIABLE> variable;
+    Node *tokenList; 
 } DocContext;

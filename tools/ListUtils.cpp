@@ -1,4 +1,5 @@
 #include "ListUtils.h"
+#include <cstdlib>
 
 Node* createNodeList(void* node)
 {
@@ -38,7 +39,7 @@ void removeNode(Node* nodeList, int index)
 	Node* nexNode = (Node*)wantNode->nextNode;
 	prevNode->nextNode = nexNode;
 	nexNode->prevNode = prevNode;
-	delete wantNode->content;
+	free(wantNode->content);
 	delete wantNode;
 }
 
