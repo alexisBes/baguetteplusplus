@@ -11,17 +11,18 @@ target_compile_features(bpp_compiler_flag INTERFACE cxx_std_11)
 configure_file(constante.h.in constante.h)
 
 add_executable(baguetteplusplus 
-    main.c
-    mainLexer.c
-    mainParser.c)
+    src/main.c
+    src/mainLexer.c
+    src/mainParser.c)
 
 add_subdirectory(tools)
 
-target_link_libraries(baguetteplusplus PUBLIC 
+target_link_libraries(baguetteplusplus PRIVATE 
     Tools)
 
 target_include_directories(baguetteplusplus PRIVATE
-    ${SOURCE_DIR}/tools)
+    include/
+    tools/include/)
 
 target_include_directories(baguetteplusplus PUBLIC ${BINARY_DIR})
 

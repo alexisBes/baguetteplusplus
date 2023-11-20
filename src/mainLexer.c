@@ -1,5 +1,5 @@
 #include "mainLexer.h"
-#include <stringTool.h>
+#include <StringTool.h>
 #include "type.h"
 
 
