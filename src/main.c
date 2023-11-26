@@ -3,7 +3,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "storage.h"
 #include "mainLexer.h"
 #include "mainParser.h"
 
@@ -28,8 +27,8 @@ int main(int argc, char *argv[])
 
 		fclose(fileBaguette);
 
-		DocContext docContext;
-		tokenizeDocument(input, length, &docContext);
+		LexerData lexerData;
+		tokenizeDocument(input, length, &lexerData);
 		//parsing(fileBaguette,  docContext);
 
 		free(input);

@@ -11,6 +11,7 @@ typedef struct {
 
 typedef struct
 {
-    Node *tokenList; 
-} DocContext;
+    Node **tokenList;
+    long int sizeTokenList; 
+} LexerData;
  #endif

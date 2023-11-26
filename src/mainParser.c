@@ -1,6 +1,6 @@
 #include "mainParser.h"
 
-void parsing( DocContext *output)
+void parsing( LexerData *output)
 {
 	//TODO add parsing logic here
 }
