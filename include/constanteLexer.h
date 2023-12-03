@@ -1,6 +1,11 @@
+#ifndef CONSTANTE_LEXER_H
+#define CONSTANTE_LEXER_H
+
+#define BPP_OPERATEUR_SIZE 12
 const char *bppOperateur[] = {"<>", "=", "<=", ">=", "^", "*","<-","/", "MOD","NON", "OU", "ET"};
 
-const char *bppKeyWord[] = { "CONST", "VAR", 
+#define BPP_MOTCLE 18
+const char *bppMotsCle[] = { "CONST", "VAR", 
     "TANTQUE", "FTANT",
      "JUSQUE", "FJUSQUE", 
      "POUR", "DE","A", "PAS", "FAIRE", "FPOUR"
@@ -8,3 +13,5 @@ const char *bppKeyWord[] = { "CONST", "VAR",
      "SELON", "QUE", "FAIRE"};
 
 const char comment  ='!';
+
+#endif
