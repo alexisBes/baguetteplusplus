@@ -1,9 +1,10 @@
-#pragma once
+#ifndef LIST_UTILS_H
+#define LIST_UTILS_H
 
 typedef struct {
-	void* prevNode = nullptr;
-	void* nextNode = nullptr;
-	void* content = nullptr;
+	void* prevNode;
+	void* nextNode;
+	void* content;
 } Node;
 
 Node* createNodeList(void* node);
@@ -18,3 +19,4 @@ Node* pop(Node* nodeList);
 
 Node* getNode(Node* nodeList, int index);
 
+#endif

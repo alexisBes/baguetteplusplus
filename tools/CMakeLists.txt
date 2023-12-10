@@ -1,7 +1,11 @@
-add_library(StringTool stringTool.cpp)
+add_library(Tools 
+    src/StringTool.c
+    src/ListUtils.c
+    include/StringTool.h
+    include/ListUtils.h)
 
-target_include_directories(StringTool INTERFACE 
-                          ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(Tools PRIVATE 
+                          ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 
-  target_link_libraries(StringTool INTERFACE bpp_compiler_flag)
+  target_link_libraries(Tools INTERFACE bpp_compiler_flag)
