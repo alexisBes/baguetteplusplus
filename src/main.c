@@ -10,19 +10,20 @@ int main(int argc, char *argv[])
 {
 	if (argc > 1)
 	{
-		FILE *fileBaguette;
-		// get length of file:
-		fseek(fileBaguette ,0, SEEK_END);
-		long int length = ftell(fileBaguette); 
-		char *input = malloc(sizeof(char) * (length +1 ));
-		fileBaguette =fopen(argv[1], "r");
+		FILE *fileBaguette = fopen(argv[1], "r");
 		
-		if (fileBaguette!=NULL)
+		if (fileBaguette==NULL)
 		{
-			printf("Enabe to open file");
+			printf("Enabe to open file %s\n", argv[1]);
 			exit(-1);
 		}
 		
+		// get length of file:
+		fseek(fileBaguette ,0L, SEEK_END);
+		long int length = ftell(fileBaguette); 
+
+		rewind(fileBaguette);
+		char *input = malloc(sizeof(char) * (length +2));
 		fgets(input,length, fileBaguette);
 
 		fclose(fileBaguette);
