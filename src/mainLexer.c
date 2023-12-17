@@ -45,15 +45,22 @@ int tokenizeDocument(char *source, long int length, LexerData *output)
         }
         else
         {
-            strcat(str, &current);
+            if (str == NULL)
+            {
+                str = malloc(sizeof(char)* 2);
+                str[0] = current;
+                str[1] = '\0';
+            }
+            else
+            {
+                str = concatanateChar(str, current);
+            }
         }
         if (current == '\n')
         {
             isNewLine = 1;
             currentLine++;
         }
-
-        output->tokenList[currentLine] = createNodeList("zer");
     }
 
     return 0;

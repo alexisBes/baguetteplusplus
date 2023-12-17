@@ -5,6 +5,8 @@ Node* createNodeList(void* node)
 {
 	Node* nodeList = (Node*) malloc( sizeof(Node));
 	nodeList->content = node;
+	nodeList->nextNode = NULL;
+	nodeList->prevNode = NULL;
 	return nodeList;
 }
 
@@ -24,8 +26,9 @@ void addNode(Node* nodeList, void* node)
 	Node* nodeToAdd =(Node*) malloc( sizeof(Node));
 	nodeToAdd->content = node;
 	nodeToAdd->prevNode = lastNode;
-	lastNode->nextNode = nodeToAdd;
-	nodeList->prevNode = nodeToAdd;
+	nodeToAdd->nextNode = NULL;
+
+	lastNode->nextNode = nodeToAdd;;
 }
 
 void removeNode(Node* nodeList, int index)
