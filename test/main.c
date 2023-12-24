@@ -11,9 +11,11 @@ int main(int argc, char *argv[])
         printf("[ ERROR ] Impossible de lancer les tests, il manque des arguments.\n");
         exit(-1);
     }
-    int type = atoi(argv[1]);
-    short int  result = 0!=0;
-    if (type % 2 == 0)
+    long valueTest = strtol(argv[1], NULL, 16 );
+    long typeTest = valueTest > 4;
+    long value = valueTest & 0b1111;
+    short int  result = 0;
+    if (typeTest & 0b0001 == 0b0001)
     {
         if(argc < 5) 
         {
@@ -21,73 +23,73 @@ int main(int argc, char *argv[])
             exit(-1);
         }
         // test string utils
-        printf(" Lancement du test sur stringutils \n");
-        if (type == 2)
+        printf(" Lancement du test sur superstrings \n");
+        if (value == 0b0001)
         {
             /* test countCharInString */
-            printf(" test de countChar in string \n");
 
             char * testingString = argv[2];
             char testChar = argv[3][0];
             int nbExpected =atoi(argv[4]);
             int nbComputed = countCharInString(testingString, strlen(testingString), testChar);
             result =  nbExpected == nbComputed;
+            printf("test countChar : ");
         }
-        else if (type == 4)
+        else if (value == 0b0010)
         {
             /* test isCharExistInArray */
-            printf(" test de isCharExistInArray in array \n");
             const char * testingString = argv[2];
             const char testChar = argv[3][0];
             int expectedResult = atoi(argv[4]);
             int computedResult = isCharExistInArray(testChar, testingString, strlen(testingString));
             result =  expectedResult == computedResult;
+            printf("test isCharExistInArray : ");
         }
-        else if (type == 6)
+        else if (value == 0b0011)
         {
             /* test concatanateString */
-            printf(" test de concatanateString \n");
             char * testingString = argv[2];
             char* testChar = argv[3];
             char* expectedResult = argv[4];
             char* computedResult = concatanateString(testingString, testChar, strlen(testingString) + strlen(testChar) +1);
             result = strcmp(expectedResult, computedResult) == 0;
+            printf("test concatanateString : ");
         }
-        else if (type == 8)
+        else if (value == 0b0100)
         {
             /* test concatanateChar */
-            printf(" test de concatanateChar \n");
             char * testingString = argv[2];
             char testChar = argv[3][0];
             char* expectedResult = argv[4];
             char* computedResult = concatanateChar(testingString, testChar);
             result = strcmp(expectedResult, computedResult) == 0;
+            printf("test concatanateChar : ");
         }
     }
-    else
+    if(typeTest & 0b0010 == 0b0010)
     {
-                // test string utils
-        if (type == 3)
+        // test list utils utils
+        if (value == 0b001)
         {
             /* code */
         }
-        else if (type == 5)
+        else if (value == 0b0010)
         {
             /* code */
         }
-        else if (type == 7)
+        else if (typeTest == 0b0011)
         {
             /* code */
         }
-        else if (type == 9)
+        else if (typeTest == 0b0100)
         {
             /* code */
         }
-        else if (type == 11)
+        else if (typeTest == 0b0101)
         {
             /* code */
         }
-        else if (type == 13)
+        else if (typeTest == 0b0110)
         {
             /* code */
         }

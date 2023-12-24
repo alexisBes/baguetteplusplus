@@ -44,15 +44,15 @@ if(TESTING)
     target_include_directories(baguetteplusplus_test PUBLIC ${BINARY_DIR})
 
     # define a function to simplify adding tests
-function(do_test myname target typeTest input element result)
+function(do_test myname functionName target typeTest input element result)
         add_test(NAME ${myname} COMMAND ${target} ${typeTest} ${input} ${element} ${result})
         set_tests_properties(${myname}
-            PROPERTIES PASS_REGULAR_EXPRESSION "SUCCES"
+            PROPERTIES PASS_REGULAR_EXPRESSION "test ${functionName} : [SUCCES]"
         )
 endfunction()
 
-    do_test( TestCountInChar baguetteplusplus_test  2 superstrings s 3)
-    do_test( TestIsCharExistInArray baguetteplusplus_test  4 superstrings t 1)
-    do_test( concatenateString baguetteplusplus_test  6 super strings superstrings)
-    do_test( concatenateChar baguetteplusplus_test  8 tot o toto)
+    do_test( TestCountInChar countChar baguetteplusplus_test  0x0011 superstrings s 3)
+    do_test( TestIsCharExistInArray isCharExistInArray baguetteplusplus_test  0x0012 superstrings t 1)
+    do_test( concatenateString concatanateString baguetteplusplus_test  0x0013 super strings superstrings)
+    do_test( concatenateChar concatanateChar baguetteplusplus_test  0x0014 tot o toto)
 endif()
