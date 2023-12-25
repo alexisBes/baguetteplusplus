@@ -12,9 +12,13 @@ Node* createNodeList(void* node)
 
 int listSize(Node* nodeList)
 {
-	int nb = 0;
-	while (nodeList->nextNode != NULL)
+	Node* tempNode = nodeList;
+	int nb = 1;
+	while (tempNode->nextNode != NULL)
+	{
 		nb++;
+		tempNode = tempNode->nextNode;
+	}
 	return nb;
 }
 
@@ -28,21 +32,23 @@ void addNode(Node* nodeList, void* node)
 	nodeToAdd->prevNode = lastNode;
 	nodeToAdd->nextNode = NULL;
 
-	lastNode->nextNode = nodeToAdd;;
+	lastNode->nextNode = nodeToAdd;
 }
 
 void removeNode(Node* nodeList, int index)
 {
 	Node* wantNode = nodeList;
-	for (int i = 0; i < index; i++)
+	int i =0;
+	while (i < index && wantNode->nextNode != NULL)
 	{
 		wantNode = (Node*)wantNode->nextNode;
+		i++;
 	}
 	Node* prevNode =(Node*) wantNode->prevNode;
 	Node* nexNode = (Node*)wantNode->nextNode;
 	prevNode->nextNode = nexNode;
-	nexNode->prevNode = prevNode;
-	free(wantNode->content);
+	if(nexNode != NULL)
+		nexNode->prevNode = prevNode;
 	free(wantNode);
 }
 
@@ -59,9 +65,23 @@ Node* pop(Node* nodeList)
 Node* getNode(Node* nodeList, int index)
 {
 	Node* wantNode = nodeList;
-	for (int i = 0; i < index; i++)
+	int i=0;
+	while (i < index && nodeList->nextNode != NULL)
 	{
 		wantNode = (Node*)wantNode->nextNode;
+		i++;
 	}
 	return wantNode;
+}
+
+Node* clearList(Node *nodeList)
+{
+	Node* curNode = nodeList;
+	while (curNode->nextNode != NULL)
+	{
+		Node *tempNode = curNode->nextNode;
+		free(curNode);
+		curNode = tempNode;
+	}
+	return NULL;	
 }

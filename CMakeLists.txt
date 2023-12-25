@@ -43,16 +43,37 @@ if(TESTING)
         tools/include/)
     target_include_directories(baguetteplusplus_test PUBLIC ${BINARY_DIR})
 
-    # define a function to simplify adding tests
-function(do_test myname functionName target typeTest input element result)
+    # function to simplify stringUtilsTest
+    function(testStringUtils myname functionName target typeTest input element result)
         add_test(NAME ${myname} COMMAND ${target} ${typeTest} ${input} ${element} ${result})
         set_tests_properties(${myname}
-            PROPERTIES PASS_REGULAR_EXPRESSION "test ${functionName} : [SUCCES]"
+            PROPERTIES PASS_REGULAR_EXPRESSION "test ${functionName} : SUCCES"
         )
-endfunction()
+    endfunction()
 
-    do_test( TestCountInChar countChar baguetteplusplus_test  0x0011 superstrings s 3)
-    do_test( TestIsCharExistInArray isCharExistInArray baguetteplusplus_test  0x0012 superstrings t 1)
-    do_test( concatenateString concatanateString baguetteplusplus_test  0x0013 super strings superstrings)
-    do_test( concatenateChar concatanateChar baguetteplusplus_test  0x0014 tot o toto)
+    # function to simplify listUtilsTest
+    function(testListUtils myname target typeTest )
+        add_test(NAME ${myname} COMMAND ${target} ${typeTest} ${CMAKE_CTEST_ARGUMENTS})
+        set_tests_properties(${myname}
+            PROPERTIES PASS_REGULAR_EXPRESSION "test initList : SUCCES"
+        )
+        set_tests_properties(${myname}
+        PROPERTIES PASS_REGULAR_EXPRESSION "test ValueList : SUCCES"
+        )
+        set_tests_properties(${myname}
+        PROPERTIES PASS_REGULAR_EXPRESSION "test removeList: SUCCES"
+        )
+        set_tests_properties(${myname}
+        PROPERTIES PASS_REGULAR_EXPRESSION "test clearList: SUCCES"
+        )
+    endfunction()
+
+    testStringUtils( TestCountInChar countChar baguetteplusplus_test  0x0011 superstrings s 3)
+    testStringUtils( TestIsCharExistInArray isCharExistInArray baguetteplusplus_test  0x0012 superstrings t 1)
+    testStringUtils( concatenateString concatanateString baguetteplusplus_test  0x0013 super strings superstrings)
+    testStringUtils( concatenateChar concatanateChar baguetteplusplus_test  0x0014 tot o toto)
+    set( CMAKE_CTEST_ARGUMENTS toto
+    to
+    tot)
+    testListUtils( testList baguetteplusplus_test  0x0020 )
 endif()
