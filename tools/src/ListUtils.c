@@ -41,7 +41,6 @@ void addNode(Node* nodeList, void* node)
 	nodeToAdd->content = node;
 	nodeToAdd->prevNode = lastNode;
 	nodeToAdd->nextNode = NULL;
-
 	lastNode->nextNode = nodeToAdd;
 }
 
