@@ -1,4 +1,4 @@
 #pragma once
 #include "storage.h"
 
-void parsing( LexerData* output);
+int parsing( LexerData* output);

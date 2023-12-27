@@ -47,7 +47,7 @@ int tokenizeDocument(char *source, long int length, LexerData *output)
         {
             if (str == NULL)
             {
-                str = malloc(sizeof(char)* 2);
+                str = malloc(sizeof(char) * 2);
                 str[0] = current;
                 str[1] = '\0';
             }
@@ -64,6 +64,15 @@ int tokenizeDocument(char *source, long int length, LexerData *output)
     }
 
     return 0;
+}
+
+void eraseLexerData(LexerData *data)
+{
+    for (size_t i = 0; i < data->sizeTokenList; i++)
+    {
+        clearList(data->tokenList[i]);
+    }
+    free(data->tokenList);
 }
 
 int checkTypeToken(char *token)

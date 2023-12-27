@@ -2,9 +2,9 @@
 #define LIST_UTILS_H
 
 typedef struct {
-	void* prevNode;
-	void* nextNode;
-	void* content;
+    void* prevNode;
+    void* nextNode;
+    void* content;
 } Node;
 
 Node* createNodeList(void* node);
