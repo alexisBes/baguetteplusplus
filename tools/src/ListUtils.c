@@ -1,6 +1,16 @@
 #include "ListUtils.h"
 #include <stdlib.h>
 
+
+/****
+ * PRIVATE FUNCTION DECLARATION
+*/
+Node * gotoTop(Node* nodeList);
+
+/*****
+ * PUBLIC FUNCTION DEFINITION
+*/
+
 Node* createNodeList(void* node)
 {
 	Node* nodeList = (Node*) malloc( sizeof(Node));
@@ -35,7 +45,7 @@ void addNode(Node* nodeList, void* node)
 	lastNode->nextNode = nodeToAdd;
 }
 
-void removeNode(Node* nodeList, int index)
+Node* removeNode(Node* nodeList, int index)
 {
 	Node* wantNode = nodeList;
 	int i =0;
@@ -50,6 +60,13 @@ void removeNode(Node* nodeList, int index)
 	if(nexNode != NULL)
 		nexNode->prevNode = prevNode;
 	free(wantNode);
+	if (prevNode ==NULL && nexNode == NULL )
+	{
+		return NULL;
+	}
+	Node* returnNode = gotoTop(nexNode);
+	if(returnNode == NULL) returnNode = gotoTop(prevNode);
+	return returnNode;
 }
 
 Node* pop(Node* nodeList)
@@ -83,5 +100,20 @@ Node* clearList(Node *nodeList)
 		free(curNode);
 		curNode = tempNode;
 	}
-	return NULL;	
+	return NULL;
+}
+
+
+/***********
+ * PRIVATE FUNCTION DEFINITION
+*/
+Node * gotoTop(Node* nodeList){
+	if(nodeList == NULL)
+		return NULL;
+	Node*tempNode = nodeList;
+	while (tempNode->prevNode != NULL)
+	{
+		tempNode = tempNode->prevNode;
+	}
+	return tempNode;
 }

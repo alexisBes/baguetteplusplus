@@ -55,16 +55,11 @@ if(TESTING)
     function(testListUtils myname target typeTest )
         add_test(NAME ${myname} COMMAND ${target} ${typeTest} ${CMAKE_CTEST_ARGUMENTS})
         set_tests_properties(${myname}
-            PROPERTIES PASS_REGULAR_EXPRESSION "test initList : SUCCES"
-        )
-        set_tests_properties(${myname}
-        PROPERTIES PASS_REGULAR_EXPRESSION "test ValueList : SUCCES"
-        )
-        set_tests_properties(${myname}
-        PROPERTIES PASS_REGULAR_EXPRESSION "test removeList: SUCCES"
-        )
-        set_tests_properties(${myname}
-        PROPERTIES PASS_REGULAR_EXPRESSION "test clearList: SUCCES"
+            PROPERTIES PASS_REGULAR_EXPRESSION "test initList : SUCCES" 
+            "test ValueList : SUCCES" 
+            "test ValueList : SUCCES" 
+            "test removeList: SUCCES"
+            "test clearList: SUCCES"
         )
     endfunction()
 
