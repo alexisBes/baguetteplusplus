@@ -102,6 +102,11 @@ Node* clearList(Node *nodeList)
     return NULL;
 }
 
+Node* getLast(Node *nodeList)
+{
+    return getNode(nodeList, listSize(nodeList));
+}
+
 
 /***********
  * PRIVATE FUNCTION DEFINITION

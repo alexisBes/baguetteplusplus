@@ -3,7 +3,11 @@
 
 enum TYPE_TOKEN {
     OPERATEUR, MOTCLE, IDENTIFIANT
-}TypeToken;
+};
+
+enum TYPE_LIGNE {
+    DECLARATION, POUR, TANT, JUSQUE, SI, SELON, INSTRUCTION 
+};
 
 
 #endif

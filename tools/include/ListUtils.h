@@ -20,4 +20,6 @@ Node* pop(Node* nodeList);
 Node* getNode(Node* nodeList, int index);
 
 Node* clearList(Node* nodeList);
+
+Node* getLast(Node* nodeList);
 #endif

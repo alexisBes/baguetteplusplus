@@ -5,13 +5,15 @@
 typedef struct {
     char* value;
     int token;
-    int priority;
-}Token;
+} Token;
 
 
 typedef struct
 {
-    Node **tokenList;
-    long int sizeTokenList; 
-} LexerData;
+    Node **tokenList; // contient une liste chainé de tousles mots clé sur une ligne
+    long int sizeTokenList;
+    int typeLigne;
+    short int validity;
+} LigneCode;
+
  #endif

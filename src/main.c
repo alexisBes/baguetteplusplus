@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 
         fclose(fileBaguette);
 
-        LexerData lexerData;
+        LigneCode lexerData;
         short int tokenizeRsult = tokenizeDocument(input, length, &lexerData);
         free(input);
 

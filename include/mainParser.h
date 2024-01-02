@@ -1,4 +1,4 @@
 #pragma once
 #include "storage.h"
 
-int parsing( LexerData* output);
+int parsing( LigneCode* output);
