@@ -14,6 +14,7 @@ set (SOURCE_LIST
     src/mainLexer.c
     src/mainParser.c
     src/Logger.c
+    src/instructionParser.c
 )
 
 add_executable(baguetteplusplus 
@@ -22,8 +23,8 @@ add_executable(baguetteplusplus
 
 add_subdirectory(tools)
 
-target_link_libraries(baguetteplusplus PRIVATE 
-    Tools)
+target_link_libraries(baguetteplusplus 
+    PRIVATE Tools)
 
 target_include_directories(baguetteplusplus PRIVATE
     include/

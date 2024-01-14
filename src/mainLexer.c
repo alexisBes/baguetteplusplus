@@ -84,9 +84,9 @@ int checkTypeToken(char *token)
     }
 
     short int isFound = 0;
-    for (int i = 0; i < BPP_MOTCLE; i++)
+    for (int i = 0; i < BPP_MOTCLE_NB; i++)
     {
-        if (strcmp(bppOperateur[i], token) == NULL)
+        if (strcmp(bppOperateur[i], token) == 0)
         {
             isFound = 1;
             break;
@@ -97,7 +97,7 @@ int checkTypeToken(char *token)
 
     for (int i = 0; i < BPP_OPERATEUR_SIZE; i++)
     {
-        if (strcmp(bppMotsCle[i], token) == NULL)
+        if (strcmp(bppMotsCle[i], token) == 0)
         {
             isFound = 1;
             break;
