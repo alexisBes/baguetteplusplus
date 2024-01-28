@@ -107,6 +107,20 @@ Node* getLast(Node *nodeList)
     return getNode(nodeList, listSize(nodeList));
 }
 
+Node* findNodeInList(Node* nodeList, void* contentToCompare,short int (*func)(void*, void*))
+{
+    Node *curNode = nodeList;
+    while (curNode->nextNode != NULL)
+    {
+        short int isFound = func(curNode->content, contentToCompare);
+        if(isFound == 1)
+        {
+            return curNode;
+        }
+        curNode = (Node*) curNode->nextNode;
+    }
+    return NULL;
+}
 
 /***********
  * PRIVATE FUNCTION DEFINITION

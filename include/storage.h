@@ -7,6 +7,13 @@ typedef struct {
     int token;
 } Token;
 
+typedef struct
+{
+    short int isVariable;
+    int typeVariable;
+    char* name;
+} Variable;
+
 
 typedef struct
 {

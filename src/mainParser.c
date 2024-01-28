@@ -10,7 +10,7 @@
 
 Node *variables = NULL;
 
-int (*checkFunctions[typeLigne_COUNT])(Node*, Node*) = {
+int (*checkFunctions[typeLigne_COUNT])(Node*, Node*, int) = {
     checkDeclarationInstruction,
     checkPourInstruction,
     checkTantQueInstruction,
@@ -57,7 +57,7 @@ int checkLine(Node *data, const int ligne)
     }
     else
     {
-        errorCount += (*checkFunctions[typeLine])(data, variables); 
+        errorCount += (*checkFunctions[typeLine])(data, variables,ligne); 
     }
     return errorCount;
 }
