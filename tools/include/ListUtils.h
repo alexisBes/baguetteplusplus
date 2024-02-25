@@ -13,10 +13,11 @@ int listSize(Node* nodeList);
 
 void addNode(Node* nodeList,void* node);
 
-void removeNode(Node* nodeList,int index);
+Node* removeNode(Node* nodeList,int index);
 
 Node* pop(Node* nodeList);
 
 Node* getNode(Node* nodeList, int index);
 
+Node* clearList(Node* nodeList);
 #endif
