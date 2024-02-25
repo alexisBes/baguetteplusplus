@@ -2,9 +2,9 @@
 #define LIST_UTILS_H
 
 typedef struct {
-	void* prevNode;
-	void* nextNode;
-	void* content;
+    void* prevNode;
+    void* nextNode;
+    void* content;
 } Node;
 
 Node* createNodeList(void* node);
@@ -20,4 +20,8 @@ Node* pop(Node* nodeList);
 Node* getNode(Node* nodeList, int index);
 
 Node* clearList(Node* nodeList);
+
+Node* getLast(Node* nodeList);
+
+Node* findNodeInList(Node* nodeList, void* contentToCompare,short int (*func)(void*, void*));
 #endif

@@ -6,15 +6,14 @@
 #include <ListUtils.h>
 #include <string.h>
 #include "enum.h"
-#include "constanteLexer.h"
+#include "constante.h"
 
-#define NB_DELIM_CHAR 10
-const char delimChar[] = "<- =/*+-\t";
 
 int checkTypeToken(char *token);
 
-int tokenizeDocument(char *source, long int length, LexerData *output)
+int tokenizeDocument(char *source, long int length, LigneCode *output)
 {
+    const char delimChar[] = DELIM_CHAR_TABLEAU;
     int nbRline = countCharInString(source, length, '\n');
 
     output->tokenList = (Node **)malloc(sizeof(Node *) * nbRline);
@@ -26,7 +25,7 @@ int tokenizeDocument(char *source, long int length, LexerData *output)
     for (long int i = 0; i < length; i++)
     {
         char current = source[i];
-        short int isDelimiteur = isCharExistInArray(current, delimChar, NB_DELIM_CHAR);
+        short int isDelimiteur = isCharExistInArray(current, delimChar, DELIM_CHAR_NB);
         if (isDelimiteur && str != NULL)
         {
             Token newToken;
@@ -47,7 +46,7 @@ int tokenizeDocument(char *source, long int length, LexerData *output)
         {
             if (str == NULL)
             {
-                str = malloc(sizeof(char)* 2);
+                str = malloc(sizeof(char) * 2);
                 str[0] = current;
                 str[1] = '\0';
             }
@@ -66,17 +65,28 @@ int tokenizeDocument(char *source, long int length, LexerData *output)
     return 0;
 }
 
+void eraseLexerData(LigneCode *data)
+{
+    for (size_t i = 0; i < data->sizeTokenList; i++)
+    {
+        clearList(data->tokenList[i]);
+    }
+    free(data->tokenList);
+}
+
 int checkTypeToken(char *token)
 {
+    const char *bppOperateur[] = BPP_OPERATEUR_TABLEAU;
+    const char *bppMotsCle[] = BPP_MOTCLE_TABLEAU;
     if (token == NULL)
     {
         return -1;
     }
 
     short int isFound = 0;
-    for (int i = 0; i < BPP_MOTCLE; i++)
+    for (int i = 0; i < BPP_MOTCLE_NB; i++)
     {
-        if (strcmp(bppOperateur[i], token))
+        if (strcmp(bppOperateur[i], token) == 0)
         {
             isFound = 1;
             break;
@@ -87,7 +97,7 @@ int checkTypeToken(char *token)
 
     for (int i = 0; i < BPP_OPERATEUR_SIZE; i++)
     {
-        if (strcmp(bppMotsCle[i], token))
+        if (strcmp(bppMotsCle[i], token) == 0)
         {
             isFound = 1;
             break;

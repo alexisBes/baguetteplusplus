@@ -2,15 +2,19 @@ cmake_minimum_required(VERSION 3.10)
 
 project("baguette plus plus" VERSION 0.0)
 
+configure_file(constante.in.h constante.h)
+
 set(TESTING OFF CACHE BOOL "Lanch unit test")
 
 add_library(bpp_compiler_flag INTERFACE)
 target_compile_features(bpp_compiler_flag INTERFACE cxx_std_11)
 
-configure_file(constante.h.in constante.h)
+
 set (SOURCE_LIST
     src/mainLexer.c
     src/mainParser.c
+    src/Logger.c
+    src/instructionParser.c
 )
 
 add_executable(baguetteplusplus 
@@ -19,14 +23,14 @@ add_executable(baguetteplusplus
 
 add_subdirectory(tools)
 
-target_link_libraries(baguetteplusplus PRIVATE 
-    Tools)
+target_link_libraries(baguetteplusplus 
+    PRIVATE Tools)
 
 target_include_directories(baguetteplusplus PRIVATE
     include/
     tools/include/)
 
-target_include_directories(baguetteplusplus PUBLIC ${BINARY_DIR})
+target_include_directories(baguetteplusplus PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 
 
 
@@ -41,7 +45,7 @@ if(TESTING)
     target_include_directories(baguetteplusplus_test PRIVATE
         include/
         tools/include/)
-    target_include_directories(baguetteplusplus_test PUBLIC ${BINARY_DIR})
+    target_include_directories(baguetteplusplus_test PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 
     # function to simplify stringUtilsTest
     function(testStringUtils myname functionName target typeTest input element result)

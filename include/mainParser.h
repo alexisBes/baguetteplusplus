@@ -1,4 +1,7 @@
-#pragma once
+#ifndef MAIN_PARSER_H
+#define MAIN_PARSER_H
 #include "storage.h"
 
-void parsing( LexerData* output);
+int parsing( LigneCode* output);
+
+#endif
