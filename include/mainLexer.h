@@ -2,7 +2,7 @@
 #define MAIN_LEXER
 #include "storage.h"
 
-int tokenizeDocument(char* input,long int length, LigneCode *output);
+int tokenizeDocument(char* input,long int length, TOKEN_LIST *output);
 
-void eraseLexerData(LigneCode *data);
+void eraseLexerData(TOKEN_LIST *data);
 #endif

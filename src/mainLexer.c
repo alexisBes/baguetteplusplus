@@ -8,20 +8,14 @@
 #include "enum.h"
 #include "constante.h"
 
-
 int checkTypeToken(char *token);
 
-int tokenizeDocument(char *source, long int length, LigneCode *output)
+int tokenizeDocument(char *source, long int length, TOKEN_LIST *output)
 {
     const char delimChar[] = DELIM_CHAR_TABLEAU;
-    int nbRline = countCharInString(source, length, '\n');
-
-    output->tokenList = (Node **)malloc(sizeof(Node *) * nbRline);
-    output->sizeTokenList = length;
 
     char *str;
-    int currentLine = 0;
-    short int isNewLine = 1;
+    short int isCommentaire = 0;
     for (long int i = 0; i < length; i++)
     {
         char current = source[i];
@@ -31,19 +25,23 @@ int tokenizeDocument(char *source, long int length, LigneCode *output)
             Token newToken;
             newToken.value = str;
             newToken.token = checkTypeToken(str);
-            if (isNewLine)
+            if (output == NULL)
             {
-                output->tokenList[currentLine] = createNodeList(&newToken);
-                isNewLine = 0;
+                output = createNodeList(&newToken);
             }
             else
             {
-                addNode(output->tokenList[currentLine], &newToken);
+                addNode(output, &newToken);
             }
             str = NULL;
         }
         else
         {
+            if (current == COMMENTAIRE)
+            {
+                isCommentaire = !isCommentaire;
+                continue;
+            }
             if (str == NULL)
             {
                 str = malloc(sizeof(char) * 2);
@@ -55,36 +53,28 @@ int tokenizeDocument(char *source, long int length, LigneCode *output)
                 str = concatanateChar(str, current);
             }
         }
-        if (current == '\n')
-        {
-            isNewLine = 1;
-            currentLine++;
-        }
     }
 
     return 0;
 }
 
-void eraseLexerData(LigneCode *data)
+void eraseLexerData(TOKEN_LIST *data)
 {
-    for (size_t i = 0; i < data->sizeTokenList; i++)
-    {
-        clearList(data->tokenList[i]);
-    }
-    free(data->tokenList);
+    clearList(data);
 }
 
 int checkTypeToken(char *token)
 {
     const char *bppOperateur[] = BPP_OPERATEUR_TABLEAU;
     const char *bppMotsCle[] = BPP_MOTCLE_TABLEAU;
+    const char *bppType[] = BPP_TYPE_TABLEAU;
     if (token == NULL)
     {
         return -1;
     }
 
     short int isFound = 0;
-    for (int i = 0; i < BPP_MOTCLE_NB; i++)
+    for (int i = 0; i < BPP_OPERATEUR_SIZE; i++)
     {
         if (strcmp(bppOperateur[i], token) == 0)
         {
@@ -95,7 +85,18 @@ int checkTypeToken(char *token)
     if (isFound)
         return OPERATEUR;
 
-    for (int i = 0; i < BPP_OPERATEUR_SIZE; i++)
+    for (int i = 0; i < BPP_TYPE_NB; i++)
+    {
+        if (strcmp(bppType[i], token) == 0)
+        {
+            isFound = 1;
+            break;
+        }
+    }
+    if (isFound)
+        return TYPE;
+
+    for (int i = 0; i < BPP_MOTCLE_NB; i++)
     {
         if (strcmp(bppMotsCle[i], token) == 0)
         {

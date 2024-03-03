@@ -2,6 +2,6 @@
 #define MAIN_PARSER_H
 #include "storage.h"
 
-int parsing( LigneCode* output);
+int parsing( TOKEN_LIST* output);
 
 #endif
