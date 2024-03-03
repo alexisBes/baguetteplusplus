@@ -10,11 +10,11 @@
 
 int checkTypeToken(char *token);
 
-int tokenizeDocument(char *source, long int length, TOKEN_LIST *output)
+int tokenizeDocument(char *source, long int length, LexerData *output)
 {
     const char delimChar[] = DELIM_CHAR_TABLEAU;
-
     char *str;
+    output->tokenList= NULL;
     short int isCommentaire = 0;
     for (long int i = 0; i < length; i++)
     {
@@ -25,13 +25,13 @@ int tokenizeDocument(char *source, long int length, TOKEN_LIST *output)
             Token newToken;
             newToken.value = str;
             newToken.token = checkTypeToken(str);
-            if (output == NULL)
+            if (output->tokenList == NULL)
             {
-                output = createNodeList(&newToken);
+                output->tokenList = createNodeList(&newToken);
             }
             else
             {
-                addNode(output, &newToken);
+                addNode(output->tokenList, &newToken);
             }
             str = NULL;
         }
@@ -40,6 +40,8 @@ int tokenizeDocument(char *source, long int length, TOKEN_LIST *output)
             if (current == COMMENTAIRE)
             {
                 isCommentaire = !isCommentaire;
+                free(str);
+                str == NULL;
                 continue;
             }
             if (str == NULL)
@@ -54,13 +56,12 @@ int tokenizeDocument(char *source, long int length, TOKEN_LIST *output)
             }
         }
     }
-
     return 0;
 }
 
-void eraseLexerData(TOKEN_LIST *data)
+void eraseLexerData(LexerData *data)
 {
-    clearList(data);
+    clearList(data->tokenList);
 }
 
 int checkTypeToken(char *token)

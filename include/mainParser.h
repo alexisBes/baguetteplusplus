@@ -2,6 +2,6 @@
 #define MAIN_PARSER_H
 #include "storage.h"
 
-int parsing( TOKEN_LIST* output);
+int parsing( LexerData* output);
 
 #endif

@@ -29,12 +29,12 @@ int main(int argc, char *argv[])
 
         fclose(fileBaguette);
 
-        TOKEN_LIST lexerData;
+        LexerData lexerData;
         short int tokenizeRsult = tokenizeDocument(input, length, &lexerData);
         free(input);
 
 
-        if(tokenizeDocument != 0)
+        if(tokenizeRsult != 0)
         {
             eraseLexerData(&lexerData);
             printf("Une erreur est survenue durant l'analyse. Vérifier les logs.");

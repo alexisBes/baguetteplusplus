@@ -14,6 +14,10 @@ typedef struct
     char* name;
 } Variable;
 
-typedef Node TOKEN_LIST;
+typedef struct
+{
+    Node* tokenList;
+} LexerData;
 
- #endif
+
+#endif
