@@ -1,6 +1,7 @@
 #include "mainLexer.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #include <StringTool.h>
 #include <ListUtils.h>
@@ -9,50 +10,45 @@
 #include "constante.h"
 
 int checkTypeToken(char *token);
+int checkIgnorableChar(const char c);
+void addToken(LexerData *output, char *token);
 
 int tokenizeDocument(char *source, long int length, LexerData *output)
 {
-    const char delimChar[] = DELIM_CHAR_TABLEAU;
-    char *str;
-    output->tokenList= NULL;
+    char *currentTokenValue;
+    output->tokenList = NULL;
     short int isCommentaire = 0;
     for (long int i = 0; i < length; i++)
     {
         char current = source[i];
-        short int isDelimiteur = isCharExistInArray(current, delimChar, DELIM_CHAR_NB);
-        if (isDelimiteur && str != NULL)
+        int isIgnorable = checkIgnorableChar(current);
+        if (isIgnorable == -1 || isIgnorable == 3)
         {
-            Token newToken;
-            newToken.value = str;
-            newToken.token = checkTypeToken(str);
-            if (output->tokenList == NULL)
-            {
-                output->tokenList = createNodeList(&newToken);
-            }
-            else
-            {
-                addNode(output->tokenList, &newToken);
-            }
-            str = NULL;
+            printf("[ERREUR] Jeton >%c< innatendue Error %d.", current, isIgnorable);
+            return -1;
+        }
+        if (isIgnorable == 0)
+        {
+            char *tmp = currentTokenValue;
+            currentTokenValue = concatanateChar(tmp, current);
         }
         else
         {
-            if (current == COMMENTAIRE)
+            int type = checkTypeToken(currentTokenValue);
+            if (type == OPERATEUR && (currentTokenValue == NULL || strlen(currentTokenValue) > 1))
             {
-                isCommentaire = !isCommentaire;
-                free(str);
-                str == NULL;
-                continue;
+                printf("[ERREUR] Jeton innatendue %s%c.", currentTokenValue, current);
+                return -1;
             }
-            if (str == NULL)
+            addToken(output, currentTokenValue);
+            if (isIgnorable == 2)
             {
-                str = malloc(sizeof(char) * 2);
-                str[0] = current;
-                str[1] = '\0';
+                char *tmp = currentTokenValue;
+                currentTokenValue = concatanateChar(tmp, current);
             }
             else
             {
-                str = concatanateChar(str, current);
+                currentTokenValue = "";
             }
         }
     }
@@ -61,7 +57,23 @@ int tokenizeDocument(char *source, long int length, LexerData *output)
 
 void eraseLexerData(LexerData *data)
 {
-    clearList(data->tokenList);
+    if (data->tokenList != NULL)
+    {
+        clearList(data->tokenList);
+    }
+}
+
+void printLexer(LexerData *data)
+{
+    printf("Les Token récupéré sont ");
+    Node *curNode = data->tokenList;
+    while (curNode != NULL)
+    {
+        Token *curToken = (Token *)curNode->content;
+        printf("%s %d;", curToken->value, curToken->token);
+        curNode = curNode->nextNode;
+    }
+    printf("\n");
 }
 
 int checkTypeToken(char *token)
@@ -109,4 +121,33 @@ int checkTypeToken(char *token)
         return MOTCLE;
     else
         return IDENTIFIANT;
+}
+
+int checkIgnorableChar(const char c)
+{
+    char delimiteur[] = "\t \n;!";
+    char operateur[] = "=-+/*<>:^";
+    int isDelimiteur = isCharExistInArray(c, delimiteur, 6);
+    int isOperateur = (isCharExistInArray(c, operateur, 10) << 1);
+
+    if (!isDelimiteur && !isOperateur && !('a' <= c && c >= 'z') && !('A' <= c && c >= 'Z') && !('0' <= c && c >= '9'))
+    {
+        return -1;
+    }
+    return isDelimiteur | isOperateur;
+}
+
+void addToken(LexerData *ld, char *token)
+{
+    Token *newToken = malloc(sizeof(Token));
+    newToken->token = checkTypeToken(token);
+    newToken->value = token;
+    if (ld->tokenList == NULL)
+    {
+        ld->tokenList = createNodeList(newToken);
+    }
+    else
+    {
+        addNode(ld->tokenList, newToken);
+    }
 }

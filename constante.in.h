@@ -42,9 +42,6 @@
 
 #define COMMENTAIRE '!'
 
-#define FIN_INSTRUTION '\n'
-
-#define DELIM_CHAR_NB 10
-#define DELIM_CHAR_TABLEAU "<- =/*+-\t"
+#define FIN_INSTRUTION ';'
 
 #endif

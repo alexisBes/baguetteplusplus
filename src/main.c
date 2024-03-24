@@ -31,8 +31,8 @@ int main(int argc, char *argv[])
 
         LexerData lexerData;
         short int tokenizeRsult = tokenizeDocument(input, length, &lexerData);
-        free(input);
-
+        //free(input);
+        printLexer(&lexerData);
 
         if(tokenizeRsult != 0)
         {
