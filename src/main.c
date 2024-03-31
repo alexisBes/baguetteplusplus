@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
         if(tokenizeRsult != 0)
         {
             eraseLexerData(&lexerData);
-            printf("Une erreur est survenue durant l'analyse. Vérifier les logs.");
+            printf("Une erreur est survenue durant l'analyse. Vérifier les logs.\n");
             return -1;
         }
 

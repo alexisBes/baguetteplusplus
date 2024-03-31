@@ -13,9 +13,10 @@ int checkTypeToken(char *token);
 int checkIgnorableChar(const char c);
 void addToken(LexerData *output, char *token);
 
+
 int tokenizeDocument(char *source, long int length, LexerData *output)
 {
-    char *currentTokenValue;
+    char *currentTokenValue = "";
     output->tokenList = NULL;
     short int isCommentaire = 0;
     for (long int i = 0; i < length; i++)
@@ -24,7 +25,7 @@ int tokenizeDocument(char *source, long int length, LexerData *output)
         int isIgnorable = checkIgnorableChar(current);
         if (isIgnorable == -1 || isIgnorable == 3)
         {
-            printf("[ERREUR] Jeton >%c< innatendue Error %d.", current, isIgnorable);
+            printf("[ERREUR] Jeton >%c< innatendue. Erreur %d. \n", current, isIgnorable);
             return -1;
         }
         if (isIgnorable == 0)
@@ -35,20 +36,21 @@ int tokenizeDocument(char *source, long int length, LexerData *output)
         else
         {
             int type = checkTypeToken(currentTokenValue);
-            if (type == OPERATEUR && (currentTokenValue == NULL || strlen(currentTokenValue) > 1))
+            if (type == OPERATEUR && (currentTokenValue == NULL))
             {
-                printf("[ERREUR] Jeton innatendue %s%c.", currentTokenValue, current);
+                printf("[ERREUR] Jeton innatendue %s%c. \n", currentTokenValue, current);
                 return -1;
             }
-            addToken(output, currentTokenValue);
+            if (isIgnorable)
+            {
+                addToken(output, currentTokenValue);
+                currentTokenValue = "";
+            }
             if (isIgnorable == 2)
             {
-                char *tmp = currentTokenValue;
-                currentTokenValue = concatanateChar(tmp, current);
-            }
-            else
-            {
-                currentTokenValue = "";
+                addToken(output, currentTokenValue);
+                char *tmp = "";
+                currentTokenValue == concatanateChar(tmp, current);
             }
         }
     }
@@ -65,12 +67,12 @@ void eraseLexerData(LexerData *data)
 
 void printLexer(LexerData *data)
 {
-    printf("Les Token récupéré sont ");
+    printf("Les Token récupéré sont :\n");
     Node *curNode = data->tokenList;
     while (curNode != NULL)
     {
         Token *curToken = (Token *)curNode->content;
-        printf("%s %d;", curToken->value, curToken->token);
+        printf("%s| %d\n", curToken->value, curToken->token);
         curNode = curNode->nextNode;
     }
     printf("\n");
@@ -125,20 +127,26 @@ int checkTypeToken(char *token)
 
 int checkIgnorableChar(const char c)
 {
-    char delimiteur[] = "\t \n;!";
+    char delimiteur[] = "\t \n;";
     char operateur[] = "=-+/*<>:^";
-    int isDelimiteur = isCharExistInArray(c, delimiteur, 6);
-    int isOperateur = (isCharExistInArray(c, operateur, 10) << 1);
+    int isDelimiteur = isCharExistInArray(c, delimiteur, 5);
+    int isOperateur = (isCharExistInArray(c, operateur, 10));
 
-    if (!isDelimiteur && !isOperateur && !('a' <= c && c >= 'z') && !('A' <= c && c >= 'Z') && !('0' <= c && c >= '9'))
+    if (!isDelimiteur && !isOperateur && !('a' <= c && c <= 'z') && !('A' <= c && c <= 'Z') && !('0' <= c && c <= '9'))
     {
         return -1;
     }
+     isOperateur = isOperateur <<1;
     return isDelimiteur | isOperateur;
 }
 
 void addToken(LexerData *ld, char *token)
 {
+    if (token == "")
+    {
+        return;
+    }
+    
     Token *newToken = malloc(sizeof(Token));
     newToken->token = checkTypeToken(token);
     newToken->value = token;
