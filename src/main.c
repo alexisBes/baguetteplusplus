@@ -2,7 +2,7 @@
 //
 
 #include <stdlib.h>
-#include <stdio.h>
+#include "FileUtils.h"
 #include "mainLexer.h"
 #include "mainParser.h"
 
@@ -11,7 +11,6 @@ int main(int argc, char *argv[])
     if (argc > 1)
     {
         FILE *fileBaguette = fopen(argv[1], "r");
-        
         if (fileBaguette==NULL)
         {
             printf("Impossible d'ouvrir le fichier  %s. Veuillez vérifier que le fichier existe.\n", argv[1]);
@@ -19,13 +18,10 @@ int main(int argc, char *argv[])
         }
         printf("Lancement de la compilation de %s \n", argv[1]);
         
-        // get length of file:
-        fseek(fileBaguette ,0L, SEEK_END);
-        long int length = ftell(fileBaguette); 
-
-        rewind(fileBaguette);
+        long int length = fileSize(fileBaguette);
         char *input = malloc(sizeof(char) * (length +2));
-        fgets(input,length, fileBaguette);
+        
+        readEntireFile(fileBaguette,input);
 
         fclose(fileBaguette);
 
