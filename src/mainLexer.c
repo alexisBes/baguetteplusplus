@@ -23,6 +23,7 @@ int tokenizeDocument(char *source, long int length, LexerData *output)
     {
         char current = source[i];
         int isIgnorable = checkIgnorableChar(current);
+        int type = checkTypeToken(currentTokenValue);
         if (isIgnorable == -1 || isIgnorable == 3)
         {
             printf("[ERREUR] Jeton >%c< innatendue. Erreur %d. \n", current, isIgnorable);
@@ -30,12 +31,16 @@ int tokenizeDocument(char *source, long int length, LexerData *output)
         }
         if (isIgnorable == 0)
         {
+            if(type == OPERATEUR)
+            {
+                addToken(output, currentTokenValue);
+                currentTokenValue = "";
+            }
             char *tmp = currentTokenValue;
             currentTokenValue = concatanateChar(tmp, current);
         }
         else
         {
-            int type = checkTypeToken(currentTokenValue);
             if (type == OPERATEUR && (currentTokenValue == NULL))
             {
                 printf("[ERREUR] Jeton innatendue %s%c. \n", currentTokenValue, current);
@@ -50,9 +55,14 @@ int tokenizeDocument(char *source, long int length, LexerData *output)
             {
                 addToken(output, currentTokenValue);
                 char *tmp = "";
-                currentTokenValue == concatanateChar(tmp, current);
+                currentTokenValue = concatanateChar(tmp, current);
             }
         }
+    }
+    int type = checkTypeToken(currentTokenValue);
+    if(type != -1)
+    {
+        addToken(output, currentTokenValue);
     }
     return 0;
 }
@@ -83,7 +93,7 @@ int checkTypeToken(char *token)
     const char *bppOperateur[] = BPP_OPERATEUR_TABLEAU;
     const char *bppMotsCle[] = BPP_MOTCLE_TABLEAU;
     const char *bppType[] = BPP_TYPE_TABLEAU;
-    if (token == NULL)
+    if (token == NULL || token == "")
     {
         return -1;
     }
