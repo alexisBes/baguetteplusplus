@@ -30,6 +30,7 @@ int listSize(Node* nodeList)
         tempNode = tempNode->nextNode;
     }
     return nb;
+
 }
 
 void addNode(Node* nodeList, void* node)

@@ -24,4 +24,5 @@ Node* clearList(Node* nodeList);
 Node* getLast(Node* nodeList);
 
 Node* findNodeInList(Node* nodeList, void* contentToCompare,short int (*func)(void*, void*));
+
 #endif
