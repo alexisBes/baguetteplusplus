@@ -43,7 +43,7 @@ char* concatanateString(char *ori, char* concat, const int totalLength)
 }
 
 
-char* concatanateChar(char *ori, char concat)
+char* concatanateChar(char *ori, const char concat)
 {
     int length = strlen(ori);
     char * newString = (char *) malloc(sizeof(char)* (length +1));
@@ -52,4 +52,11 @@ char* concatanateChar(char *ori, char concat)
     newString[length+1] = '\0';
 
     return newString;
+}
+
+void copyString(char* dest, const char* ori){
+    int size = strlen(dest);
+    dest = malloc(sizeof(char) * size);
+
+    strcpy(dest, ori);
 }

@@ -2,37 +2,45 @@
 //
 
 #include <stdlib.h>
-#include <stdio.h>
+#include "bppFile.h"
 #include "mainLexer.h"
 #include "mainParser.h"
 
 int main(int argc, char *argv[])
 {
-	if (argc > 1)
-	{
-		FILE *fileBaguette = fopen(argv[1], "r");
-		
-		if (fileBaguette==NULL)
-		{
-			printf("Enabe to open file %s\n", argv[1]);
-			exit(-1);
-		}
-		
-		// get length of file:
-		fseek(fileBaguette ,0L, SEEK_END);
-		long int length = ftell(fileBaguette); 
+    if (argc > 1)
+    {
+        FILE *fileBaguette = fopen(argv[1], "r");
+        if (fileBaguette==NULL)
+        {
+            printf("Impossible d'ouvrir le fichier  %s. Veuillez vérifier que le fichier existe.\n", argv[1]);
+            exit(-1);
+        }
+        printf("Lancement de la compilation de %s \n", argv[1]);
+        
+        long int length = readSizeFile(fileBaguette);
+        char *input = malloc(sizeof(char) * (length +2));
+        
+        readSourceCode(fileBaguette,input);
 
-		rewind(fileBaguette);
-		char *input = malloc(sizeof(char) * (length +2));
-		fgets(input,length, fileBaguette);
+        fclose(fileBaguette);
 
-		fclose(fileBaguette);
+        LexerData lexerData;
+        short int tokenizeRsult = tokenizeDocument(input, length, &lexerData);
+        //free(input);
 
-		LexerData lexerData;
-		tokenizeDocument(input, length, &lexerData);
-		//parsing(fileBaguette,  docContext);
 
-		free(input);
-	}
-	return 0;
+        if(tokenizeRsult != 0)
+        {
+            eraseLexerData(&lexerData);
+            printf("Une erreur est survenue durant l'analyse. Vérifier les logs.\n");
+            printLexer(&lexerData);
+            return -1;
+        }
+        printLexer(&lexerData);
+        //short int parsingResult = parsing(&lexerData);
+
+        eraseLexerData(&lexerData);
+    }
+    return 0;
 }

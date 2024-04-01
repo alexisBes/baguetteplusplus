@@ -5,12 +5,19 @@
 typedef struct {
     char* value;
     int token;
-}Token;
-
+} Token;
 
 typedef struct
 {
-    Node **tokenList;
-    long int sizeTokenList; 
+    short int isVariable;
+    int typeVariable;
+    char* name;
+} Variable;
+
+typedef struct
+{
+    Node* tokenList;
 } LexerData;
- #endif
+
+
+#endif

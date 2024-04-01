@@ -1,82 +1,107 @@
 #include "mainLexer.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #include <StringTool.h>
 #include <ListUtils.h>
 #include <string.h>
 #include "enum.h"
-#include "constanteLexer.h"
-
-#define NB_DELIM_CHAR 10
-const char delimChar[] = "<- =/*+-\t";
+#include "constante.h"
 
 int checkTypeToken(char *token);
+int checkIgnorableChar(const char c);
+void addToken(LexerData *output, char *token);
+
 
 int tokenizeDocument(char *source, long int length, LexerData *output)
 {
-    int nbRline = countCharInString(source, length, '\n');
-
-    output->tokenList = (Node **)malloc(sizeof(Node *) * nbRline);
-    output->sizeTokenList = length;
-
-    char *str;
-    int currentLine = 0;
-    short int isNewLine = 1;
+    char *currentTokenValue = "";
+    output->tokenList = NULL;
+    short int isCommentaire = 0;
     for (long int i = 0; i < length; i++)
     {
         char current = source[i];
-        short int isDelimiteur = isCharExistInArray(current, delimChar, NB_DELIM_CHAR);
-        if (isDelimiteur && str != NULL)
+        int isIgnorable = checkIgnorableChar(current);
+        int type = checkTypeToken(currentTokenValue);
+        if (isIgnorable == -1 || isIgnorable == 3)
         {
-            Token newToken;
-            newToken.value = str;
-            newToken.token = checkTypeToken(str);
-            if (isNewLine)
+            printf("[ERREUR] Jeton >%c< innatendue. Erreur %d. \n", current, isIgnorable);
+            return -1;
+        }
+        if (isIgnorable == 0)
+        {
+            if(type == OPERATEUR)
             {
-                output->tokenList[currentLine] = createNodeList(&newToken);
-                isNewLine = 0;
+                addToken(output, currentTokenValue);
+                currentTokenValue = "";
             }
-            else
-            {
-                addNode(output->tokenList[currentLine], &newToken);
-            }
-            str = NULL;
+            char *tmp = currentTokenValue;
+            currentTokenValue = concatanateChar(tmp, current);
         }
         else
         {
-            if (str == NULL)
+            if (type == OPERATEUR && (currentTokenValue == NULL))
             {
-                str = malloc(sizeof(char)* 2);
-                str[0] = current;
-                str[1] = '\0';
+                printf("[ERREUR] Jeton innatendue %s%c. \n", currentTokenValue, current);
+                return -1;
             }
-            else
+            if (isIgnorable)
             {
-                str = concatanateChar(str, current);
+                addToken(output, currentTokenValue);
+                currentTokenValue = "";
             }
-        }
-        if (current == '\n')
-        {
-            isNewLine = 1;
-            currentLine++;
+            if (isIgnorable == 2)
+            {
+                addToken(output, currentTokenValue);
+                char *tmp = "";
+                currentTokenValue = concatanateChar(tmp, current);
+            }
         }
     }
-
+    int type = checkTypeToken(currentTokenValue);
+    if(type != -1)
+    {
+        addToken(output, currentTokenValue);
+    }
     return 0;
+}
+
+void eraseLexerData(LexerData *data)
+{
+    if (data->tokenList != NULL)
+    {
+        clearList(data->tokenList);
+    }
+}
+
+void printLexer(LexerData *data)
+{
+    printf("Les Token récupéré sont :\n");
+    Node *curNode = data->tokenList;
+    while (curNode != NULL)
+    {
+        Token *curToken = (Token *)curNode->content;
+        printf("%s| %d\n", curToken->value, curToken->token);
+        curNode = curNode->nextNode;
+    }
+    printf("\n");
 }
 
 int checkTypeToken(char *token)
 {
-    if (token == NULL)
+    const char *bppOperateur[] = BPP_OPERATEUR_TABLEAU;
+    const char *bppMotsCle[] = BPP_MOTCLE_TABLEAU;
+    const char *bppType[] = BPP_TYPE_TABLEAU;
+    if (token == NULL || token == "")
     {
         return -1;
     }
 
     short int isFound = 0;
-    for (int i = 0; i < BPP_MOTCLE; i++)
+    for (int i = 0; i < BPP_OPERATEUR_SIZE; i++)
     {
-        if (strcmp(bppOperateur[i], token))
+        if (strcmp(bppOperateur[i], token) == 0)
         {
             isFound = 1;
             break;
@@ -85,9 +110,20 @@ int checkTypeToken(char *token)
     if (isFound)
         return OPERATEUR;
 
-    for (int i = 0; i < BPP_OPERATEUR_SIZE; i++)
+    for (int i = 0; i < BPP_TYPE_NB; i++)
     {
-        if (strcmp(bppMotsCle[i], token))
+        if (strcmp(bppType[i], token) == 0)
+        {
+            isFound = 1;
+            break;
+        }
+    }
+    if (isFound)
+        return TYPE;
+
+    for (int i = 0; i < BPP_MOTCLE_NB; i++)
+    {
+        if (strcmp(bppMotsCle[i], token) == 0)
         {
             isFound = 1;
             break;
@@ -97,4 +133,39 @@ int checkTypeToken(char *token)
         return MOTCLE;
     else
         return IDENTIFIANT;
+}
+
+int checkIgnorableChar(const char c)
+{
+    char delimiteur[] = "\t \n;";
+    char operateur[] = "=-+/*<>:^";
+    int isDelimiteur = isCharExistInArray(c, delimiteur, 5);
+    int isOperateur = (isCharExistInArray(c, operateur, 10));
+
+    if (!isDelimiteur && !isOperateur && !('a' <= c && c <= 'z') && !('A' <= c && c <= 'Z') && !('0' <= c && c <= '9'))
+    {
+        return -1;
+    }
+     isOperateur = isOperateur <<1;
+    return isDelimiteur | isOperateur;
+}
+
+void addToken(LexerData *ld, char *token)
+{
+    if (token == "")
+    {
+        return;
+    }
+    
+    Token *newToken = malloc(sizeof(Token));
+    newToken->token = checkTypeToken(token);
+    newToken->value = token;
+    if (ld->tokenList == NULL)
+    {
+        ld->tokenList = createNodeList(newToken);
+    }
+    else
+    {
+        addNode(ld->tokenList, newToken);
+    }
 }
