@@ -14,13 +14,10 @@ typedef struct
     char* name;
 } Variable;
 
-
 typedef struct
 {
-    Node **tokenList; // contient une liste chainé de tousles mots clé sur une ligne
-    long int sizeTokenList;
-    int typeLigne;
-    short int validity;
-} LigneCode;
+    Node* tokenList;
+} LexerData;
 
- #endif
+
+#endif

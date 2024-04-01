@@ -29,12 +29,13 @@ int checkKeyWordLine(const char *keyword);
 /*********
  * Public function definition
  */
-int parsing(LigneCode *output)
+int parsing(LexerData *output)
 {
     int errorCount = 0;
-    for (int i = 0; i < output->sizeTokenList; i++)
+    const int sizeList = listSize(output->tokenList);
+    for (int i = 0; i < sizeList; i++)
     {
-        checkLine(output->tokenList[i], i);
+        checkLine(output->tokenList, i);
     }
 
     return errorCount;

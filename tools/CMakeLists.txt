@@ -1,7 +1,8 @@
 add_library(Tools 
     src/StringTool.c
     src/ListUtils.c
-    src/ArrayUtils.c)
+    src/ArrayUtils.c
+    src/FileUtils.c)
 
 target_include_directories(Tools PRIVATE 
                           ${CMAKE_CURRENT_SOURCE_DIR}/include)
