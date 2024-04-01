@@ -2,7 +2,7 @@
 //
 
 #include <stdlib.h>
-#include "FileUtils.h"
+#include "bppFile.h"
 #include "mainLexer.h"
 #include "mainParser.h"
 
@@ -18,10 +18,10 @@ int main(int argc, char *argv[])
         }
         printf("Lancement de la compilation de %s \n", argv[1]);
         
-        long int length = fileSize(fileBaguette);
+        long int length = readSizeFile(fileBaguette);
         char *input = malloc(sizeof(char) * (length +2));
         
-        readEntireFile(fileBaguette,input);
+        readSourceCode(fileBaguette,input);
 
         fclose(fileBaguette);
 

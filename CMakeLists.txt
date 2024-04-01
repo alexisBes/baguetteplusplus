@@ -15,6 +15,7 @@ set (SOURCE_LIST
     src/mainParser.c
     src/Logger.c
     src/instructionParser.c
+    src/bppFile.c
 )
 
 add_executable(baguetteplusplus 
