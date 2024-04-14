@@ -9,5 +9,4 @@ enum TYPE_LIGNE {
     DECLARATION, POUR, TANT, JUSQUE, SI, SELON, INSTRUCTION,typeLigne_COUNT 
 };
 
-
 #endif

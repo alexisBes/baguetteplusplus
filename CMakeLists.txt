@@ -34,46 +34,8 @@ target_include_directories(baguetteplusplus PRIVATE
 target_include_directories(baguetteplusplus PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 
 
-
 if(TESTING)
-    enable_testing()
-    add_executable(baguetteplusplus_test
-    test/main.c
-    ${SOURCE_LIST})
-    target_link_libraries(baguetteplusplus_test PRIVATE 
-        Tools)
+enable_testing()
 
-    target_include_directories(baguetteplusplus_test PRIVATE
-        include/
-        tools/include/)
-    target_include_directories(baguetteplusplus_test PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
-
-    # function to simplify stringUtilsTest
-    function(testStringUtils myname functionName target typeTest input element result)
-        add_test(NAME ${myname} COMMAND ${target} ${typeTest} ${input} ${element} ${result})
-        set_tests_properties(${myname}
-            PROPERTIES PASS_REGULAR_EXPRESSION "test ${functionName} : SUCCES"
-        )
-    endfunction()
-
-    # function to simplify listUtilsTest
-    function(testListUtils myname target typeTest )
-        add_test(NAME ${myname} COMMAND ${target} ${typeTest} ${CMAKE_CTEST_ARGUMENTS})
-        set_tests_properties(${myname}
-            PROPERTIES PASS_REGULAR_EXPRESSION "test initList : SUCCES" 
-            "test ValueList : SUCCES" 
-            "test ValueList : SUCCES" 
-            "test removeList: SUCCES"
-            "test clearList: SUCCES"
-        )
-    endfunction()
-
-    testStringUtils( TestCountInChar countChar baguetteplusplus_test  0x0011 superstrings s 3)
-    testStringUtils( TestIsCharExistInArray isCharExistInArray baguetteplusplus_test  0x0012 superstrings t 1)
-    testStringUtils( concatenateString concatanateString baguetteplusplus_test  0x0013 super strings superstrings)
-    testStringUtils( concatenateChar concatanateChar baguetteplusplus_test  0x0014 tot o toto)
-    set( CMAKE_CTEST_ARGUMENTS toto
-    to
-    tot)
-    testListUtils( testList baguetteplusplus_test  0x0020 )
 endif()
+

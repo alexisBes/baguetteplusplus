@@ -54,9 +54,10 @@ char* concatanateChar(char *ori, const char concat)
     return newString;
 }
 
-void copyString(char* dest, const char* ori){
-    int size = strlen(dest);
-    dest = malloc(sizeof(char) * size);
+char* copyString(char* ori){
+    int size = strlen(ori);
+    char * cpStr = malloc(sizeof(char) * size);
 
-    strcpy(dest, ori);
+    strcpy(cpStr, ori);
+    return cpStr;
 }
