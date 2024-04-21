@@ -1,6 +1,7 @@
 #ifndef CONSTANTE_LEXER_H
 #define CONSTANTE_LEXER_H
 
+
 #define BPP_OPERATEUR_SIZE 13
 #define BPP_OPERATEUR_TABLEAU                                                     \
     {                                                                             \

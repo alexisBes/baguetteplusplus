@@ -37,7 +37,12 @@ int main(int argc, char *argv[])
             printLexer(&lexerData);
             return -1;
         }
-        printLexer(&lexerData);
+        #ifdef TESTING
+
+        printLexerToCsv(argv[1], &lexerData);
+        
+
+        #endif
         //short int parsingResult = parsing(&lexerData);
 
         eraseLexerData(&lexerData);

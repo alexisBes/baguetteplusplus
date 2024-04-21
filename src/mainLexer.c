@@ -82,11 +82,30 @@ void printLexer(LexerData *data)
     while (curNode != NULL)
     {
         Token *curToken = (Token *)curNode->content;
-        printf("%s| %d\n", curToken->value, curToken->token);
+        printf("%s;%d\n", curToken->value, curToken->token);
         curNode = curNode->nextNode;
     }
     printf("\n");
 }
+
+#ifdef TESTING
+
+void printLexerToCsv(char *result, LexerData *data)
+{
+    Node *curNode= data->tokenList;
+    int size = strlen(result);
+    char *nameOutputFile = concatanateString(result, ".lexer",size + 7);
+    FILE *ouputFile = fopen(nameOutputFile, "w");
+    while (curNode != NULL)
+    {
+        Token *curToken = (Token *) curNode->content;
+        fprintf(ouputFile, "%s;%d;\n",curToken->value, curToken->token);
+        curNode = curNode->nextNode;
+    }
+    fclose(ouputFile);
+}
+
+#endif
 
 int checkTypeToken(char *token)
 {

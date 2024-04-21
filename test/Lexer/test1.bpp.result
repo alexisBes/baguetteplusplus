@@ -1,0 +1,16 @@
+VAR;1;
+a;2;
+:;0;
+ENTIER;3;
+SI;1;
+a;2;
+=;0;
+=;0;
+0;2;
+ALORS;1;
+ECRIRE;2;
+1;2;
+SINON;1;
+ECRIRE;2;
+2;2;
+FSI;1;

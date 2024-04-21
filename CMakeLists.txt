@@ -7,16 +7,22 @@ configure_file(constante.in.h constante.h)
 set(TESTING OFF CACHE BOOL "Lanch unit test")
 
 add_library(bpp_compiler_flag INTERFACE)
-target_compile_features(bpp_compiler_flag INTERFACE cxx_std_11)
+target_compile_features(bpp_compiler_flag INTERFACE c_std_11)
 
 
 set (SOURCE_LIST
-    src/mainLexer.c
-    src/mainParser.c
-    src/Logger.c
-    src/instructionParser.c
-    src/bppFile.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/mainLexer.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/mainParser.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Logger.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/instructionParser.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/bppFile.c
 )
+
+
+if(TESTING)
+enable_testing()
+add_definitions( -DTESTING)
+endif()
 
 add_executable(baguetteplusplus 
     src/main.c
@@ -33,9 +39,4 @@ target_include_directories(baguetteplusplus PRIVATE
 
 target_include_directories(baguetteplusplus PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 
-
-if(TESTING)
-enable_testing()
-
-endif()
 
