@@ -9,6 +9,6 @@ char* concatanateString(char *ori, char* concat, const int totalLength);
 
 char* concatanateChar(char *ori, char concat);
 
-void copyString(char* dest, const char* ori);
+char* copyString(char* ori);
 #endif
 

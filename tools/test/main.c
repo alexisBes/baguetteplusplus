@@ -67,7 +67,16 @@ int main(int argc, char *argv[])
             char *computedResult = concatanateChar(testingString, testChar);
             result = strcmp(expectedResult, computedResult) == 0;
             printf("test concatanateChar : ");
+        } else if (value == 0b0101)
+        {
+            /* test concatanateChar */
+            char *testingString = argv[2];
+            char *expectedResult = argv[4];
+            char* computedResult  = copyString(testingString);
+            result = strcmp(expectedResult, computedResult) == 0;
+            printf("test copyString : ");
         }
+        
         if (result)
             printf("SUCCES \n");
         else
