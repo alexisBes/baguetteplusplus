@@ -2,5 +2,9 @@
 build/
 out/
 
+#ignore temp file
+*.lexer
+
+#ignore cache
 .vscode/
 .vs/
