@@ -156,10 +156,10 @@ int checkTypeToken(char *token)
 
 int checkIgnorableChar(const char c)
 {
-    char delimiteur[] = "\t \n;";
-    char operateur[] = "=-+/*<>:^";
-    int isDelimiteur = isCharExistInArray(c, delimiteur, 5);
-    int isOperateur = (isCharExistInArray(c, operateur, 10));
+    char delimiteur[] = "\t \n";
+    char operateur[] = "=-+/*<>:^;";
+    int isDelimiteur = isCharExistInArray(c, delimiteur, 4);
+    int isOperateur = (isCharExistInArray(c, operateur, 11));
 
     if (!isDelimiteur && !isOperateur && !('a' <= c && c <= 'z') && !('A' <= c && c <= 'Z') && !('0' <= c && c <= '9'))
     {

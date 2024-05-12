@@ -2,10 +2,9 @@
 result=""
 for t in "$(find . -name *.bpp)";
 do 
-
 ./build/baguetteplusplus $t
 
-result="$(diff $t.result $t.lexer) ${result}";
+result="$(diff $t.result $t.lexer) $result";
 
 done
 
