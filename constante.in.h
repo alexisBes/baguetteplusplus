@@ -33,8 +33,8 @@
 #define BPP_SELON_NB 3
 #define BPP_SELON_TABLEAU "SELON", "QUE", "VAUT"
 
-#define BPP_FIN_NB 1
-#define BPP_FIN_TABLEAU "FIN"
+#define BPP_FIN_NB 2
+#define BPP_FIN_TABLEAU "FIN", ";"
 
 #define BPP_MOTCLE_NB BPP_DEFINITION_NB + BPP_TANTQUE_NB + BPP_JUSQUE_NB + BPP_POUR_NB + BPP_SI_NB + BPP_SELON_NB + BPP_FIN_NB
 #define BPP_MOTCLE_TABLEAU                                                                 \

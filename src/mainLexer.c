@@ -8,22 +8,21 @@
 #include <string.h>
 #include "enum.h"
 #include "constante.h"
+#include "tokenUtils.h"
 
-int checkTypeToken(char *token);
 int checkIgnorableChar(const char c);
 void addToken(LexerData *output, char *token);
-
 
 int tokenizeDocument(char *source, long int length, LexerData *output)
 {
     char *currentTokenValue = "";
     output->tokenList = NULL;
-    short int isCommentaire = 0;
     for (long int i = 0; i < length; i++)
     {
         char current = source[i];
         int isIgnorable = checkIgnorableChar(current);
-        int type = checkTypeToken(currentTokenValue);
+        int type = -1;
+        checkTypeToken(currentTokenValue, &type, NULL);
         if (isIgnorable == -1 || isIgnorable == 3)
         {
             printf("[ERREUR] Jeton >%c< innatendue. Erreur %d. \n", current, isIgnorable);
@@ -31,7 +30,7 @@ int tokenizeDocument(char *source, long int length, LexerData *output)
         }
         if (isIgnorable == 0)
         {
-            if(type == OPERATEUR)
+            if (type == OPERATEUR)
             {
                 addToken(output, currentTokenValue);
                 currentTokenValue = "";
@@ -59,8 +58,9 @@ int tokenizeDocument(char *source, long int length, LexerData *output)
             }
         }
     }
-    int type = checkTypeToken(currentTokenValue);
-    if(type != -1)
+    int type = -1, typeKeyword = -1;
+    checkTypeToken(currentTokenValue, &type, &typeKeyword);
+    if (type != -1)
     {
         addToken(output, currentTokenValue);
     }
@@ -92,14 +92,14 @@ void printLexer(LexerData *data)
 
 void printLexerToCsv(char *result, LexerData *data)
 {
-    Node *curNode= data->tokenList;
+    Node *curNode = data->tokenList;
     int size = strlen(result);
-    char *nameOutputFile = concatanateString(result, ".lexer",size + 7);
+    char *nameOutputFile = concatanateString(result, ".lexer", size + 7);
     FILE *ouputFile = fopen(nameOutputFile, "w");
     while (curNode != NULL)
     {
-        Token *curToken = (Token *) curNode->content;
-        fprintf(ouputFile, "%s;%d;\n",curToken->value, curToken->token);
+        Token *curToken = (Token *)curNode->content;
+        fprintf(ouputFile, "%s;%d;%d;\n", curToken->value, curToken->token, curToken->keyWord);
         curNode = curNode->nextNode;
     }
     fclose(ouputFile);
@@ -107,52 +107,6 @@ void printLexerToCsv(char *result, LexerData *data)
 
 #endif
 
-int checkTypeToken(char *token)
-{
-    const char *bppOperateur[] = BPP_OPERATEUR_TABLEAU;
-    const char *bppMotsCle[] = BPP_MOTCLE_TABLEAU;
-    const char *bppType[] = BPP_TYPE_TABLEAU;
-    if (token == NULL || token == "")
-    {
-        return -1;
-    }
-
-    short int isFound = 0;
-    for (int i = 0; i < BPP_OPERATEUR_SIZE; i++)
-    {
-        if (strcmp(bppOperateur[i], token) == 0)
-        {
-            isFound = 1;
-            break;
-        }
-    }
-    if (isFound)
-        return OPERATEUR;
-
-    for (int i = 0; i < BPP_TYPE_NB; i++)
-    {
-        if (strcmp(bppType[i], token) == 0)
-        {
-            isFound = 1;
-            break;
-        }
-    }
-    if (isFound)
-        return TYPE;
-
-    for (int i = 0; i < BPP_MOTCLE_NB; i++)
-    {
-        if (strcmp(bppMotsCle[i], token) == 0)
-        {
-            isFound = 1;
-            break;
-        }
-    }
-    if (isFound)
-        return MOTCLE;
-    else
-        return IDENTIFIANT;
-}
 
 int checkIgnorableChar(const char c)
 {
@@ -165,19 +119,22 @@ int checkIgnorableChar(const char c)
     {
         return -1;
     }
-     isOperateur = isOperateur <<1;
+    isOperateur = isOperateur << 1;
     return isDelimiteur | isOperateur;
 }
 
 void addToken(LexerData *ld, char *token)
 {
-    if (token == "")
+    if (token[0] == '\0')
     {
         return;
     }
-    
+
     Token *newToken = malloc(sizeof(Token));
-    newToken->token = checkTypeToken(token);
+    int type = -1, typeKw = -1;
+    checkTypeToken(token, &type, &typeKw);
+    newToken->token = type;
+    newToken->keyWord = typeKw;
     newToken->value = token;
     if (ld->tokenList == NULL)
     {

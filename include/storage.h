@@ -5,6 +5,7 @@
 typedef struct {
     char* value;
     int token;
+    int keyWord;
 } Token;
 
 typedef struct
