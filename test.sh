@@ -9,7 +9,7 @@ echo $result
 
 done
 
-if [ -z $result ] 
+if [ -z "$result" ] 
 then
 echo "Les tests sont ok"
 else
