@@ -8,45 +8,47 @@
 #include <string.h>
 #include "enum.h"
 #include "constante.h"
+#include "tokenUtils.h"
 
-int checkTypeToken(char *token);
+/*********
+ * Private function declaration
+ */
 int checkIgnorableChar(const char c);
 void addToken(LexerData *output, char *token);
+int checkTwoCharOperator(LexerData *output, char *source, int i);
 
-
+/*********
+ * Public function definition
+ */
 int tokenizeDocument(char *source, long int length, LexerData *output)
 {
     char *currentTokenValue = "";
     output->tokenList = NULL;
-    short int isCommentaire = 0;
     for (long int i = 0; i < length; i++)
     {
         char current = source[i];
         int isIgnorable = checkIgnorableChar(current);
-        int type = checkTypeToken(currentTokenValue);
         if (isIgnorable == -1 || isIgnorable == 3)
         {
             printf("[ERREUR] Jeton >%c< innatendue. Erreur %d. \n", current, isIgnorable);
             return -1;
         }
+        int type = -1;
+        char *currentStr = concatanateChar(currentTokenValue, current);
+        checkTypeToken(currentStr, &type, NULL);
         if (isIgnorable == 0)
         {
-            if(type == OPERATEUR)
-            {
-                addToken(output, currentTokenValue);
-                currentTokenValue = "";
-            }
             char *tmp = currentTokenValue;
             currentTokenValue = concatanateChar(tmp, current);
         }
         else
         {
-            if (type == OPERATEUR && (currentTokenValue == NULL))
+            if (type == -1 || currentTokenValue == NULL)
             {
                 printf("[ERREUR] Jeton innatendue %s%c. \n", currentTokenValue, current);
                 return -1;
             }
-            if (isIgnorable)
+            if (isIgnorable == 1)
             {
                 addToken(output, currentTokenValue);
                 currentTokenValue = "";
@@ -54,13 +56,19 @@ int tokenizeDocument(char *source, long int length, LexerData *output)
             if (isIgnorable == 2)
             {
                 addToken(output, currentTokenValue);
-                char *tmp = "";
-                currentTokenValue = concatanateChar(tmp, current);
+                currentTokenValue = "";
+                int tmpIndex = checkTwoCharOperator(output, source, i);
+                if (tmpIndex != i)
+                {
+                    currentTokenValue = "";
+                    i = tmpIndex;
+                }
             }
         }
     }
-    int type = checkTypeToken(currentTokenValue);
-    if(type != -1)
+    int type = -1, typeKeyword = -1;
+    checkTypeToken(currentTokenValue, &type, &typeKeyword);
+    if (type != -1)
     {
         addToken(output, currentTokenValue);
     }
@@ -83,7 +91,10 @@ void printLexer(LexerData *data)
     {
         Token *curToken = (Token *)curNode->content;
         printf("%s;%d\n", curToken->value, curToken->token);
-        curNode = curNode->nextNode;
+        if (!curNode->nextNode)
+            curNode = NULL;
+        else
+            curNode = curNode->nextNode;
     }
     printf("\n");
 }
@@ -92,14 +103,14 @@ void printLexer(LexerData *data)
 
 void printLexerToCsv(char *result, LexerData *data)
 {
-    Node *curNode= data->tokenList;
+    Node *curNode = data->tokenList;
     int size = strlen(result);
-    char *nameOutputFile = concatanateString(result, ".lexer",size + 7);
+    char *nameOutputFile = concatanateString(result, ".lexer", size + 7);
     FILE *ouputFile = fopen(nameOutputFile, "w");
     while (curNode != NULL)
     {
-        Token *curToken = (Token *) curNode->content;
-        fprintf(ouputFile, "%s;%d;\n",curToken->value, curToken->token);
+        Token *curToken = (Token *)curNode->content;
+        fprintf(ouputFile, "%s;%d;%d;\n", curToken->value, curToken->token, curToken->keyWord);
         curNode = curNode->nextNode;
     }
     fclose(ouputFile);
@@ -107,77 +118,37 @@ void printLexerToCsv(char *result, LexerData *data)
 
 #endif
 
-int checkTypeToken(char *token)
-{
-    const char *bppOperateur[] = BPP_OPERATEUR_TABLEAU;
-    const char *bppMotsCle[] = BPP_MOTCLE_TABLEAU;
-    const char *bppType[] = BPP_TYPE_TABLEAU;
-    if (token == NULL || token == "")
-    {
-        return -1;
-    }
-
-    short int isFound = 0;
-    for (int i = 0; i < BPP_OPERATEUR_SIZE; i++)
-    {
-        if (strcmp(bppOperateur[i], token) == 0)
-        {
-            isFound = 1;
-            break;
-        }
-    }
-    if (isFound)
-        return OPERATEUR;
-
-    for (int i = 0; i < BPP_TYPE_NB; i++)
-    {
-        if (strcmp(bppType[i], token) == 0)
-        {
-            isFound = 1;
-            break;
-        }
-    }
-    if (isFound)
-        return TYPE;
-
-    for (int i = 0; i < BPP_MOTCLE_NB; i++)
-    {
-        if (strcmp(bppMotsCle[i], token) == 0)
-        {
-            isFound = 1;
-            break;
-        }
-    }
-    if (isFound)
-        return MOTCLE;
-    else
-        return IDENTIFIANT;
-}
-
+/*********
+ * Private function definition
+ */
 int checkIgnorableChar(const char c)
 {
-    char delimiteur[] = "\t \n;";
-    char operateur[] = "=-+/*<>:^";
-    int isDelimiteur = isCharExistInArray(c, delimiteur, 5);
-    int isOperateur = (isCharExistInArray(c, operateur, 10));
+    char delimiteur[] = "\t \n";
+    char operateur[] = "=-<>:^;+/*";
+    int isDelimiteur = isCharExistInArray(c, delimiteur, 4);
+    int isOperateur = isCharExistInArray(c, operateur, 11);
 
     if (!isDelimiteur && !isOperateur && !('a' <= c && c <= 'z') && !('A' <= c && c <= 'Z') && !('0' <= c && c <= '9'))
     {
         return -1;
     }
-     isOperateur = isOperateur <<1;
+    isOperateur = isOperateur << 1;
     return isDelimiteur | isOperateur;
 }
 
 void addToken(LexerData *ld, char *token)
 {
-    if (token == "")
+    if (token[0] == '\0')
     {
         return;
     }
-    
+
     Token *newToken = malloc(sizeof(Token));
-    newToken->token = checkTypeToken(token);
+    int type = -1, typeKw = -1;
+    checkTypeToken(token, &type, &typeKw);
+
+    newToken->token = type;
+    newToken->keyWord = typeKw;
     newToken->value = token;
     if (ld->tokenList == NULL)
     {
@@ -186,5 +157,27 @@ void addToken(LexerData *ld, char *token)
     else
     {
         addNode(ld->tokenList, newToken);
+    }
+}
+
+int checkTwoCharOperator(LexerData *output, char *source, int i)
+{
+    char tmp[3] = {source[i], source[i + 1], '\0'};
+    int type = -1, typeKw = -1;
+    checkTypeToken(tmp, &type, &typeKw);
+    if (type == OPERATEUR)
+    {
+        char *newStr = malloc(sizeof(char) * 3);
+        memcpy(newStr,tmp,sizeof(char) * 3);
+        addToken(output, newStr);
+        return i + 1;
+    }
+    else
+    {
+        tmp[1]= '\0';
+        char *newStr = malloc(sizeof(char) * 2);
+        memcpy(newStr, tmp,sizeof(char) * 2);
+        addToken(output, newStr);
+        return i;
     }
 }

@@ -27,14 +27,15 @@ int main(int argc, char *argv[])
 
         LexerData lexerData;
         short int tokenizeRsult = tokenizeDocument(input, length, &lexerData);
-        //free(input);
-
+        
 
         if(tokenizeRsult != 0)
         {
-            eraseLexerData(&lexerData);
             printf("Une erreur est survenue durant l'analyse. Vérifier les logs.\n");
             printLexer(&lexerData);
+            eraseLexerData(&lexerData);
+            free(input);
+
             return -1;
         }
         #ifdef TESTING
@@ -46,6 +47,7 @@ int main(int argc, char *argv[])
         //short int parsingResult = parsing(&lexerData);
 
         eraseLexerData(&lexerData);
+        free(input);
     }
     return 0;
 }
