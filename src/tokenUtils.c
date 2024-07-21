@@ -42,7 +42,7 @@ void checkTypeToken(char *token, int *oType, int *oTypeKW)
     }
     if (isFound)
     {
-        oType = OPERATEUR;
+        *oType = OPERATEUR;
         return;
     }
 

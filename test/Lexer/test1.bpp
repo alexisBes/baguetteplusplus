@@ -1,5 +1,6 @@
 VAR a : ENTIER;
-SI a==0 ALORS :
+a<-0;
+SI a=0 ALORS :
  ECRIRE 1;
 SINON :
  ECRIRE 2;

@@ -19,13 +19,22 @@ int parsing(LexerData *output)
 {
     int errorCount = 0;
 
-    int size = listSize(output->tokenList);
     Node *token = output->tokenList;
-    for (int i = 0; i < size; i++)
+    while (token != NULL)
     {
         Token *curTok = (Token *)token->content;
         if (curTok->token == MOTCLE)
         {
+            if (curTok->keyWord == DEFINITION)
+            {
+                // do VARIABLE logic
+            }
+            else
+            {
+                // do INSTRUCTION logic
+            }
+            
+            
             
         }
     }

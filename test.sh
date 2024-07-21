@@ -4,11 +4,12 @@ for t in "$(find . -name *.bpp)";
 do 
 ./build/baguetteplusplus $t
 
-result="$(diff $t.result $t.lexer) $result";
+result="$(diff -q $t.result $t.lexer) $result";
+echo $result
 
 done
 
-if [ -z $result ] 
+if [ -z "$result" ] 
 then
 echo "Les tests sont ok"
 else

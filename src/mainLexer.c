@@ -10,9 +10,16 @@
 #include "constante.h"
 #include "tokenUtils.h"
 
+/*********
+ * Private function declaration
+ */
 int checkIgnorableChar(const char c);
 void addToken(LexerData *output, char *token);
+int checkTwoCharOperator(LexerData *output, char *source, int i);
 
+/*********
+ * Public function definition
+ */
 int tokenizeDocument(char *source, long int length, LexerData *output)
 {
     char *currentTokenValue = "";
@@ -21,31 +28,27 @@ int tokenizeDocument(char *source, long int length, LexerData *output)
     {
         char current = source[i];
         int isIgnorable = checkIgnorableChar(current);
-        int type = -1;
-        checkTypeToken(currentTokenValue, &type, NULL);
         if (isIgnorable == -1 || isIgnorable == 3)
         {
             printf("[ERREUR] Jeton >%c< innatendue. Erreur %d. \n", current, isIgnorable);
             return -1;
         }
+        int type = -1;
+        char *currentStr = concatanateChar(currentTokenValue, current);
+        checkTypeToken(currentStr, &type, NULL);
         if (isIgnorable == 0)
         {
-            if (type == OPERATEUR)
-            {
-                addToken(output, currentTokenValue);
-                currentTokenValue = "";
-            }
             char *tmp = currentTokenValue;
             currentTokenValue = concatanateChar(tmp, current);
         }
         else
         {
-            if (type == OPERATEUR && (currentTokenValue == NULL))
+            if (type == -1 || currentTokenValue == NULL)
             {
                 printf("[ERREUR] Jeton innatendue %s%c. \n", currentTokenValue, current);
                 return -1;
             }
-            if (isIgnorable)
+            if (isIgnorable == 1)
             {
                 addToken(output, currentTokenValue);
                 currentTokenValue = "";
@@ -53,8 +56,13 @@ int tokenizeDocument(char *source, long int length, LexerData *output)
             if (isIgnorable == 2)
             {
                 addToken(output, currentTokenValue);
-                char *tmp = "";
-                currentTokenValue = concatanateChar(tmp, current);
+                currentTokenValue = "";
+                int tmpIndex = checkTwoCharOperator(output, source, i);
+                if (tmpIndex != i)
+                {
+                    currentTokenValue = "";
+                    i = tmpIndex;
+                }
             }
         }
     }
@@ -83,7 +91,10 @@ void printLexer(LexerData *data)
     {
         Token *curToken = (Token *)curNode->content;
         printf("%s;%d\n", curToken->value, curToken->token);
-        curNode = curNode->nextNode;
+        if (!curNode->nextNode)
+            curNode = NULL;
+        else
+            curNode = curNode->nextNode;
     }
     printf("\n");
 }
@@ -107,13 +118,15 @@ void printLexerToCsv(char *result, LexerData *data)
 
 #endif
 
-
+/*********
+ * Private function definition
+ */
 int checkIgnorableChar(const char c)
 {
     char delimiteur[] = "\t \n";
-    char operateur[] = "=-+/*<>:^;";
+    char operateur[] = "=-<>:^;+/*";
     int isDelimiteur = isCharExistInArray(c, delimiteur, 4);
-    int isOperateur = (isCharExistInArray(c, operateur, 11));
+    int isOperateur = isCharExistInArray(c, operateur, 11);
 
     if (!isDelimiteur && !isOperateur && !('a' <= c && c <= 'z') && !('A' <= c && c <= 'Z') && !('0' <= c && c <= '9'))
     {
@@ -133,6 +146,7 @@ void addToken(LexerData *ld, char *token)
     Token *newToken = malloc(sizeof(Token));
     int type = -1, typeKw = -1;
     checkTypeToken(token, &type, &typeKw);
+
     newToken->token = type;
     newToken->keyWord = typeKw;
     newToken->value = token;
@@ -143,5 +157,27 @@ void addToken(LexerData *ld, char *token)
     else
     {
         addNode(ld->tokenList, newToken);
+    }
+}
+
+int checkTwoCharOperator(LexerData *output, char *source, int i)
+{
+    char tmp[3] = {source[i], source[i + 1], '\0'};
+    int type = -1, typeKw = -1;
+    checkTypeToken(tmp, &type, &typeKw);
+    if (type == OPERATEUR)
+    {
+        char *newStr = malloc(sizeof(char) * 3);
+        memcpy(newStr,tmp,sizeof(char) * 3);
+        addToken(output, newStr);
+        return i + 1;
+    }
+    else
+    {
+        tmp[1]= '\0';
+        char *newStr = malloc(sizeof(char) * 2);
+        memcpy(newStr, tmp,sizeof(char) * 2);
+        addToken(output, newStr);
+        return i;
     }
 }
