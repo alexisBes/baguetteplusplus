@@ -14,7 +14,7 @@ set(CMAKE_C_FLAGS " -Wall")
 set (SOURCE_LIST
    ${CMAKE_CURRENT_SOURCE_DIR}/src/mainLexer.c
     ${CMAKE_CURRENT_SOURCE_DIR}/src/mainParser.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Logger.cœ
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Logger.c
     ${CMAKE_CURRENT_SOURCE_DIR}/src/bppFile.c
     ${CMAKE_CURRENT_SOURCE_DIR}/src/tokenUtils.c
 )
