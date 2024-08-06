@@ -5,24 +5,24 @@ typedef struct {
     void* prevNode;
     void* nextNode;
     void* content;
-} Node;
+} List;
 
-Node* createNodeList(void* node);
+List* createNodeList(void* node);
 
-int listSize(Node* nodeList);
+int listSize(List* nodeList);
 
-void addNode(Node* nodeList,void* node);
+void addNode(List* nodeList,void* node);
 
-Node* removeNode(Node* nodeList,int index);
+void removeNode(List* nodeList,const int index);
 
-Node* pop(Node* nodeList);
+void clearList(List* nodeList);
 
-Node* getNode(Node* nodeList, int index);
+List* pop(List* nodeList);
 
-Node* clearList(Node* nodeList);
+List* getNode(List* nodeList, const int index);
 
-Node* getLast(Node* nodeList);
+List* getLast(List* nodeList);
 
-Node* findNodeInList(Node* nodeList, void* contentToCompare,short int (*func)(void*, void*));
+List* findNodeInList(List* nodeList, void* contentToCompare,short int (*func)(void*, void*));
 
 #endif

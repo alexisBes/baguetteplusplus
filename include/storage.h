@@ -1,7 +1,7 @@
 #ifndef STORAGE_H
 #define STORAGE_H
 #include "ListUtils.h"
-
+typedef List Token_List;
 typedef struct {
     char* value;
     int token;
@@ -17,7 +17,7 @@ typedef struct
 
 typedef struct
 {
-    Node* tokenList;
+    Token_List* tokenList;
 } LexerData;
 
 

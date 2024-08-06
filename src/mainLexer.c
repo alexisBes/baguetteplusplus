@@ -86,7 +86,7 @@ void eraseLexerData(LexerData *data)
 void printLexer(LexerData *data)
 {
     printf("Les Token récupéré sont :\n");
-    Node *curNode = data->tokenList;
+    List *curNode = data->tokenList;
     while (curNode != NULL)
     {
         Token *curToken = (Token *)curNode->content;
@@ -103,7 +103,7 @@ void printLexer(LexerData *data)
 
 void printLexerToCsv(char *result, LexerData *data)
 {
-    Node *curNode = data->tokenList;
+    List *curNode = data->tokenList;
     int size = strlen(result);
     char *nameOutputFile = concatanateString(result, ".lexer", size + 7);
     FILE *ouputFile = fopen(nameOutputFile, "w");

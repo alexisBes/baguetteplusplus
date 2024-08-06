@@ -5,7 +5,7 @@
 #include "string.h"
 #include "stdio.h"
 
-short int checkList(Node *newNode, char *expectedValues[], int size, int toIgnore);
+short int checkList(List *newNode, char *expectedValues[], int size, int toIgnore);
 
 int main(int argc, char *argv[])
 {
@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
     if (typeTest == 0b0010)
     {
 
-        Node *newNode = createNodeList(argv[2]);
+        List *newNode = createNodeList(argv[2]);
         for (int i = 3; i < argc; i++)
         {
             addNode(newNode, argv[i]);
@@ -113,12 +113,12 @@ int main(int argc, char *argv[])
         else
             printf("ECHEC \n");
 
-        newNode = clearList(newNode);
+        clearList(newNode);
         printf("test clearList: SUCCES");
     }
 }
 
-short int checkList(Node *newNode, char *expectedValues[], int size, int toIgnore)
+short int checkList(List *newNode, char *expectedValues[], int size, int toIgnore)
 {
     short int isValid = 1;
     int ignored = 0;

@@ -1,4 +1,5 @@
 #include "mainParser.h"
+#include "constante.h"
 #include "StringTool.h"
 #include "ListUtils.h"
 #include "ArrayUtils.h"
@@ -10,7 +11,7 @@
 /*********
  * Private function declaration
  */
-void handleInstruction(Node *token, int *errorCount);
+void handleInstruction(List *token, int *errorCount);
 
 /*********
  * Public function definition
@@ -19,7 +20,7 @@ int parsing(LexerData *output)
 {
     int errorCount = 0;
 
-    Node *token = output->tokenList;
+    List *token = output->tokenList;
     while (token != NULL)
     {
         Token *curTok = (Token *)token->content;
@@ -33,9 +34,9 @@ int parsing(LexerData *output)
             {
                 // do INSTRUCTION logic
             }
-            
-            
-            
+
+
+
         }
     }
 
@@ -45,6 +46,6 @@ int parsing(LexerData *output)
 /*********
  * Private function definition
  */
-void handleInstruction(Node *token, int *errorCount)
+void handleInstruction(List *token, int *errorCount)
 {
 }

@@ -5,24 +5,23 @@
 /****
  * PRIVATE FUNCTION DECLARATION
 */
-Node * gotoTop(Node* nodeList);
 
 /*****
  * PUBLIC FUNCTION DEFINITION
 */
 
-Node* createNodeList(void* node)
+List* createNodeList(void* node)
 {
-    Node* nodeList = (Node*) malloc( sizeof(Node));
+    List* nodeList = (List*) malloc( sizeof(List));
     nodeList->content = node;
     nodeList->nextNode = NULL;
     nodeList->prevNode = NULL;
     return nodeList;
 }
 
-int listSize(Node* nodeList)
+int listSize(List* nodeList)
 {
-    Node* tempNode = nodeList;
+    List* tempNode = nodeList;
     int nb = 1;
     while (tempNode->nextNode != NULL)
     {
@@ -33,84 +32,77 @@ int listSize(Node* nodeList)
 
 }
 
-void addNode(Node* nodeList, void* node)
+void addNode(List* nodeList, void* node)
 {
-    Node* lastNode = nodeList;
+    List* lastNode = nodeList;
     while (lastNode->nextNode != NULL)
-        lastNode = (Node*)lastNode->nextNode;
-    Node* nodeToAdd =(Node*) malloc( sizeof(Node));
+        lastNode = (List*)lastNode->nextNode;
+    List* nodeToAdd =(List*) malloc( sizeof(List));
     nodeToAdd->content = node;
     nodeToAdd->prevNode = lastNode;
     nodeToAdd->nextNode = NULL;
     lastNode->nextNode = nodeToAdd;
 }
 
-Node* removeNode(Node* nodeList, int index)
+void removeNode(List* nodeList, int index)
 {
-    Node* wantNode = nodeList;
+    List* wantNode = nodeList;
     int i =0;
     while (i < index && wantNode->nextNode != NULL)
     {
-        wantNode = (Node*)wantNode->nextNode;
+        wantNode = (List*)wantNode->nextNode;
         i++;
     }
-    Node* prevNode =(Node*) wantNode->prevNode;
-    Node* nexNode = (Node*)wantNode->nextNode;
+    List* prevNode =(List*) wantNode->prevNode;
+    List* nexNode = (List*)wantNode->nextNode;
     prevNode->nextNode = nexNode;
     if(nexNode != NULL)
         nexNode->prevNode = prevNode;
     free(wantNode);
-    if (prevNode ==NULL && nexNode == NULL )
-    {
-        return NULL;
-    }
-    Node* returnNode = gotoTop(nexNode);
-    if(returnNode == NULL) returnNode = gotoTop(prevNode);
-    return returnNode;
 }
 
-Node* pop(Node* nodeList)
+List* pop(List* nodeList)
 {
-    Node* nodeToRemove =(Node *) nodeList->prevNode;
-    Node* prevNode = (Node*)nodeToRemove->prevNode;
+    List* nodeToRemove =(List *) nodeList->prevNode;
+    List* prevNode = (List*)nodeToRemove->prevNode;
     nodeList->prevNode = prevNode;
     prevNode->nextNode = nodeList;
     
     return nodeToRemove;
 }
 
-Node* getNode(Node* nodeList, int index)
+List* getNode(List* nodeList, int index)
 {
-    Node* wantNode = nodeList;
+    List* wantNode = nodeList;
     int i=0;
     while (i < index && nodeList->nextNode != NULL)
     {
-        wantNode = (Node*)wantNode->nextNode;
+        wantNode = (List*)wantNode->nextNode;
         i++;
     }
     return wantNode;
 }
 
-Node* clearList(Node *nodeList)
+void clearList(List *nodeList)
 {
-    Node* curNode = nodeList;
+    List* curNode = nodeList;
     while (curNode->nextNode != NULL)
     {
-        Node *tempNode = curNode->nextNode;
+        List *tempNode = curNode->nextNode;
         free(curNode);
         curNode = tempNode;
     }
-    return NULL;
+    curNode= NULL;
 }
 
-Node* getLast(Node *nodeList)
+List* getLast(List *nodeList)
 {
     return getNode(nodeList, listSize(nodeList));
 }
 
-Node* findNodeInList(Node* nodeList, void* contentToCompare,short int (*func)(void*, void*))
+List* findNodeInList(List* nodeList, void* contentToCompare,short int (*func)(void*, void*))
 {
-    Node *curNode = nodeList;
+    List *curNode = nodeList;
     while (curNode->nextNode != NULL)
     {
         short int isFound = func(curNode->content, contentToCompare);
@@ -118,7 +110,7 @@ Node* findNodeInList(Node* nodeList, void* contentToCompare,short int (*func)(vo
         {
             return curNode;
         }
-        curNode = (Node*) curNode->nextNode;
+        curNode = (List*) curNode->nextNode;
     }
     return NULL;
 }
@@ -126,13 +118,3 @@ Node* findNodeInList(Node* nodeList, void* contentToCompare,short int (*func)(vo
 /***********
  * PRIVATE FUNCTION DEFINITION
 */
-Node * gotoTop(Node* nodeList){
-    if(nodeList == NULL)
-        return NULL;
-    Node*tempNode = nodeList;
-    while (tempNode->prevNode != NULL)
-    {
-        tempNode = tempNode->prevNode;
-    }
-    return tempNode;
-}
