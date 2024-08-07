@@ -91,10 +91,10 @@ void printLexer(LexerData *data)
     {
         Token *curToken = (Token *)curNode->content;
         printf("%s;%d\n", curToken->value, curToken->token);
-        if (!curNode->nextNode)
+        if (!curNode->next)
             curNode = NULL;
         else
-            curNode = curNode->nextNode;
+            curNode = curNode->next;
     }
     printf("\n");
 }
@@ -111,7 +111,7 @@ void printLexerToCsv(char *result, LexerData *data)
     {
         Token *curToken = (Token *)curNode->content;
         fprintf(ouputFile, "%s;%d;%d;\n", curToken->value, curToken->token, curToken->keyWord);
-        curNode = curNode->nextNode;
+        curNode = curNode->next;
     }
     fclose(ouputFile);
 }

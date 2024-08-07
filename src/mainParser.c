@@ -1,10 +1,7 @@
 #include "mainParser.h"
 #include "constante.h"
 #include "StringTool.h"
-#include "ListUtils.h"
-#include "ArrayUtils.h"
 #include "stddef.h"
-#include "constante.h"
 #include "enum.h"
 #include "Logger.h"
 
@@ -28,7 +25,7 @@ int parsing(LexerData *output)
         {
             if (curTok->keyWord == DEFINITION)
             {
-                // do VARIABLE logic
+
             }
             else
             {
@@ -36,7 +33,7 @@ int parsing(LexerData *output)
             }
 
 
-
+            
         }
     }
 
