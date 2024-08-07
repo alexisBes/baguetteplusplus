@@ -21,7 +21,7 @@ int countCharInString(const char *s, const int length, const char c)
     return count;
 }
 
-short int isCharExistInArray(const char c, const char *array, const int length)
+bool isCharExistInArray(const char c, const char *array, const int length)
 {
     if (length <= 0)
         return 0;
@@ -60,4 +60,10 @@ char* copyString(char* ori){
 
     strcpy(cpStr, ori);
     return cpStr;
+}
+
+bool isIdenticalStr(const char *str1, const char *str2)
+{
+    int result = strcmp(str1,str2);
+    return result != 0;
 }
