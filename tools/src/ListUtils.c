@@ -87,7 +87,7 @@ List* getLast(List *nodeList)
     return getNode(nodeList, listSize(nodeList));
 }
 
-List* findNodeInList(List* nodeList, void* contentToCompare,bool (*func)(void*, void*))
+List* findNodeInList(List* nodeList, void* contentToCompare,bool (*func)(const void*,const void*))
 {
     List *curNode = nodeList;
     while (curNode->next != NULL)

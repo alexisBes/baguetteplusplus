@@ -23,6 +23,6 @@ List *getNode(List *nodeList, const int index);
 
 List *getLast(List *nodeList);
 
-List *findNodeInList(List *nodeList, void *contentToCompare, bool (*func)(void *, void *));
+List *findNodeInList(List *nodeList, void *contentToCompare, bool (*func)(const void *,const void *));
 
 #endif

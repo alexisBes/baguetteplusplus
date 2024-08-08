@@ -65,5 +65,9 @@ char* copyString(char* ori){
 bool isIdenticalStr(const char *str1, const char *str2)
 {
     int result = strcmp(str1,str2);
-    return result != 0;
+    return result == 0;
+}
+
+bool isIdenticalStr_misc(const void * str1, const void * str2){
+    return isIdenticalStr((const char*)str1, (const char *)str2);
 }

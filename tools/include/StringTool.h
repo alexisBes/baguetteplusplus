@@ -13,5 +13,7 @@ char* concatanateChar(char *ori, char concat);
 char* copyString(char* ori);
 
 bool isIdenticalStr(const char * str1, const char * str2);
+
+bool isIdenticalStr_misc(const void * str1, const void * str2);
 #endif
 

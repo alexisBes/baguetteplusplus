@@ -37,12 +37,21 @@ target_include_directories(Tools PRIVATE
     testStringUtils( TestConcatenateString concatanateString tools_test  0x0013 super strings superstrings)
     testStringUtils( TestConcatenateChar concatanateChar tools_test  0x0014 tot o toto)
     testStringUtils( TestCopyString copyString tools_test  0x0015 toto 0 toto)
+    testStringUtils( TestIsIdenticalString isIdenticalStr tools_test  0x0016 toto 0 toto)
     
     add_test(NAME testList COMMAND tools_test 0x0020 toto to tot)
     set_tests_properties(testList
         PROPERTIES PASS_REGULAR_EXPRESSION "test initList : SUCCES" 
+        "test find List : SUCCES SUCCES" 
         "test ValueList : SUCCES" 
-        "test ValueList : SUCCES" 
+        "test removeList: SUCCES"
+        "test clearList: SUCCES"
+    )
+    add_test(NAME testTree COMMAND tools_test 0x0020 toto to tot tata ta tat)
+    set_tests_properties(testTree
+        PROPERTIES PASS_REGULAR_EXPRESSION "test initList : SUCCES" 
+        "test find List : SUCCES SUCCES" 
+        "test removeList: SUCCES"
         "test removeList: SUCCES"
         "test clearList: SUCCES"
     )

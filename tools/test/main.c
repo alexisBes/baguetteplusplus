@@ -1,10 +1,10 @@
-#include "ListUtils.h"
-#include "StringTool.h"
 #include "time.h"
 #include "stdlib.h"
 #include "string.h"
 #include "stdio.h"
-
+#include "ListUtils.h"
+#include "TreeUtils.h"
+#include "StringTool.h"
 short int checkList(List *newNode, char *expectedValues[], int size, int toIgnore);
 
 int main(int argc, char *argv[])
@@ -69,12 +69,19 @@ int main(int argc, char *argv[])
             printf("test concatanateChar : ");
         } else if (value == 0b0101)
         {
+            /* test isIdenticalStr */
+            char *testingString = argv[2];
+            result  = isIdenticalStr(testingString, testingString);
+            printf("test copyString : ");
+        }
+        else if (value == 0b0110)
+        {
             /* test concatanateChar */
             char *testingString = argv[2];
             char *expectedResult = argv[4];
             char* computedResult  = copyString(testingString);
             result = strcmp(expectedResult, computedResult) == 0;
-            printf("test copyString : ");
+            printf("test isIdenticalStr : ");
         }
         
         if (result)
@@ -84,7 +91,6 @@ int main(int argc, char *argv[])
     }
     if (typeTest == 0b0010)
     {
-
         List *newNode = createNodeList(argv[2]);
         for (int i = 3; i < argc; i++)
         {
@@ -99,6 +105,22 @@ int main(int argc, char *argv[])
         {
             printf("ECHEC\n");
         }
+
+
+        List *found = findNodeInList(newNode, argv[3], isIdenticalStr_misc );
+
+        printf("test find List : ");
+        if(found != NULL && isIdenticalStr(found->content, argv[3]))
+            printf("SUCCES ");
+        else
+            printf("ECHEC ");
+        
+        List *nFound = findNodeInList(newNode, argv[0], isIdenticalStr_misc );
+        if(nFound == NULL)
+            printf("SUCCES \n");
+        else
+            printf("ECHEC \n");
+
         printf("test ValueList : ");
         if (checkList(newNode, argv, argc, -1))
             printf("SUCCES \n");
@@ -116,6 +138,42 @@ int main(int argc, char *argv[])
         clearList(newNode);
         printf("test clearList: SUCCES");
     }
+    if (typeTest == 0b0011)
+    {
+        printf("test creat tree : ");
+        Tree *root = createTree(argv[2]);
+        Tree* currentTree = root;
+        bool lor = 1;
+        for (int i = 3; i < argc; i++)
+        {
+            addItem(currentTree, argv[i],lor);
+            if(lor == 0)
+            {
+                currentTree = currentTree->lNode;
+            }
+            lor = !lor;
+        }
+        printf("SUCCES \n");
+
+        Tree *found = findItemInTree(root, argv[3], isIdenticalStr_misc );
+
+        printf("test find tree : ");
+        if(found != NULL && isIdenticalStr(found->content, argv[3]))
+            printf("SUCCES ");
+        else
+            printf("ECHEC ");
+        
+        Tree *nFound = findItemInTree(root, argv[0], isIdenticalStr_misc );
+        if(nFound == NULL)
+            printf("SUCCES \n");
+        else
+            printf("ECHEC %s\n", (const char*)nFound->content);
+        
+        printf("test clear tree ");
+        clearTree(root);
+        printf("SUCCES \n");
+    }
+    
 }
 
 short int checkList(List *newNode, char *expectedValues[], int size, int toIgnore)
