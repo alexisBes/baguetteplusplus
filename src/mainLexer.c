@@ -128,7 +128,7 @@ int checkIgnorableChar(const char c)
     int isDelimiteur = isCharExistInArray(c, delimiteur, 4);
     int isOperateur = isCharExistInArray(c, operateur, 11);
 
-    if (!isDelimiteur && !isOperateur && !('a' <= c && c <= 'z') && !('A' <= c && c <= 'Z') && !('0' <= c && c <= '9'))
+    if (!isDelimiteur && !isOperateur && !('a' <= c && c <= 'z') && !('A' <= c && c <= 'Z') && !('0' <= c && c <= '9') && c != ',')
     {
         return -1;
     }
@@ -168,15 +168,15 @@ int checkTwoCharOperator(LexerData *output, char *source, int i)
     if (type == OPERATEUR)
     {
         char *newStr = malloc(sizeof(char) * 3);
-        memcpy(newStr,tmp,sizeof(char) * 3);
+        memcpy(newStr, tmp, sizeof(char) * 3);
         addToken(output, newStr);
         return i + 1;
     }
     else
     {
-        tmp[1]= '\0';
+        tmp[1] = '\0';
         char *newStr = malloc(sizeof(char) * 2);
-        memcpy(newStr, tmp,sizeof(char) * 2);
+        memcpy(newStr, tmp, sizeof(char) * 2);
         addToken(output, newStr);
         return i;
     }
