@@ -1,14 +1,8 @@
 #ifndef MAIN_LEXER
 #define MAIN_LEXER
-#include "storage.h"
+#include "enum.h"
+#include "stdio.h"
 
-int tokenizeDocument(char* input,long int length, LexerData *output);
+unsigned char getNextToken(FILE *codeFile ,char *out_token);
 
-void eraseLexerData(LexerData *data);
-
-void printLexer(LexerData *data);
-
-#ifdef TESTING
-void printLexerToCsv(char *resultFile, LexerData *data);
-#endif
 #endif

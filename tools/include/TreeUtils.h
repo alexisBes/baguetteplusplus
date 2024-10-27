@@ -1,6 +1,5 @@
 #ifndef TREE_UTILS_H
 #define TREE_UTILS_H
-#include "Types.h"
 
 typedef struct s_Tree Tree;
 
@@ -15,8 +14,8 @@ Tree *createTree(void *content);
 
 void clearTree(Tree *tree);
 
-bool addItem(Tree *tree,void *content, const bool isLeft);
+char addItem(Tree *tree,void *content, const char isLeft);
 
-Tree *findItemInTree(Tree *tree, void *content, bool (*func)(const void *, const void *));
+Tree *findItemInTree(Tree *tree, void *content, char (*func)(const void *, const void *));
 
 #endif

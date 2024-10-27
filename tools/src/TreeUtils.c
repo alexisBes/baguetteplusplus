@@ -33,7 +33,7 @@ void clearTree(Tree *tree)
     return;
 }
 
-bool addItem(Tree *tree, void *content, const bool isLeft)
+char addItem(Tree *tree, void *content, const char isLeft)
 {
     if (isLeft)
     {
@@ -47,7 +47,7 @@ bool addItem(Tree *tree, void *content, const bool isLeft)
     }
 }
 
-Tree *findItemInTree(Tree *tree, void *content, bool (*func)(const void *,const void *))
+Tree *findItemInTree(Tree *tree, void *content, char (*func)(const void *,const void *))
 {
     if (func(tree->content, content))
     {

@@ -21,7 +21,7 @@ int countCharInString(const char *s, const int length, const char c)
     return count;
 }
 
-bool isCharExistInArray(const char c, const char *array, const int length)
+char isCharExistInArray(const char c, const char *array, const int length)
 {
     if (length <= 0)
         return 0;
@@ -62,12 +62,12 @@ char* copyString(char* ori){
     return cpStr;
 }
 
-bool isIdenticalStr(const char *str1, const char *str2)
+char isIdenticalStr(const char *str1, const char *str2)
 {
     int result = strcmp(str1,str2);
     return result == 0;
 }
 
-bool isIdenticalStr_misc(const void * str1, const void * str2){
+char isIdenticalStr_misc(const void * str1, const void * str2){
     return isIdenticalStr((const char*)str1, (const char *)str2);
 }

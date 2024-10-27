@@ -17,37 +17,6 @@ int main(int argc, char *argv[])
             exit(-1);
         }
         printf("Lancement de la compilation de %s \n", argv[1]);
-        
-        long int length = readSizeFile(fileBaguette);
-        char *input = malloc(sizeof(char) * (length +2));
-        
-        readSourceCode(fileBaguette,input);
-
-        fclose(fileBaguette);
-
-        LexerData lexerData;
-        short int tokenizeRsult = tokenizeDocument(input, length, &lexerData);
-        
-
-        if(tokenizeRsult != 0)
-        {
-            printf("Une erreur est survenue durant l'analyse. Vérifier les logs.\n");
-            printLexer(&lexerData);
-            eraseLexerData(&lexerData);
-            free(input);
-
-            return -1;
-        }
-        #ifdef TESTING
-
-        printLexerToCsv(argv[1], &lexerData);
-        
-
-        #endif
-        //short int parsingResult = parsing(&lexerData);
-
-        eraseLexerData(&lexerData);
-        free(input);
     }
     return 0;
 }

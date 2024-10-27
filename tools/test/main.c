@@ -143,7 +143,7 @@ int main(int argc, char *argv[])
         printf("test creat tree : ");
         Tree *root = createTree(argv[2]);
         Tree* currentTree = root;
-        bool lor = 1;
+        char lor = 1;
         for (int i = 3; i < argc; i++)
         {
             addItem(currentTree, argv[i],lor);
