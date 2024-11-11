@@ -1,4 +1,4 @@
-#include "mainLexer.h"
+#include "lexer_main.h"
 #include "stdlib.h"
 #include "StringTool.h"
 
@@ -9,10 +9,10 @@ unsigned char getNextToken(FILE *codeFile ,char *out_token){
     const char delimiteur[] = "\t \n";
     const char operateur[] = "=-<>:^;+/*";
 
-    unsigned char isEndInstruction = 0, isEndToken = 0;
+    unsigned char isEndInstruction = 0;
     int sizeToken = 0;
     out_token = malloc(sizeof(char));
-    while (!isEndToken && !feof(codeFile))
+    while (!feof(codeFile))
     {
         char c = getc(codeFile);
         out_token  =realloc(out_token, sizeof(char) * (sizeToken +1));

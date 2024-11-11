@@ -12,11 +12,10 @@ target_compile_features(bpp_compiler_flag INTERFACE c_std_11)
 set(CMAKE_C_FLAGS " -Wall")
 
 set (SOURCE_LIST
-   ${CMAKE_CURRENT_SOURCE_DIR}/src/mainLexer.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/mainParser.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Logger.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/bppFile.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/tokenUtils.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/lexer_main.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/parser_main.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/logger.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/token_utils.c
 )
 
 

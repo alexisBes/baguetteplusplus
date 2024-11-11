@@ -1,10 +1,8 @@
 // baguetteplusplus.cpp : Ce fichier contient la fonction 'main'. L'exécution du programme commence et se termine à cet endroit.
 //
 
-#include <stdlib.h>
-#include "bppFile.h"
-#include "mainLexer.h"
-#include "mainParser.h"
+#include "stdlib.h"
+#include "parser_main.h"
 
 int main(int argc, char *argv[])
 {
@@ -17,6 +15,8 @@ int main(int argc, char *argv[])
             exit(-1);
         }
         printf("Lancement de la compilation de %s \n", argv[1]);
+
+        parsing(fileBaguette);
     }
     return 0;
 }

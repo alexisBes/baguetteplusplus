@@ -7,4 +7,5 @@ void erreur_VariableExiste(const char *variable);
 
 void erreur_MauvaisOperateur(const char *operateur);
 
+
 #endif

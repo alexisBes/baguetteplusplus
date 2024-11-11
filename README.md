@@ -1,14 +1,16 @@
 # Introduction
 Le baguette plus plus est un language de programation en français se basant sur la méthode de programmation LDA[language de description des algorithme](https://fr.wikibooks.org/wiki/Programmation_LDA) .
-L'objectif est de proposer un language de programmation francais compiler.
+L'objectif est de proposer un language de programmation francais.
 
 # Pré requis
 ## Pour un développeur
  - Cmake a la version 3
  - Gcc
  - de la patience
-## Pour un utilisateur ( l'exectable sera fournis a la V1)
+## Pour un utilisateur
  - un pc
+### compatibilité
+Il y en aura.
 
 # Lancement du projet
  Apres aoir cloné le projet, utilisé CMake via les commandes suivantes:
