@@ -36,6 +36,8 @@ target_include_directories(Tools PRIVATE
     testStringUtils( TestConcatenateChar concatanateChar tools_test  0x0014 tot o toto)
     testStringUtils( TestCopyString copyString tools_test  0x0015 toto 0 toto)
     testStringUtils( TestIsIdenticalString isIdenticalStr tools_test  0x0016 toto 0 toto)
+    testStringUtils( TestIsNumeric_False isIdenticalStr tools_test  0x0017 toto 0 0)
+    testStringUtils( TestIsNumeric_True isIdenticalStr tools_test  0x0017 478 0 1)
     
     add_test(NAME testList COMMAND tools_test 0x0020 toto to tot)
     set_tests_properties(testList
