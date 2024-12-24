@@ -1,7 +1,7 @@
 add_library(Tools 
-    src/StringTool.c
-    src/ListUtils.c
-    src/TreeUtils.c)
+    src/tools_list.c
+    src/tools_string.c
+    src/tools_tree.c)
 
 target_include_directories(Tools PRIVATE 
                           ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -13,9 +13,9 @@ target_include_directories(Tools PRIVATE
   enable_testing()
     add_executable(tools_test
     test/main.c
-    src/StringTool.c
-    src/ListUtils.c
-    src/TreeUtils.c)
+    src/tools_list.c
+    src/tools_string.c
+    src/tools_tree.c)
 
     target_include_directories(tools_test PRIVATE
         include/)

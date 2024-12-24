@@ -2,9 +2,9 @@
 #include "stdlib.h"
 #include "string.h"
 #include "stdio.h"
-#include "ListUtils.h"
-#include "TreeUtils.h"
-#include "StringTool.h"
+#include "tools_list.h"
+#include "tools_tree.h"
+#include "tools_string.h"
 short int checkList(List *newNode, char *expectedValues[], int size, int toIgnore);
 
 int main(int argc, char *argv[])
