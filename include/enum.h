@@ -1,12 +1,8 @@
 #ifndef ENUM_H
 #define ENUM_H
 
-typedef enum{
-    OPERATEUR, MOTCLE, IDENTIFIANT, TYPE
-} TYPE_TOKEN;
-
-enum TYPE_INSTRUCTION {
-    DEFINITION, TANTQUE, JUSQUE, POUR, SI, SELON, FIN, typeLigne_COUNT 
-};
+typedef enum {
+    INSTRUCTION_MATH, VARIABLE,NOMBRE,OPERATEUR, INSTRUCTION_BASIQUE_COUNT
+}InstructionBasique;
 
 #endif

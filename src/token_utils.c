@@ -1,106 +1,44 @@
 #include "token_utils.h"
-
-#include <stddef.h>
-#include <string.h>
-
-#include "constante.h"
+#include "StringTool.h"
 #include "enum.h"
 
-/*****
- * Private Constante
- */
-const int ARRAY_INDEX_KEYWORD[] = {BPP_DEFINITION_NB, BPP_TANTQUE_NB, BPP_JUSQUE_NB, BPP_POUR_NB, BPP_SI_NB, BPP_SELON_NB, BPP_FIN_NB};
+#define _BPP_MATH_INSTRUCTION_ "+-/*"
+#define _BPP_AFFECTATION_INSTRUCTION_ "<-"
 
-/***
- * Private declaration
- */
+int handleNumber(char *token);
 
-int checkKeyword(int index);
-
-/***
- * public definition
- */
-void checkTypeToken(char *token, int *oType, int *oTypeKW)
+int checkTypeToken(char *token)
 {
-    const char *bppOperateur[] = BPP_OPERATEUR_TABLEAU;
-    const char *bppMotsCle[] = BPP_MOTCLE_TABLEAU;
-    const char *bppType[] = BPP_TYPE_TABLEAU;
-    if (token == NULL || token[0] == '\0')
-    {
-        *oType = -1;
-        return;
-    }
+    size_t length_token = strlen(token);
+    if (isIdenticalStr(token, _BPP_AFFECTATION_INSTRUCTION_))
+        return OPERATEUR;
 
-    short int isFound = 0;
-    for (int i = 0; i < BPP_OPERATEUR_SIZE; i++)
+    if (token >= '0' && token <= '9')
     {
-        if (strcmp(bppOperateur[i], token) == 0)
+        if (isNumeric(token))
         {
-            isFound = 1;
-            break;
+            return NOMBRE;
+        }
+        else
+        {
+            printf("[ERREUR] une variable ne peut pas commencer par un caractere non alphabétique.\n");
+            return INSTRUCTION_BASIQUE_COUNT;
         }
     }
-    if (isFound)
+    unsigned char isMathInstruction = isCharExistInArray(token[0], _BPP_MATH_INSTRUCTION_, 5);
+    if (isMathInstruction && length_token == 1)
     {
-        *oType = OPERATEUR;
-        return;
-    }
-
-    for (int i = 0; i < BPP_TYPE_NB; i++)
-    {
-        if (strcmp(bppType[i], token) == 0)
-        {
-            isFound = 1;
-            break;
-        }
-    }
-    if (isFound)
-    {
-        *oType = TYPE;
-        return;
-    }
-
-    for (int i = 0; i < BPP_MOTCLE_NB; i++)
-    {
-        if (strcmp(bppMotsCle[i], token) == 0)
-        {
-            isFound = 1;
-            if(oTypeKW != NULL)
-                *oTypeKW = checkKeyword(i);
-            break;
-        }
-    }
-    if (isFound)
-    {
-        *oType = MOTCLE;
-        return;
+        return INSTRUCTION_MATH;
     }
     else
     {
-        *oType = IDENTIFIANT;
-        return;
-    }
-}
-
-/****
- * private definition
- */
-
-/// @brief Indique le type de mots clé récupéré par le lexer. Si pas de correspondance renvoie -1
-/// @param index ou a était récupérer le mots clé
-/// @return le type de mots clé définis dans TYPE_INSTRUCTION
-int checkKeyword(int index)
-{
-    int indexMax = 0, i=0;
-    while (i < BPP_DIFFERENT_KW_TYPE)
-    {
-        indexMax += ARRAY_INDEX_KEYWORD[i];
-        if (index < indexMax)
+        if (isMathInstruction)
         {
-            return i;
+            printf("[ERREUR] une variable ne peut pas commencer par un des caracteres suivant : %s\n", _BPP_MATH_INSTRUCTION_);
+            return INSTRUCTION_BASIQUE_COUNT;
         }
-        i++;
+
+        // TODO: chack variable has been defined
+        return VARIABLE;
     }
-    
-    return -1;
 }

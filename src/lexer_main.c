@@ -1,13 +1,13 @@
 #include "lexer_main.h"
 #include "stdlib.h"
-#include "StringTool.h"
+#include "tools_string.h"
 
 #define SIZE_DELIM 1
-#define SIZE_OPERATEUR 11
+#define SIZE_OPERATEUR 15
 
 unsigned char getNextToken(FILE *codeFile ,char *out_token){
     const char delimiteur[] = "\t \n";
-    const char operateur[] = "=-<>:^;+/*";
+    const char operateur[] = "=-<>:^;+/*()[]";
 
     unsigned char isEndInstruction = 0;
     int sizeToken = 0;

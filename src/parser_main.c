@@ -2,54 +2,55 @@
 
 #include <stdlib.h>
 #include "lexer_main.h"
-#include "StringTool.h"
+#include "tools_string.h"
+#include "tools_tree.h"
+#include "token_utils.h"
 
-/*********
- * Private function declaration
- */
-void enterFunction(FILE* codeFile);
-void parseMultipleVariable(const char* codeFile);
+typedef Tree Tree_Instruction;
 
-/*********
- * Public function definition
- */
+void handleInstruction(const char* idToken,FILE *codeFile);
+char handle_Identifier(const char* idToken);
+void handle_Mathematical(FILE *codeFile, Tree_Instruction *instructionTree);
+
+
 void parsing(FILE *codeFile)
 {
 
-    char *token = malloc(sizeof(char));
-    do
+    char * firstToken =NULL;
+    unsigned char isEndInstruction = getNextToken(codeFile,firstToken);
+    if(isEndInstruction)
     {
-        if (token != NULL) free(token);
-
-        getNextToken(codeFile, token);
-        if(feof(codeFile))
-        {
-            fprintf(stderr,"[ERROR] Unable to find start point");
-            free(token);
-            exit(EXIT_FAILURE);
-        }
-    } while(isIdenticalStr(token, "DEBUT"));
-    enterFunction(codeFile);
-
-}
-
-
-/*********
- * Private function declaration
- */
-void enterFunction(FILE* codeFile)
-{
-    char *nameFunction = NULL, *token = NULL;
-    getNextToken(codeFile, nameFunction);
-    getNextToken(codeFile, token);
-    if(isIdenticalStr(token,"("))
+        fprintf(stderr,"[ERREUR] Pas de caractere a lire \n");
+        exit(1);
+    }
+    // Ici on ajoutera la vérification du type (declaration, boucle,etc...)
+    if(firstToken)
     {
-        long g = 0;
-        //parseMultipleVariable();
+        // si c'est une instruction
+        handleInstruction(firstToken,codeFile);
+        free(firstToken);
     }
 }
 
-void parseMultipleVariable(const char * strVariableLine)
+void handleInstruction(const char* idToken,FILE *codeFile)
 {
-    //rien  pour le moment
+    char* instructionToken = NULL;
+    if(getNextToken(codeFile,instructionToken))
+    {
+        fprintf(stderr, "[WARNING] Instruction vide.\n");
+        return;
+    }
+    unsigned char isValid_S = handle_Identifier(idToken);
+    if (instructionToken == "<-" && isValid_S)
+    {
+        Tree_Instruction *instructionTree = createTree(instructionToken);
+        addItem(instructionTree,idToken,1);
+        handle_Mathematical(codeFile, instructionTree);
+    }
+}
+
+void handle_Mathematical(FILE* codeFile, Tree_Instruction *instructionTree)
+{
+    char* allTokens[3] = {"","",""};
+    
 }
