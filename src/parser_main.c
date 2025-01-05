@@ -41,16 +41,25 @@ void handleInstruction(const char* idToken,FILE *codeFile)
         return;
     }
     unsigned char isValid_S = handle_Identifier(idToken);
-    if (instructionToken == "<-" && isValid_S)
+    if (isIdenticalStr(instructionToken, "<-") && isValid_S)
     {
         Tree_Instruction *instructionTree = createTree(instructionToken);
         addItem(instructionTree,idToken,1);
         handle_Mathematical(codeFile, instructionTree);
     }
 }
+char handle_Identifier(const char* idToken)
+{
+    /*
+    Ajoute la partie vérification de l'existence du nom de variable dans la tables 
+    */
+    return 1;
+}
 
 void handle_Mathematical(FILE* codeFile, Tree_Instruction *instructionTree)
 {
     char* allTokens[3] = {"","",""};
+    getNToken(codeFile,allTokens,3);
+
     
 }

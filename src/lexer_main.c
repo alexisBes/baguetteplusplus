@@ -40,3 +40,16 @@ unsigned char getNextToken(FILE *codeFile ,char *out_token){
     
     return isEndInstruction;
 }
+
+unsigned char getNToken(FILE* codeFile, char *out_token[], const int size)
+{
+    int i = 0;
+    unsigned char lastValue = 0;
+    while (i < size)
+    {
+        lastValue = getNextToken(codeFile,out_token[i]);
+        if(lastValue) break;
+        i++;
+    }
+    return (i == size)&& lastValue;
+}

@@ -6,5 +6,5 @@
 // valeur a vrai si repère la fin d'une instruction (soit caractere ';')
 unsigned char getNextToken(FILE *codeFile ,char *out_token);
 
-unsigned char getNToken(FILE* codeFile, char *out_token[], int size);
+unsigned char getNToken(FILE* codeFile, char *out_token[],const int size);
 #endif
