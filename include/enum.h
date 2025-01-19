@@ -2,7 +2,10 @@
 #define ENUM_H
 
 typedef enum {
-    INSTRUCTION_MATH, VARIABLE,NOMBRE,OPERATEUR, INSTRUCTION_BASIQUE_COUNT
-}InstructionBasique;
+ IDENTIFIANT, NOMBRE, // generique avec attribut 
+ AFFECTATION, //generique sans attribut
+ ADDITION, SOUSTRACTION, MULTIPLICATION, DIVISION, // mathématique
+ UNITE_LEXICAL_COUNT // FIN
+} uniteLexical;
 
 #endif
