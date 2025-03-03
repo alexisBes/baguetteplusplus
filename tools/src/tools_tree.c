@@ -47,6 +47,24 @@ char addItem(Tree *tree, void *content, const char isLeft)
     }
 }
 
+char addParent(Tree *tree, void *content, const char isLeft)
+{
+    Tree *newTree = malloc(sizeof(Tree));
+    newTree->content = content;
+    newTree->lNode = NULL;
+    newTree->rNode = NULL;
+    if (isLeft)
+    {
+        newTree->lNode = tree;
+    }
+    else
+    {
+        newTree->rNode = tree;
+    }
+    tree= newTree;
+    return newTree != NULL;
+}
+
 Tree *findItemInTree(Tree *tree, void *content, char (*func)(const void *,const void *))
 {
     if (func(tree->content, content))

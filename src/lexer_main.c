@@ -27,7 +27,7 @@ void getNextToken(uniteLexical *out_TypeLexique, char *param)
         printf("Veuillez renseignez un fichier.\n");
         return;
     }
-        char currentChar= fgetc(fileBaguette);
+    char currentChar= fgetc(fileBaguette);
     
     // le caracter est un chiffre
     if(currentChar >='0' && currentChar <= '9')
@@ -47,12 +47,16 @@ void getNextToken(uniteLexical *out_TypeLexique, char *param)
     }
     else
     {   
-        //TODO vérifier si on récupére un lettre, vérifier si c'est un opérateur
-        // si ce n'est pas un opérateur alors c'est un identifiant
+        //sinon c'est peut etre un opérateur
         if(currentChar == '+') { *out_TypeLexique= ADDITION;return;} 
         if(currentChar == '*') { *out_TypeLexique= MULTIPLICATION;return;}
         if(currentChar == '-') {*out_TypeLexique= SOUSTRACTION;return ;}
         if(currentChar == '/') { *out_TypeLexique= DIVISION;return;}
+        
+        // sinon c'est peut etre une fin d'instruction
+        if(currentChar == ';') { *out_TypeLexique= DIVISION;return;}
+        
+        // si ce n'est pas un operateur, c'est un identifiant 
         if((currentChar >= 'a' && currentChar <= 'z') || (currentChar >= 'A' && currentChar <= 'Z'))
         {
             char *ident = malloc(2*sizeof(char));

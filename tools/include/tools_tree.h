@@ -16,6 +16,8 @@ void clearTree(Tree *tree);
 
 char addItem(Tree *tree,void *content, const char isLeft);
 
+char addParent(Tree *tree, void *content, const char isLeft);
+
 Tree *findItemInTree(Tree *tree, void *content, char (*func)(const void *, const void *));
 
 #endif
