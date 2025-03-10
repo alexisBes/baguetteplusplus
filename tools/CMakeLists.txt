@@ -1,5 +1,4 @@
 add_library(Tools 
-    src/tools_list.c
     src/tools_string.c
     src/tools_tree.c)
 
@@ -13,7 +12,6 @@ target_include_directories(Tools PRIVATE
   enable_testing()
     add_executable(tools_test
     test/main.c
-    src/tools_list.c
     src/tools_string.c
     src/tools_tree.c)
 
