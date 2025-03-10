@@ -1,7 +1,6 @@
 #include "parser_main.h"
 #include "parser_math.h"
 
-#include "tools_tree.h"
 #include "tools_string.h"
 
 #include <stdlib.h>
@@ -9,9 +8,8 @@
 #include "lexer_main.h"
 
 void gestionIdentifiant(Tree *current);
-void gestionUnitMathematique(Tree *current);
 
-void parsing()
+void parsing(Tree* arbreSyntaxique)
 {
     uniteLexical unite = UNITE_LEXICAL_COUNT;
     char *param = NULL;
@@ -23,12 +21,9 @@ void parsing()
 
         currentSyntaxe->param = copyString(param);
         currentSyntaxe->unite = unite;
-        Tree *arbreSyntaxique = createTree(currentSyntaxe);
+        arbreSyntaxique = createTree(currentSyntaxe);
 
-        free(currentSyntaxe->param);
-        free(currentSyntaxe);
-
-        gestionUnitMathematique(arbreSyntaxique);
+        gestionIdentifiant(arbreSyntaxique);
     }
     else
     {
@@ -38,7 +33,7 @@ void parsing()
     }
 }
 
-void gestionIdentifient(Tree *current)
+void gestionIdentifiant(Tree *current)
 {
     uniteSyntaxique *currentSyntaxe = malloc(sizeof(uniteSyntaxique));
     currentSyntaxe->param = NULL;
@@ -46,6 +41,6 @@ void gestionIdentifient(Tree *current)
     if (AFFECTATION == currentSyntaxe->unite)
     {
         addParent(current, currentSyntaxe, 1);
-        current->lNode = mainMath();
+        current->rNode = mainMath();
     }
 }
