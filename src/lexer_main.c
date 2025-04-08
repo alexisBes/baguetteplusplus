@@ -2,7 +2,7 @@
 #include "stdlib.h"
 #include "tools_string.h"
 
-#define _BPP_OPERATEUR_ "-*/+ ;\n"
+#define _BPP_OPERATEUR_ "-*/+ ;<\n"
 #define _BPP_OPERATEUR_SIZE sizeof(_BPP_OPERATEUR_)
 
 void recuperationNombre(char* out_param,int *out_index);
@@ -20,7 +20,7 @@ void initLexer(const char *path)
     }
 }
 
-void getNextToken(uniteLexical *out_TypeLexique, char *param)
+void getNextToken(uniteLexical *out_TypeLexique, char **param)
 {
     if (fileBaguette == NULL)
     {
@@ -40,8 +40,8 @@ void getNextToken(uniteLexical *out_TypeLexique, char *param)
         recuperationNombre(number,&index);
         number[index]='\0';
         *out_TypeLexique=NOMBRE;
-        param = malloc(index* sizeof(char));
-        strncpy(param,number, index);
+        *param = malloc(index* sizeof(char));
+        strncpy(*param,number, index);
         free(number);
         return;
     }
@@ -63,10 +63,10 @@ void getNextToken(uniteLexical *out_TypeLexique, char *param)
             int index =0;
             ident[index]=currentChar;
             index++;
-            recuperationIdentifiant(param,&index);
+            recuperationIdentifiant(ident,&index);
             *out_TypeLexique= IDENTIFIANT;
-            param = malloc(index* sizeof(char));
-            strncpy(param,ident, index);
+            *param = malloc(index* sizeof(char));
+            strncpy(*param,ident, index);
             free(ident);
             return;
         }
@@ -83,24 +83,27 @@ void closeLexer()
 void recuperationNombre(char* out_param,int *out_index)
 {
     char currentChar = '\0';
+    int index = *out_index;
     do
     {
         currentChar = fgetc(fileBaguette);
+        out_param =  realloc(out_param, sizeof(char)*(index +1));
         if(isCharExistInArray(currentChar, _BPP_OPERATEUR_, _BPP_OPERATEUR_SIZE))
         {
-            out_param =  realloc(out_param, sizeof(char)*(*out_index+1));
-            out_param[*out_index] = '\0';
+            out_param[index] = '\0';
             fseek(fileBaguette,-1, SEEK_CUR);
+            *out_index=index;
             return;
         }
         if(currentChar <'0' && currentChar > '9')
         {
             fprintf(stderr,"Erreur, token invalid.\n");
+            free(out_param);
             return;
         }
 
-        out_param[*out_index]=currentChar;
-        *out_index++;
+        out_param[index]=currentChar;
+        index++;
 
     } while (!feof(fileBaguette));
     
@@ -109,18 +112,20 @@ void recuperationNombre(char* out_param,int *out_index)
 void recuperationIdentifiant(char *out_param, int *out_index)
 {
     char currentChar = '\0';
+    int index = *out_index;
     do
     {
         currentChar = fgetc(fileBaguette);
+        out_param =  realloc(out_param, sizeof(char)*( index +1));
         if(isCharExistInArray(currentChar, _BPP_OPERATEUR_, _BPP_OPERATEUR_SIZE))
         {
-            out_param =  realloc(out_param, sizeof(char)*(*out_index+1));
-            out_param[*out_index] = '\0';
+            out_param[index] = '\0';
+            *out_index=index;
             fseek(fileBaguette,-1, SEEK_CUR);
             return;
         }
-        out_param[*out_index]=currentChar;
-        *out_index++;
+        out_param[index]=currentChar;
+        index++;
 
     } while (!feof(fileBaguette));
     
