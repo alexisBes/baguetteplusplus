@@ -15,6 +15,7 @@ set (SOURCE_LIST
    ${CMAKE_CURRENT_SOURCE_DIR}/src/lexer_main.c
     ${CMAKE_CURRENT_SOURCE_DIR}/src/parser_main.c
     ${CMAKE_CURRENT_SOURCE_DIR}/src/parser_math.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/generateur_main.c
 )
 
 

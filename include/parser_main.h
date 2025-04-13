@@ -5,7 +5,7 @@
 /***
  * Anayse syntaxique du code. Lit Instruction par instruction
  */
-void parsing(Tree* arbreSyntaxique);
+void parsing(Tree** arbreSyntaxique);
 
 
 #endif

@@ -7,6 +7,7 @@
 
 void recuperationNombre(char* out_param,int *out_index);
 void recuperationIdentifiant(char* out_param,int *out_index);
+uniteLexical recupOperateur(const char current);
 
 FILE *fileBaguette = NULL;
 
@@ -46,15 +47,13 @@ void getNextToken(uniteLexical *out_TypeLexique, char **param)
         return;
     }
     else
-    {   
-        //sinon c'est peut etre un opérateur
-        if(currentChar == '+') { *out_TypeLexique= ADDITION;return;} 
-        if(currentChar == '*') { *out_TypeLexique= MULTIPLICATION;return;}
-        if(currentChar == '-') {*out_TypeLexique= SOUSTRACTION;return ;}
-        if(currentChar == '/') { *out_TypeLexique= DIVISION;return;}
-        
-        // sinon c'est peut etre une fin d'instruction
-        if(currentChar == ';') { *out_TypeLexique= DIVISION;return;}
+    {
+        uniteLexical operateur = recupOperateur(currentChar);
+        if(operateur != UNITE_LEXICAL_COUNT)
+        {
+            *out_TypeLexique= operateur;
+            return;
+        }
         
         // si ce n'est pas un operateur, c'est un identifiant 
         if((currentChar >= 'a' && currentChar <= 'z') || (currentChar >= 'A' && currentChar <= 'Z'))
@@ -129,4 +128,34 @@ void recuperationIdentifiant(char *out_param, int *out_index)
 
     } while (!feof(fileBaguette));
     
+}
+
+uniteLexical recupOperateur(const char current)
+{
+    uniteLexical returnLexique = UNITE_LEXICAL_COUNT;
+    if (!isCharExistInArray(current,_BPP_OPERATEUR_,_BPP_OPERATEUR_SIZE))
+    {
+        return returnLexique;
+    }
+
+        //sinon c'est peut etre un opérateur
+        if(current == '+') return ADDITION; 
+        if(current == '*') return MULTIPLICATION;
+        if(current == '-') return SOUSTRACTION;
+        if(current == '/') return DIVISION;
+
+        // < peut etre multiple (< ou <-)
+        if(current == '<')
+        {
+            char c = fgetc(fileBaguette);
+            if(c == '-') return AFFECTATION;
+            else {
+                fseek(fileBaguette,-1, SEEK_CUR);
+                return UNITE_LEXICAL_COUNT;
+            }
+        }
+        // sinon c'est peut etre une fin d'instruction
+        if(current == ';') { return FIN_INSTRUCTION;}
+    printf("tu n'est pas censé allez jusque ici.\n");
+    exit(EXIT_FAILURE);
 }

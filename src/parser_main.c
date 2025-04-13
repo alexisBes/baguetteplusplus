@@ -7,9 +7,9 @@
 #include "bpp_types.h"
 #include "lexer_main.h"
 
-void gestionIdentifiant(Tree *current);
+void gestionIdentifiant(Tree **current);
 
-void parsing(Tree* arbreSyntaxique)
+void parsing(Tree** arbreSyntaxique)
 {
     uniteLexical unite = UNITE_LEXICAL_COUNT;
     char *param = NULL;
@@ -21,7 +21,7 @@ void parsing(Tree* arbreSyntaxique)
 
         currentSyntaxe->param = copyString(param);
         currentSyntaxe->unite = unite;
-        arbreSyntaxique = createTree(currentSyntaxe);
+        *arbreSyntaxique = createTree(currentSyntaxe);
 
         gestionIdentifiant(arbreSyntaxique);
     }
@@ -33,14 +33,14 @@ void parsing(Tree* arbreSyntaxique)
     }
 }
 
-void gestionIdentifiant(Tree *current)
+void gestionIdentifiant(Tree **current)
 {
     uniteSyntaxique *currentSyntaxe = malloc(sizeof(uniteSyntaxique));
     currentSyntaxe->param = NULL;
     getNextToken(&currentSyntaxe->unite, &currentSyntaxe->param);
     if (AFFECTATION == currentSyntaxe->unite)
     {
-        addParent(current, currentSyntaxe, 1);
-        current->rNode = mainMath();
+        addParent(*current, currentSyntaxe, 1);
+        (*current)->rNode = mainMath();
     }
 }

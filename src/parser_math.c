@@ -21,7 +21,7 @@ void gestionMathematique(Tree* currentTree)
 {
     uniteSyntaxique *currentSyntaxe = malloc(sizeof(uniteSyntaxique));
     currentSyntaxe->param = NULL;
-    getNextToken(&currentSyntaxe->unite,currentSyntaxe->param);
+    getNextToken(&currentSyntaxe->unite,&currentSyntaxe->param);
     if (currentSyntaxe->unite == IDENTIFIANT || currentSyntaxe->unite == NOMBRE)
     {
         if(currentTree == NULL)currentTree= createTree(currentSyntaxe);
@@ -39,7 +39,7 @@ void gestionUniteMathematique(Tree* currentTree)
 {
     uniteSyntaxique *currentSyntaxe = malloc(sizeof(uniteSyntaxique));
     currentSyntaxe->param = NULL;
-    getNextToken(&currentSyntaxe->unite,currentSyntaxe->param);
+    getNextToken(&currentSyntaxe->unite,&currentSyntaxe->param);
     if (currentSyntaxe->unite >= ADDITION && currentSyntaxe->unite<= DIVISION)
     {
         addParent(currentTree, currentSyntaxe, 1);
