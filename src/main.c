@@ -1,22 +1,30 @@
-// baguetteplusplus.cpp : Ce fichier contient la fonction 'main'. L'exécution du programme commence et se termine à cet endroit.
+// baguetteplusplus.cpp : Ce fichier contient la fonction 'main'. L'execution du programme commence et se termine a cet endroit.
 //
 
 #include "stdlib.h"
+#include "lexer_main.h"
 #include "parser_main.h"
+#include "generateur_main.h"
 
 int main(int argc, char *argv[])
 {
     if (argc > 1)
     {
-        FILE *fileBaguette = fopen(argv[1], "r");
-        if (fileBaguette==NULL)
-        {
-            printf("Impossible d'ouvrir le fichier  %s. Veuillez vérifier que le fichier existe.\n", argv[1]);
-            exit(-1);
-        }
+        initLexer(argv[1]);
         printf("Lancement de la compilation de %s \n", argv[1]);
 
-        parsing(fileBaguette);
+        Tree* arbreInstruction  =NULL;
+        // analyse syntaxique.
+        parsing(&arbreInstruction);
+
+        // Ajout de la partie lecture semantique 
+        //quand on aura une table des symboles
+        
+        // generateur de code
+        generate( arbreInstruction);
+
+        // fermeture des fichiers
+        closeLexer();
     }
     return 0;
 }

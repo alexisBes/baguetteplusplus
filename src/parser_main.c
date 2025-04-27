@@ -1,55 +1,46 @@
 #include "parser_main.h"
+#include "parser_math.h"
+
+#include "tools_string.h"
 
 #include <stdlib.h>
+#include "bpp_types.h"
 #include "lexer_main.h"
-#include "StringTool.h"
 
-/*********
- * Private function declaration
- */
-void enterFunction(FILE* codeFile);
-void parseMultipleVariable(const char* codeFile);
+void gestionIdentifiant(Tree **current);
 
-/*********
- * Public function definition
- */
-void parsing(FILE *codeFile)
+void parsing(Tree** arbreSyntaxique)
 {
-
-    char *token = malloc(sizeof(char));
-    do
+    uniteLexical unite = UNITE_LEXICAL_COUNT;
+    char *param = NULL;
+    getNextToken(&unite, &param);
+    // gestion d'une instruction mathématique
+    if (IDENTIFIANT == unite)
     {
-        if (token != NULL) free(token);
+        uniteSyntaxique *currentSyntaxe = malloc(sizeof(uniteSyntaxique));
 
-        getNextToken(codeFile, token);
-        if(feof(codeFile))
-        {
-            fprintf(stderr,"[ERROR] Unable to find start point");
-            free(token);
-            exit(EXIT_FAILURE);
-        }
-    } while(isIdenticalStr(token, "DEBUT"));
-    enterFunction(codeFile);
+        currentSyntaxe->param = copyString(param);
+        currentSyntaxe->unite = unite;
+        *arbreSyntaxique = createTree(currentSyntaxe);
 
-}
-
-
-/*********
- * Private function declaration
- */
-void enterFunction(FILE* codeFile)
-{
-    char *nameFunction = NULL, *token = NULL;
-    getNextToken(codeFile, nameFunction);
-    getNextToken(codeFile, token);
-    if(isIdenticalStr(token,"("))
+        gestionIdentifiant(arbreSyntaxique);
+    }
+    else
     {
-        long g = 0;
-        //parseMultipleVariable();
+        free(param);
+        printf("Pas encore implementé, mais bientot ;)\n");
+        return;
     }
 }
 
-void parseMultipleVariable(const char * strVariableLine)
+void gestionIdentifiant(Tree **current)
 {
-    //rien  pour le moment
+    uniteSyntaxique *currentSyntaxe = malloc(sizeof(uniteSyntaxique));
+    currentSyntaxe->param = NULL;
+    getNextToken(&currentSyntaxe->unite, &currentSyntaxe->param);
+    if (AFFECTATION == currentSyntaxe->unite)
+    {
+        addParent(*current, currentSyntaxe, 1);
+        (*current)->rNode = mainMath();
+    }
 }

@@ -1,12 +1,12 @@
 #ifndef ENUM_H
 #define ENUM_H
 
-typedef enum{
-    OPERATEUR, MOTCLE, IDENTIFIANT, TYPE
-} TYPE_TOKEN;
-
-enum TYPE_INSTRUCTION {
-    DEFINITION, TANTQUE, JUSQUE, POUR, SI, SELON, FIN, typeLigne_COUNT 
-};
+typedef enum {
+ IDENTIFIANT, NOMBRE, // generique avec attribut 
+ AFFECTATION, //generique sans attribut
+ ADDITION, SOUSTRACTION, MULTIPLICATION, DIVISION, // mathématique
+ FIN_INSTRUCTION, // structurant fin
+ UNITE_LEXICAL_COUNT // FIN
+} uniteLexical;
 
 #endif

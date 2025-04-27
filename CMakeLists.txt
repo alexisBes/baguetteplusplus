@@ -9,13 +9,13 @@ set(TESTING OFF CACHE BOOL "Lanch unit test")
 add_library(bpp_compiler_flag INTERFACE)
 target_compile_features(bpp_compiler_flag INTERFACE c_std_11)
 
-set(CMAKE_C_FLAGS " -Wall")
+set(CMAKE_C_FLAGS " -Wall -Wunused")
 
 set (SOURCE_LIST
    ${CMAKE_CURRENT_SOURCE_DIR}/src/lexer_main.c
     ${CMAKE_CURRENT_SOURCE_DIR}/src/parser_main.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/logger.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/token_utils.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/parser_math.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/generateur_main.c
 )
 
 

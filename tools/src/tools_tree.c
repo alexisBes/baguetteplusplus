@@ -1,4 +1,4 @@
-#include "TreeUtils.h"
+#include "tools_tree.h"
 
 #include <stdlib.h>
 
@@ -45,6 +45,29 @@ char addItem(Tree *tree, void *content, const char isLeft)
         tree->rNode= _allocItem(tree->rNode, content);
         return tree->rNode != NULL;
     }
+}
+
+char addParent(Tree *tree, void *content, const char isLeft)
+{
+    void* tmp_content = tree->content;
+    tree->content = content;
+    Tree* lTree = tree->lNode;
+    tree->lNode = NULL;
+    Tree* rTree = tree->rNode;
+    tree->rNode = NULL;
+    if (isLeft)
+    {
+        addItem(tree,tmp_content,1);
+        tree->lNode->lNode =lTree;
+        tree->lNode->rNode = rTree;
+    }
+    else
+    {
+        addItem(tree,tmp_content,0);
+        tree->rNode->lNode =lTree;
+        tree->rNode->rNode = rTree;
+    }
+    return tree != NULL;
 }
 
 Tree *findItemInTree(Tree *tree, void *content, char (*func)(const void *,const void *))

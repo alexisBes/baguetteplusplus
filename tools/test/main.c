@@ -2,10 +2,9 @@
 #include "stdlib.h"
 #include "string.h"
 #include "stdio.h"
-#include "ListUtils.h"
-#include "TreeUtils.h"
-#include "StringTool.h"
-short int checkList(List *newNode, char *expectedValues[], int size, int toIgnore);
+#include "tools_tree.h"
+#include "tools_string.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -91,52 +90,7 @@ int main(int argc, char *argv[])
     }
     if (typeTest == 0b0010)
     {
-        List *newNode = createNodeList(argv[2]);
-        for (int i = 3; i < argc; i++)
-        {
-            addNode(newNode, argv[i]);
-        }
-        printf("test initList : ");
-        if (argc - 2 == listSize(newNode))
-        {
-            printf("SUCCES\n");
-        }
-        else
-        {
-            printf("ECHEC\n");
-        }
-
-
-        List *found = findNodeInList(newNode, argv[3], isIdenticalStr_misc );
-
-        printf("test find List : ");
-        if(found != NULL && isIdenticalStr(found->content, argv[3]))
-            printf("SUCCES ");
-        else
-            printf("ECHEC ");
-        
-        List *nFound = findNodeInList(newNode, argv[0], isIdenticalStr_misc );
-        if(nFound == NULL)
-            printf("SUCCES \n");
-        else
-            printf("ECHEC \n");
-
-        printf("test ValueList : ");
-        if (checkList(newNode, argv, argc, -1))
-            printf("SUCCES \n");
-        else
-            printf("ECHEC \n");
-        srand(time(NULL));
-        printf("test removeList: ");
-        int random = (rand() + 2) % argc + 1;
-        removeNode(newNode, random);
-        if (argc - 3 == listSize(newNode))
-            printf("SUCCES \n");
-        else
-            printf("ECHEC \n");
-
-        clearList(newNode);
-        printf("test clearList: SUCCES");
+        printf("NO TEST");
     }
     if (typeTest == 0b0011)
     {
@@ -174,26 +128,4 @@ int main(int argc, char *argv[])
         printf("SUCCES \n");
     }
     
-}
-
-short int checkList(List *newNode, char *expectedValues[], int size, int toIgnore)
-{
-    short int isValid = 1;
-    int ignored = 0;
-    for (int i = 2; i < size; i++)
-    {
-        if (toIgnore == i)
-        {
-            ignored++;
-        }
-        else
-        {
-            const int goodIndex = i - 2 - ignored;
-            if (strcmp(expectedValues[i], (char *)getNode(newNode, goodIndex)->content) != 0)
-            {
-                isValid = 0;
-            }
-        }
-    }
-    return isValid;
 }

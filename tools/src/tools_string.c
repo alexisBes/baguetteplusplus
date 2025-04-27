@@ -1,4 +1,4 @@
-#include "StringTool.h"
+#include "tools_string.h"
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
@@ -71,3 +71,17 @@ char isIdenticalStr(const char *str1, const char *str2)
 char isIdenticalStr_misc(const void * str1, const void * str2){
     return isIdenticalStr((const char*)str1, (const char *)str2);
 }
+
+char isNumeric(const char *str1)
+{
+    size_t len = strlen(str1);
+    int index = 0;
+    while (index < len)
+    {
+        if(str1[index] < '0' && str1[index] >'9')
+        {
+            return 0; // ce n'est pas numéric
+        }
+    }
+    return 1; // c'est numérique
+} 
