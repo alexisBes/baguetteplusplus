@@ -28,6 +28,8 @@ int main()
    int result = 0;
    result= (NULL == CU_add_test(pSuite, "Test de CountCharInString", test_CountCharInString));
    result = result || (NULL == CU_add_test(pSuite, "Test de CountCharInString KO", test_CountCharInString_KO));
+   result = result || (NULL == CU_add_test(pSuite, "Test de test_isCharExistInArray", test_isCharExistInArray));
+   result = result || (NULL == CU_add_test(pSuite, "Test de test_isCharExistInArray KO", test_isCharExistInArray_KO));
    if (result)
    {
       CU_cleanup_registry();

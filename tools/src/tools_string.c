@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+extern int errno;
+
 int countCharInString(const char *s, const int length, const char c)
 {
     if (length <= 0 || s == NULL)
@@ -23,8 +25,10 @@ int countCharInString(const char *s, const int length, const char c)
 
 char isCharExistInArray(const char c, const char *array, const int length)
 {
-    if (length <= 0)
-        return 0;
+    if (length <= 0 || array == NULL)
+    {
+        return -1;
+    }
 
     for (int i = 0; i < length; i++)
     {

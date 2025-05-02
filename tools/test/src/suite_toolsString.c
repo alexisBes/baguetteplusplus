@@ -24,3 +24,18 @@ void test_CountCharInString_KO()
     CU_ASSERT(countCharInString(NULL,9,'t')==-1);
     CU_ASSERT(countCharInString("TATA",8,'T')==2);
 }
+
+void test_isCharExistInArray()
+{
+    CU_ASSERT_TRUE(isCharExistInArray('t', "toto", 4));
+    CU_ASSERT_FALSE(isCharExistInArray('T', "toto", 4));
+    CU_ASSERT_FALSE(isCharExistInArray('b', "albert", 2));
+}
+
+void test_isCharExistInArray_KO()
+{
+
+    CU_ASSERT_EQUAL(isCharExistInArray('t', NULL, 4),-1);
+    CU_ASSERT_EQUAL(isCharExistInArray('T', "toto", 0),-1);
+    CU_ASSERT_FALSE_FATAL(isCharExistInArray('T', "toto", 15));
+}
