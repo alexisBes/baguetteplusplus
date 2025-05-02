@@ -25,24 +25,14 @@ int main()
    }
 
    /* add the tests to the suite */
-   if (NULL == CU_add_test(pSuite, "Test de CountCharInString", test_CountCharInString))
+   int result = 0;
+   result= (NULL == CU_add_test(pSuite, "Test de CountCharInString", test_CountCharInString));
+   result = result || (NULL == CU_add_test(pSuite, "Test de CountCharInString KO", test_CountCharInString_KO));
+   if (result)
    {
       CU_cleanup_registry();
       return CU_get_error();
    }
-   /* add a suite to the registry */
-   pSuite2 = CU_add_suite("Suite_ToolsString_2", Init_ToolsString, Clean_ToolsString);
-   if (NULL == pSuite2) {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
-
-      /* add the tests to the suite */
-      if (NULL == CU_add_test(pSuite2, "Test de CountCharInString", test_CountCharInString))
-      {
-         CU_cleanup_registry();
-         return CU_get_error();
-      }
    /* Run all tests using the CUnit Basic interface */
    CU_basic_set_mode(CU_BRM_VERBOSE);
    CU_basic_run_tests();
