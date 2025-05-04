@@ -21,16 +21,17 @@ Tree *createTree(void *content, const long size)
     return newTree;
 }
 
-void clearTree(Tree *tree)
+void clearTree(Tree *tree, void (*func)(void *))
 {
     if ( tree->lNode != NULL)
     {
-        clearTree(tree->lNode);
+        clearTree(tree->lNode, func);
     }
     if (tree->rNode != NULL)
     {
-        clearTree(tree->rNode);
+        clearTree(tree->rNode, func);
     }
+    func(tree->content);
     free(tree);
     return;
 }
