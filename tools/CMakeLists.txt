@@ -11,6 +11,7 @@ target_include_directories(Tools PRIVATE
     add_executable(tools_test
     test/src/main.c
     test/src/suite_toolsString.c
+    test/src/suite_toolsTree.c
     src/tools_string.c
     src/tools_tree.c)
 
