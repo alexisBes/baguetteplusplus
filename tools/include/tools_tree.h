@@ -13,7 +13,7 @@ struct s_Tree
 
 Tree *createTree(void *content, const long size);
 
-void clearTree(Tree *tree, void (*func)(void *));
+void clearTree(Tree *tree);
 
 char addItem(Tree *tree,void *content, const long size,const char isLeft);
 
