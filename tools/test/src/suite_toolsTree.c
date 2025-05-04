@@ -4,9 +4,19 @@
 Tree *commonTree = NULL;
 int commonInitContent = 654616876;
 
+int Init_ToolsTree_CreateDestruct()
+{
+    return 0;
+}
+
 int Init_ToolsTree()
 {
     commonTree = createTree(&commonInitContent, sizeof(commonInitContent));
+    return 0;
+}
+
+int Clean_ToolsTree_CreateDestruct()
+{
     return 0;
 }
 

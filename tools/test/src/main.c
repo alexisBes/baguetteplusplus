@@ -4,7 +4,9 @@
 #include "suite_toolsTree.h"
 #include "CUnit/Basic.h"
 
-
+int Test_ToolsString(CU_pSuite suite);
+int Test_ToolsTree_Create(CU_pSuite suite);
+int Test_ToolsTree(CU_pSuite suite);
 /* The main() function for setting up and running the tests.
  * Returns a CUE_SUCCESS on successful running, another
  * CUnit error code on failure.
@@ -12,6 +14,7 @@
 int main()
 {
    CU_pSuite pSuite = NULL;
+   CU_pSuite pSuite_Tree_CreateDestruct = NULL;
    CU_pSuite pSuite_Tree = NULL;
 
    /* initialize the CUnit test registry */
@@ -19,45 +22,70 @@ int main()
       return CU_get_error();
 
    /* add a suite to the registry */
-   pSuite = CU_add_suite("Suite_ToolsString", Init_ToolsString, Clean_ToolsString);
-   if (NULL == pSuite) {
+   pSuite = CU_add_suite("ToolsString", Init_ToolsString, Clean_ToolsString);
+   if (NULL == pSuite)
+   {
       CU_cleanup_registry();
       return CU_get_error();
    }
+   Test_ToolsString(pSuite);
 
-   /* add the tests to the suite */
-   int result = 0;
-   result= (NULL == CU_add_test(pSuite, "Test de CountCharInString", test_CountCharInString));
-   result = result || (NULL == CU_add_test(pSuite, "Test de CountCharInString KO", test_CountCharInString_KO));
-   result = result || (NULL == CU_add_test(pSuite, "Test de isCharExistInArray", test_isCharExistInArray));
-   result = result || (NULL == CU_add_test(pSuite, "Test de isCharExistInArray KO", test_isCharExistInArray_KO));
-   result = result || (NULL == CU_add_test(pSuite, "Test de copyString", test_copyString));
-   result = result || (NULL == CU_add_test(pSuite, "Test de copyString KO", test_copyString_KO));
-   if (result)
+   /* add a suite to the registry */
+   pSuite_Tree_CreateDestruct = CU_add_suite("ToolsTree Creation & Destruction", 
+      Init_ToolsTree_CreateDestruct,
+      Clean_ToolsTree_CreateDestruct);
+   if (NULL == pSuite_Tree_CreateDestruct)
+   {
+      CU_cleanup_registry();
+      return CU_get_error();
+   }
+   Test_ToolsTree_Create(pSuite_Tree_CreateDestruct);
+
+   int restul_Tree = 0;
+   restul_Tree = (NULL == CU_add_test(pSuite_Tree_CreateDestruct, "Test de CreateTree", test_CreateTree));
+   if (restul_Tree)
    {
       CU_cleanup_registry();
       return CU_get_error();
    }
 
-      /* add a suite to the registry */
-      pSuite_Tree = CU_add_suite("Suite_ToolsTree", Init_ToolsTree, Clean_ToolsTree);
-      if (NULL == pSuite_Tree) {
-         CU_cleanup_registry();
-         return CU_get_error();
-      }
-   
-      int restul_Tree= 0;
-      restul_Tree= (NULL == CU_add_test(pSuite_Tree, "Test de CreateTree", test_CreateTree));
-      if (restul_Tree)
-   {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
-
-      /* Run all tests using the CUnit Basic interface */
+   /* Run all tests using the CUnit Basic interface */
    CU_basic_set_mode(CU_BRM_VERBOSE);
    CU_basic_run_tests();
    CU_cleanup_registry();
    return CU_get_error();
 }
 
+int Test_ToolsString(CU_pSuite suite)
+{
+   /* add the tests to the suite */
+   int result = 0;
+   result = (NULL == CU_add_test(suite, "CountCharInString", test_CountCharInString));
+   result = result || (NULL == CU_add_test(suite, "CountCharInString KO", test_CountCharInString_KO));
+   result = result || (NULL == CU_add_test(suite, "isCharExistInArray", test_isCharExistInArray));
+   result = result || (NULL == CU_add_test(suite, "isCharExistInArray KO", test_isCharExistInArray_KO));
+   result = result || (NULL == CU_add_test(suite, "copyString", test_copyString));
+   result = result || (NULL == CU_add_test(suite, "copyString KO", test_copyString_KO));
+   if (result)
+   {
+      CU_cleanup_registry();
+      return CU_get_error();
+   }
+   return result;
+}
+int Test_ToolsTree_Create(CU_pSuite suite)
+{
+   int result = 0;
+   result = (NULL == CU_add_test(suite, "Test de CreateTree", test_CreateTree));
+   if (result)
+   {
+      CU_cleanup_registry();
+      return CU_get_error();
+   }
+   return result;
+}
+int Test_ToolsTree(CU_pSuite suite)
+{
+   int result = 0;
+   return result;
+}
