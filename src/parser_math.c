@@ -34,8 +34,8 @@ void gestionMathematique(Tree** currentTree)
     getNextToken(&currentSyntaxe->unite,&currentSyntaxe->param);
     if (currentSyntaxe->unite == IDENTIFIANT || currentSyntaxe->unite == NOMBRE)
     {
-        if(*currentTree == NULL)*currentTree= createTree(currentSyntaxe);
-        else addItem(*currentTree, currentSyntaxe, 1);
+        if(*currentTree == NULL)*currentTree= createTree(currentSyntaxe,sizeof(uniteSyntaxique));
+        else addItem(*currentTree, currentSyntaxe,sizeof(uniteSyntaxique) ,1);
         gestionUniteMathematique(currentTree);
         return;
     }else if (currentSyntaxe->unite == FIN_INSTRUCTION)
@@ -52,7 +52,7 @@ void gestionUniteMathematique(Tree** currentTree)
     getNextToken(&currentSyntaxe->unite,&currentSyntaxe->param);
     if (currentSyntaxe->unite >= ADDITION && currentSyntaxe->unite<= DIVISION)
     {
-        addParent(*currentTree, currentSyntaxe, 1);
+        addParent(*currentTree, currentSyntaxe,sizeof(uniteSyntaxique), 1);
         gestionMathematique((Tree**)&((*currentTree)->rNode));
     }
     return;
