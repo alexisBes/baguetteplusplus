@@ -38,54 +38,16 @@ char isCharExistInArray(const char c, const char *array, const int length)
     return 0;
 }
 
-char* concatanateString(char *ori, char* concat, const int totalLength)
-{
-    char * newString = (char *) malloc(sizeof(char)* totalLength);
-    strcpy(newString, ori);
-    strcat(newString, concat);
-    return newString;
-}
-
-
-char* concatanateChar(char *ori, const char concat)
-{
-    int length = strlen(ori);
-    char * newString = (char *) malloc(sizeof(char)* (length +1));
-    strcpy(newString, ori);
-    newString[length] = concat;
-    newString[length+1] = '\0';
-
-    return newString;
-}
-
 char* copyString(char* ori){
+    char * cpStr = "";
+    if (ori==NULL)
+    {
+        return cpStr;
+    }
+    
     int size = strlen(ori);
-    char * cpStr = malloc(sizeof(char) * size);
+    cpStr = malloc(sizeof(char) * size);
 
     strcpy(cpStr, ori);
     return cpStr;
 }
-
-char isIdenticalStr(const char *str1, const char *str2)
-{
-    int result = strcmp(str1,str2);
-    return result == 0;
-}
-
-char isIdenticalStr_misc(const void * str1, const void * str2){
-    return isIdenticalStr((const char*)str1, (const char *)str2);
-}
-
-char isNumeric(const char *str1)
-{
-    size_t len = strlen(str1);
-    int index = 0;
-    while (index < len)
-    {
-        if(str1[index] < '0' && str1[index] >'9')
-        {
-            return 0; // ce n'est pas numéric
-        }
-    }
-    return 1; // c'est numérique
-} 

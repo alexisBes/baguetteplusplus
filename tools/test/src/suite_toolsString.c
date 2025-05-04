@@ -39,3 +39,13 @@ void test_isCharExistInArray_KO()
     CU_ASSERT_EQUAL(isCharExistInArray('T', "toto", 0),-1);
     CU_ASSERT_FALSE_FATAL(isCharExistInArray('T', "toto", 15));
 }
+
+void test_copyString(){
+    char* str = copyString("Joseph Joestar");
+    CU_ASSERT(strcmp(str,"Joseph Joestar")==0);
+}
+void test_copyString_KO(){
+    char* str = copyString(NULL);
+    CU_ASSERT(strcmp(str,"")==0);
+
+}
