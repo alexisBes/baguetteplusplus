@@ -1,5 +1,6 @@
 #include "tools_string.h"
 #include <CUnit/CUnit.h>
+#include "stdlib.h"
 
 int Init_ToolsString()
 {
@@ -43,6 +44,7 @@ void test_isCharExistInArray_KO()
 void test_copyString(){
     char* str = copyString("Joseph Joestar");
     CU_ASSERT(strcmp(str,"Joseph Joestar")==0);
+    free(str);
 }
 void test_copyString_KO(){
     char* str = copyString(NULL);

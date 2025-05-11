@@ -39,14 +39,14 @@ char isCharExistInArray(const char c, const char *array, const int length)
 }
 
 char* copyString(char* ori){
-    char * cpStr = "";
+
     if (ori==NULL)
     {
-        return cpStr;
+        return "";
     }
     
     int size = strlen(ori);
-    cpStr = malloc(sizeof(char) * size);
+    char * cpStr = malloc(sizeof(char) * size);
 
     strcpy(cpStr, ori);
     return cpStr;

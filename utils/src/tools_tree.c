@@ -32,7 +32,8 @@ void clearTree(Tree *tree)
     {
         clearTree(tree->rNode);
     }
-    if(tree->content->param != NULL)free(tree->content->param);
+    if(tree->content->param != NULL)
+        free(tree->content->param);
     free(tree->content);
     free(tree);
     return;

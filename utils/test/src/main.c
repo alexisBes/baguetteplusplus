@@ -42,13 +42,14 @@ int main()
    Test_ToolsTree_Create(pSuite_Tree_CreateDestruct);
    /* add a suite to the registry */
    pSuite_Tree = CU_add_suite("ToolsTree Others", 
-      Init_ToolsTree_CreateDestruct,
-      Clean_ToolsTree_CreateDestruct);
+      Init_ToolsTree,
+      Clean_ToolsTree);
    if (NULL ==pSuite_Tree)
    {
       CU_cleanup_registry();
       return CU_get_error();
    }
+   Test_ToolsTree(pSuite_Tree);
    /* Run all tests using the CUnit Basic interface */
    CU_basic_set_mode(CU_BRM_VERBOSE);
    CU_basic_run_tests();
@@ -77,10 +78,8 @@ int Test_ToolsTree_Create(CU_pSuite suite)
 {
    int result = 0;
    result = (NULL == CU_add_test(suite, "Test de CreateTree Structure", test_CreateTree_struct));
+   result = result || (NULL == CU_add_test(suite, "Test de CreateTree const", test_CreateTree_const));
    result = result || (NULL == CU_add_test(suite, "Test de CreateTree pointer", test_CreateTree_pointer));
-   
-   result = result || (NULL == CU_add_test(suite, "Test de ClearTree structure", test_ClearTree_struct));
-   result = result || (NULL == CU_add_test(suite, "Test de ClearTree pointer", test_ClearTree_pointer));
    if (result)
    {
       CU_cleanup_registry();
@@ -91,5 +90,14 @@ int Test_ToolsTree_Create(CU_pSuite suite)
 int Test_ToolsTree(CU_pSuite suite)
 {
    int result = 0;
+   result = (NULL == CU_add_test(suite, "Test d'ajout d'item gauche ", test_AddItemG));
+   result = result || (NULL == CU_add_test(suite, "Test d'ajout d'item droite ", test_AddItemD));
+   result = result || (NULL == CU_add_test(suite, "Test d'ajout d'item gauche gauche ", test_AddItemGG));
+   result = result || (NULL == CU_add_test(suite, "Test d'ajout d'item droite droite ", test_AddItemDD));
+   if (result)
+   {
+      CU_cleanup_registry();
+      return CU_get_error();
+   }
    return result;
 }
