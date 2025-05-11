@@ -5,17 +5,16 @@
 /****
  * PRIVATE DECLARATION
  */
-Tree * _allocItem(Tree *dest, void *content, const long size);
+Tree * _allocItem(Tree *dest, unite_instruction *content);
 
 /****
  * PUBLIC DEFINITION
  */
-Tree *createTree(void *content, const long size)
+Tree *createTree(unite_instruction *content)
 {
     Tree *newTree = malloc(sizeof(Tree));
-    newTree->content = malloc(size);
-    memcpy(newTree->content,content, size);
-    newTree->size = size;
+    newTree->content = malloc(sizeof(unite_instruction));
+    memcpy(newTree->content,content, sizeof(unite_instruction));
     newTree->lNode = NULL;
     newTree->rNode = NULL;
     return newTree;
@@ -36,47 +35,45 @@ void clearTree(Tree *tree)
     return;
 }
 
-char addItem(Tree *tree, void *content, const long size,const char isLeft)
+char addItem(Tree *tree, unite_instruction *content,const char isLeft)
 {
     if (isLeft)
     {
-        tree->lNode= _allocItem(tree->lNode, content, size);
+        tree->lNode= _allocItem(tree->lNode, content);
         return tree->lNode != NULL;
     }
     else
     {
-        tree->rNode= _allocItem(tree->rNode, content, size);
+        tree->rNode= _allocItem(tree->rNode, content);
         return tree->rNode != NULL;
     }
 }
 
-char addParent(Tree *tree, void *content, const long size,const char isLeft)
+char addParent(Tree *tree, unite_instruction *content,const char isLeft)
 {
     void* tmp_content = tree->content;
-    int old_size = tree->size;
-    tree->content = malloc(size);
-    memcpy(tree->content, content, size);
-    tree->size=size;
+    tree->content = malloc(sizeof(unite_instruction));
+    memcpy(tree->content, content,sizeof(unite_instruction));
     Tree* lTree = tree->lNode;
     tree->lNode = NULL;
     Tree* rTree = tree->rNode;
     tree->rNode = NULL;
     if (isLeft)
     {
-        addItem(tree,tmp_content, old_size,1);
+        addItem(tree,tmp_content,1);
         tree->lNode->lNode =lTree;
         tree->lNode->rNode = rTree;
     }
     else
     {
-        addItem(tree,tmp_content,old_size,0);
+        addItem(tree,tmp_content,0);
         tree->rNode->lNode =lTree;
         tree->rNode->rNode = rTree;
     }
     return tree != NULL;
 }
 
-Tree *findItemInTree(Tree *tree, void *content, char (*func)(const void *,const void *))
+Tree *findItemInTree(Tree *tree, unite_instruction *content, char (*func)(const unite_instruction *,const unite_instruction *))
 {
     if (func(tree->content, content))
     {
@@ -103,16 +100,15 @@ Tree *findItemInTree(Tree *tree, void *content, char (*func)(const void *,const 
 /****
  * PRIVATE DEFINITION
  */
-Tree * _allocItem(Tree *tree, void *content, const long size)
+Tree * _allocItem(Tree *tree, unite_instruction *content)
 {
     if (tree == NULL)
     {
         tree = malloc(sizeof(Tree));
         tree->lNode = NULL;
         tree->rNode = NULL;
-        tree->content = malloc(size);
-        memcpy(tree->content,content, size);
-        tree->size = size;
+        tree->content = malloc(sizeof(unite_instruction));
+        memcpy(tree->content,content,sizeof(unite_instruction));
         return tree;
     }
     return NULL;

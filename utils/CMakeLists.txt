@@ -18,7 +18,6 @@ target_include_directories(Tools PRIVATE
     message("${PROJECT_SOURCE_DIR}")
 
     target_include_directories(tools_test PRIVATE
-        ${PROJECT_SOURCE_DIR}/common/
         test/  
         include/)
 

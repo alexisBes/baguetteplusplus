@@ -21,7 +21,7 @@ void parsing(Tree** arbreSyntaxique)
 
         currentSyntaxe->param = copyString(param);
         currentSyntaxe->unite = unite;
-        *arbreSyntaxique = createTree(currentSyntaxe,sizeof(unite_instruction));
+        *arbreSyntaxique = createTree(currentSyntaxe);
 
         gestionIdentifiant(arbreSyntaxique);
     }
@@ -40,7 +40,7 @@ void gestionIdentifiant(Tree **current)
     getNextToken(&currentSyntaxe->unite, &currentSyntaxe->param);
     if (AFFECTATION == currentSyntaxe->unite)
     {
-        addParent(*current, currentSyntaxe,sizeof(unite_instruction), 1);
+        addParent(*current, currentSyntaxe, 1);
         (*current)->rNode = mainMath();
     }
 }
