@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include "string.h"
+#include "tools_string.h"
 /****
  * PRIVATE DECLARATION
  */
@@ -15,6 +16,7 @@ Tree *createTree(unite_instruction *content)
     Tree *newTree = malloc(sizeof(Tree));
     newTree->content = malloc(sizeof(unite_instruction));
     memcpy(newTree->content,content, sizeof(unite_instruction));
+    newTree->content->param = copyString(content->param);
     newTree->lNode = NULL;
     newTree->rNode = NULL;
     return newTree;
@@ -30,6 +32,7 @@ void clearTree(Tree *tree)
     {
         clearTree(tree->rNode);
     }
+    if(tree->content->param != NULL)free(tree->content->param);
     free(tree->content);
     free(tree);
     return;
@@ -109,6 +112,7 @@ Tree * _allocItem(Tree *tree, unite_instruction *content)
         tree->rNode = NULL;
         tree->content = malloc(sizeof(unite_instruction));
         memcpy(tree->content,content,sizeof(unite_instruction));
+        tree->content->param = copyString(content->param);
         return tree;
     }
     return NULL;

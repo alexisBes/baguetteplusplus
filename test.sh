@@ -12,6 +12,6 @@ mkdir tempbuild
 cmake -B tempbuild -S . -G Ninja
 cmake --build ./tempbuild --target tools_test --config Release
 
-./tempbuild/tools/tools_test
+./tempbuild/utils/tools_test
 
 rm -rf tempbuild

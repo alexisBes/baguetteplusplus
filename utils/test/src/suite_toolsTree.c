@@ -61,7 +61,7 @@ void test_CreateTree_pointer()
     content->param = malloc(sizeof(char) * 15);
     memcpy(content->param,"jeSuisunchaine", sizeof(char) * 15);
 
-    Tree *myTree = createTree(&content);
+    Tree *myTree = createTree(content);
 
     unite_instruction *treeContent =(unite_instruction *)myTree->content; 
     // on test que le nouvel element est bien ajouté
