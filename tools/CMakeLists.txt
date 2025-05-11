@@ -14,8 +14,11 @@ target_include_directories(Tools PRIVATE
     test/src/suite_toolsTree.c
     src/tools_string.c
     src/tools_tree.c)
+    
+    message("${PROJECT_SOURCE_DIR}")
 
     target_include_directories(tools_test PRIVATE
+        ${PROJECT_SOURCE_DIR}/common/
         test/  
         include/)
 

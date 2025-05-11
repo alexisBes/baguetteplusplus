@@ -7,7 +7,7 @@
 
 void recuperationNombre(char* out_param,int *out_index);
 void recuperationIdentifiant(char* out_param,int *out_index);
-uniteLexical recupOperateur(const char current);
+unite_type recupOperateur(const char current);
 
 FILE *fileBaguette = NULL;
 
@@ -21,7 +21,7 @@ void initLexer(const char *path)
     }
 }
 
-void getNextToken(uniteLexical *out_TypeLexique, char **param)
+void getNextToken(unite_type *out_TypeLexique, char **param)
 {
     if (fileBaguette == NULL)
     {
@@ -48,7 +48,7 @@ void getNextToken(uniteLexical *out_TypeLexique, char **param)
     }
     else
     {
-        uniteLexical operateur = recupOperateur(currentChar);
+        unite_type operateur = recupOperateur(currentChar);
         if(operateur != UNITE_LEXICAL_COUNT)
         {
             *out_TypeLexique= operateur;
@@ -130,9 +130,9 @@ void recuperationIdentifiant(char *out_param, int *out_index)
     
 }
 
-uniteLexical recupOperateur(const char current)
+unite_type recupOperateur(const char current)
 {
-    uniteLexical returnLexique = UNITE_LEXICAL_COUNT;
+    unite_type returnLexique = UNITE_LEXICAL_COUNT;
     if (!isCharExistInArray(current,_BPP_OPERATEUR_,_BPP_OPERATEUR_SIZE))
     {
         return returnLexique;

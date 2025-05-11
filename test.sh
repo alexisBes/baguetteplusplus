@@ -1,3 +1,4 @@
+#!/bin/bash
 
 result=""
 
@@ -7,11 +8,10 @@ if [ ! -d "$DIRECTORY" ]; then
 fi
 
 mkdir tempbuild
-cd tempbuild
-cmake .. 
-make
 
-./tools/tools_test
+cmake -B tempbuild -S . -G Ninja
+cmake --build ./tempbuild --target tools_test --config Release
 
-cd ..
+./tempbuild/tools/tools_test
+
 rm -rf tempbuild

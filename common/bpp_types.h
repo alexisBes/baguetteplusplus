@@ -4,9 +4,9 @@
 
 typedef struct
 {
-    uniteLexical unite;
+    unite_type unite;
     char* param;
-} uniteSyntaxique;
+} unite_instruction;
 
 
 #endif

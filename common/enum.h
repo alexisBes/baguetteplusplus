@@ -7,6 +7,6 @@ typedef enum {
  ADDITION, SOUSTRACTION, MULTIPLICATION, DIVISION, // mathématique
  FIN_INSTRUCTION, // structurant fin
  UNITE_LEXICAL_COUNT // FIN
-} uniteLexical;
+} unite_type;
 
 #endif

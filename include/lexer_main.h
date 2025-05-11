@@ -10,7 +10,7 @@ void initLexer(const char *path);
 /// @brief Recupere une unité lexical. Doit etre utilisé par le parser.
 /// @return out_TypeLexique : le token qui vient d'etre récupére
 /// @return param : un parametre, NULL sauf pour NUOMBRE et IDENTIFIANT
-void getNextToken(uniteLexical *out_TypeLexique, char **param);
+void getNextToken(unite_type *out_TypeLexique, char **param);
 
 /// @brief Fermeture du fichier sources.
 void closeLexer();

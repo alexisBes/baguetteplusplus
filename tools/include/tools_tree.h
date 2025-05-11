@@ -1,13 +1,15 @@
 #ifndef TREE_UTILS_H
 #define TREE_UTILS_H
 
+#include "bpp_types.h"
+
 typedef struct s_Tree Tree;
 
 struct s_Tree
 {
     Tree *lNode;
     Tree *rNode;
-    void *content;
+    unite_type *content;
     int size;
 };
 
