@@ -29,13 +29,13 @@ Tree* mainMath()
 
 void gestionMathematique(Tree** currentTree)
 {
-    uniteSyntaxique *currentSyntaxe = malloc(sizeof(uniteSyntaxique));
+    unite_instruction *currentSyntaxe = malloc(sizeof(unite_instruction));
     currentSyntaxe->param = NULL;
     getNextToken(&currentSyntaxe->unite,&currentSyntaxe->param);
     if (currentSyntaxe->unite == IDENTIFIANT || currentSyntaxe->unite == NOMBRE)
     {
         if(*currentTree == NULL)*currentTree= createTree(currentSyntaxe);
-        else addItem(*currentTree, currentSyntaxe, 1);
+        else addItem(*currentTree, currentSyntaxe ,1);
         gestionUniteMathematique(currentTree);
         return;
     }else if (currentSyntaxe->unite == FIN_INSTRUCTION)
@@ -47,7 +47,7 @@ void gestionMathematique(Tree** currentTree)
 
 void gestionUniteMathematique(Tree** currentTree)
 {
-    uniteSyntaxique *currentSyntaxe = malloc(sizeof(uniteSyntaxique));
+    unite_instruction *currentSyntaxe = malloc(sizeof(unite_instruction));
     currentSyntaxe->param = NULL;
     getNextToken(&currentSyntaxe->unite,&currentSyntaxe->param);
     if (currentSyntaxe->unite >= ADDITION && currentSyntaxe->unite<= DIVISION)

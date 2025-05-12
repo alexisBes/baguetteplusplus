@@ -11,13 +11,13 @@ void gestionIdentifiant(Tree **current);
 
 void parsing(Tree** arbreSyntaxique)
 {
-    uniteLexical unite = UNITE_LEXICAL_COUNT;
+    unite_type unite = UNITE_LEXICAL_COUNT;
     char *param = NULL;
     getNextToken(&unite, &param);
     // gestion d'une instruction mathématique
     if (IDENTIFIANT == unite)
     {
-        uniteSyntaxique *currentSyntaxe = malloc(sizeof(uniteSyntaxique));
+        unite_instruction *currentSyntaxe = malloc(sizeof(unite_instruction));
 
         currentSyntaxe->param = copyString(param);
         currentSyntaxe->unite = unite;
@@ -35,7 +35,7 @@ void parsing(Tree** arbreSyntaxique)
 
 void gestionIdentifiant(Tree **current)
 {
-    uniteSyntaxique *currentSyntaxe = malloc(sizeof(uniteSyntaxique));
+    unite_instruction *currentSyntaxe = malloc(sizeof(unite_instruction));
     currentSyntaxe->param = NULL;
     getNextToken(&currentSyntaxe->unite, &currentSyntaxe->param);
     if (AFFECTATION == currentSyntaxe->unite)

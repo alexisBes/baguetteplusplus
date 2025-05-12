@@ -4,6 +4,6 @@
 
 void generate(Tree* arbreInstruction)
 {
-    uniteSyntaxique* unite = (uniteSyntaxique*) arbreInstruction->content;
+    unite_instruction* unite = (unite_instruction*) arbreInstruction->content;
     printf("%d", unite->unite);
 }

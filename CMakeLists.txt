@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 project("baguette plus plus" VERSION 0.0)
-
+set (CMAKE_C_STANDARD 11)
 
 configure_file(constante.in.h constante.h)
 set(TESTING OFF CACHE BOOL "Lanch unit test")
@@ -28,14 +28,14 @@ add_executable(baguetteplusplus
     src/main.c
     ${SOURCE_LIST})
 
-add_subdirectory(tools)
+add_subdirectory(utils)
 
 target_link_libraries(baguetteplusplus 
     PRIVATE Tools)
 
 target_include_directories(baguetteplusplus PRIVATE
     include/
-    tools/include/)
+    utils/include/)
 
 target_include_directories(baguetteplusplus PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 

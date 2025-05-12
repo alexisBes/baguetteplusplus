@@ -1,3 +1,4 @@
+#!/bin/bash
 
 result=""
 
@@ -7,26 +8,14 @@ if [ ! -d "$DIRECTORY" ]; then
 fi
 
 mkdir tempbuild
-cd tempbuild
-cmake .. -DTESTING=ON
-make
-
-cd ..
-
-for t in "$(find . -name *.bpp)";
-do 
-./tempbuild/baguetteplusplus $t
-
-result="$(diff -q $t.result $t.lexer) $result";
-echo $result
-
-done
-
-if [ -z $result ] 
+COMPILER='Unix Makefiles'
+if command -v ninja 2>&1 >/dev/null
 then
-echo "Les tests sont ok"
-else
-echo "Les test ont echoué"
+    COMPILER='Ninja'
 fi
+cmake -B tempbuild -S . -G "$COMPILER"
+cmake --build ./tempbuild --target tools_test --config Release
+
+./tempbuild/utils/tools_test
 
 rm -rf tempbuild
