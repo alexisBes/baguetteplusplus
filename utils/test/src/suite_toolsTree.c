@@ -166,3 +166,31 @@ void test_AddItemDD()
     CU_ASSERT(newItem->lNode == NULL);
     CU_ASSERT(newItem->rNode== NULL);
 }
+
+void test_addParentGDG()
+{
+
+    unite_instruction content;
+    content.unite = 10;
+    content.param = "je suis parent de gauche ";
+
+    addParent(commonTree->lNode,&content,0);
+    CU_ASSERT(commonTree->lNode != NULL);
+    CU_ASSERT(commonTree->lNode->rNode != NULL);
+    CU_ASSERT(commonTree->lNode->rNode->lNode != NULL);
+
+}
+
+void test_addParentDGD()
+{
+
+    unite_instruction content;
+    content.unite = 10;
+    content.param = "je suis parent de droite ";
+
+    addParent(commonTree->rNode,&content,1);
+    CU_ASSERT(commonTree->rNode != NULL);
+    CU_ASSERT(commonTree->rNode->lNode != NULL);
+    CU_ASSERT(commonTree->rNode->lNode->rNode != NULL);
+
+}

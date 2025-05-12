@@ -23,6 +23,8 @@ void test_AddItemG();
 void test_AddItemD();
 void test_AddItemGG();
 void test_AddItemDD();
+void test_addParentGDG();
+void test_addParentDGD();
 
 
 

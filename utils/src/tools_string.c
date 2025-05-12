@@ -45,7 +45,7 @@ char* copyString(char* ori){
         return "";
     }
     
-    int size = strlen(ori);
+    int size = strlen(ori) +1;
     char * cpStr = malloc(sizeof(char) * size);
 
     strcpy(cpStr, ori);

@@ -55,9 +55,16 @@ char addItem(Tree *tree, unite_instruction *content,const char isLeft)
 
 char addParent(Tree *tree, unite_instruction *content,const char isLeft)
 {
-    void* tmp_content = tree->content;
-    tree->content = malloc(sizeof(unite_instruction));
-    memcpy(tree->content, content,sizeof(unite_instruction));
+    unite_instruction *tmp_content = malloc(sizeof(unite_instruction));
+    tmp_content->unite = tree->content->unite;
+    tmp_content->param = copyString(tree->content->param);
+    
+    // libération de l'ancienne valeur de parametre
+    free(tree->content->param);
+    
+    tree->content->unite = content->unite;
+    tree->content->param = copyString(content->param);
+
     Tree* lTree = tree->lNode;
     tree->lNode = NULL;
     Tree* rTree = tree->rNode;
@@ -74,6 +81,8 @@ char addParent(Tree *tree, unite_instruction *content,const char isLeft)
         tree->rNode->lNode =lTree;
         tree->rNode->rNode = rTree;
     }
+    free(tmp_content->param);
+    free(tmp_content);
     return tree != NULL;
 }
 
