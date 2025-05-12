@@ -86,29 +86,6 @@ char addParent(Tree *tree, unite_instruction *content,const char isLeft)
     return tree != NULL;
 }
 
-Tree *findItemInTree(Tree *tree, unite_instruction *content, char (*func)(const unite_instruction *,const unite_instruction *))
-{
-    if (func(tree->content, content))
-    {
-        return tree;
-    }
-    else
-    {
-        Tree* tmpTree = NULL;
-        if(tree->lNode != NULL){
-            tmpTree = findItemInTree(tree->lNode, content, func);
-        }
-        if(tmpTree != NULL) return tmpTree;
-        if (tree->rNode != NULL)
-        {
-            tmpTree = findItemInTree(tree->rNode, content, func);
-        }
-        if(tmpTree != NULL) return tmpTree;
-        else return NULL;
-    }
-    
-    
-}
 
 /****
  * PRIVATE DEFINITION
