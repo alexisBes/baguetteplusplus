@@ -8,8 +8,12 @@ if [ ! -d "$DIRECTORY" ]; then
 fi
 
 mkdir tempbuild
-
-cmake -B tempbuild -S . -G Ninja
+COMPILER='Unix Makefiles'
+if command -v ninja 2>&1 >/dev/null
+then
+    COMPILER='Ninja'
+fi
+cmake -B tempbuild -S . -G "$COMPILER"
 cmake --build ./tempbuild --target tools_test --config Release
 
 ./tempbuild/utils/tools_test

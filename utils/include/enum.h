@@ -1,6 +1,9 @@
 #ifndef ENUM_H
 #define ENUM_H
 
+/**
+ * Tous les types de token possible dans le code
+ */
 typedef enum {
  IDENTIFIANT, NOMBRE, // generique avec attribut 
  AFFECTATION, //generique sans attribut

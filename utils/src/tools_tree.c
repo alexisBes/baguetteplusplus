@@ -6,6 +6,14 @@
 /****
  * PRIVATE DECLARATION
  */
+
+ /**
+  * @name _allocItem
+  * @brief fonction générique pour l'ajout d'un nouveau noeud
+  * @param dest : un pointeur vers le nouveau noeud a ajouter non initialisé
+  * @param content : le contenue du noeud
+  * @return un pointeur vers le nouveau noeud
+  */
 Tree * _allocItem(Tree *dest, unite_instruction *content);
 
 /****
