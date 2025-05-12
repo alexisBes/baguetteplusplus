@@ -21,8 +21,8 @@ int Init_ToolsTree();
 int Clean_ToolsTree();
 void test_AddItemG();
 void test_AddItemD();
-void test_AddItemGG();
-void test_AddItemDD();
+void test_AddItemGG_NullParam();
+void test_AddItemDD_Pointer();
 void test_addParentGDG();
 void test_addParentDGD();
 

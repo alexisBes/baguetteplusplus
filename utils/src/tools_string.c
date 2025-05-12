@@ -42,7 +42,7 @@ char* copyString(char* ori){
 
     if (ori==NULL)
     {
-        return "";
+        return NULL;
     }
     
     int size = strlen(ori) +1;

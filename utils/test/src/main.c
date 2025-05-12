@@ -92,8 +92,8 @@ int Test_ToolsTree(CU_pSuite suite)
    int result = 0;
    result = (NULL == CU_add_test(suite, "Test d'ajout d'item gauche ", test_AddItemG));
    result = result || (NULL == CU_add_test(suite, "Test d'ajout d'item droite ", test_AddItemD));
-   result = result || (NULL == CU_add_test(suite, "Test d'ajout d'item gauche gauche ", test_AddItemGG));
-   result = result || (NULL == CU_add_test(suite, "Test d'ajout d'item droite droite ", test_AddItemDD));
+   result = result || (NULL == CU_add_test(suite, "Test d'ajout d'item avec un parametre null gauche gauche ", test_AddItemGG_NullParam));
+   result = result || (NULL == CU_add_test(suite, "Test d'ajout d'item par pointer droite droite ", test_AddItemDD_Pointer));
    result = result || (NULL == CU_add_test(suite, "Test d'ajout parent gauche gauche ", test_addParentGDG));
    result = result || (NULL == CU_add_test(suite, "Test d'ajout parent droite droite ", test_addParentDGD));
    if (result)

@@ -48,6 +48,6 @@ void test_copyString(){
 }
 void test_copyString_KO(){
     char* str = copyString(NULL);
-    CU_ASSERT(strcmp(str,"")==0);
+    CU_ASSERT(str == NULL);
 
 }

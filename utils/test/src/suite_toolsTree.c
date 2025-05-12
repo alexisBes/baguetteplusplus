@@ -107,9 +107,10 @@ void test_AddItemG()
     content.unite = 4;
     content.param = "je suis gauche";
 
-    addItem(commonTree,&content,1);
+    char isSuccess = addItem(commonTree,&content,1);
     Tree* newItem = commonTree->lNode;
     // on test que le nouvel element est bien ajouté
+    CU_ASSERT_TRUE(isSuccess);
     CU_ASSERT(commonTree->lNode != NULL);
     CU_ASSERT(newItem->content->unite == content.unite);
     CU_ASSERT(strcmp(newItem->content->param,content.param) == 0);
@@ -120,14 +121,14 @@ void test_AddItemG()
 
 void test_AddItemD()
 {
-
     unite_instruction content;
     content.unite = 7;
     content.param = "je suis droite";
 
-    addItem(commonTree,&content,0);
+    char isSuccess = addItem(commonTree,&content,0);
     Tree* newItem = commonTree->rNode;
     // on test que le nouvel element est bien ajouté
+    CU_ASSERT_TRUE(isSuccess);
     CU_ASSERT(commonTree->rNode != NULL);
     CU_ASSERT(newItem->content->unite == content.unite);
     CU_ASSERT(strcmp(newItem->content->param,content.param) == 0);
@@ -135,36 +136,45 @@ void test_AddItemD()
     CU_ASSERT(newItem->rNode== NULL);
 }
 
-void test_AddItemGG()
+void test_AddItemGG_NullParam()
 {
     unite_instruction content;
     content.unite = 9;
-    content.param = "je suis guache gauche";
+    content.param = NULL;
 
-    addItem(commonTree->lNode,&content,1);
+    char isSuccess = addItem(commonTree->lNode,&content,1);
     Tree* newItem = commonTree->lNode->lNode;
     // on test que le nouvel element est bien ajouté
+    CU_ASSERT_TRUE(isSuccess);
     CU_ASSERT(commonTree->lNode->lNode != NULL);
     CU_ASSERT(newItem->content->unite == content.unite);
-    CU_ASSERT(strcmp(newItem->content->param,content.param) == 0);
+    CU_ASSERT_PTR_NULL(newItem->content->param);
     CU_ASSERT(newItem->lNode == NULL);
     CU_ASSERT(newItem->rNode== NULL);
 }
 
-void test_AddItemDD()
+void test_AddItemDD_Pointer()
 {
-    unite_instruction content;
-    content.unite = 1;
-    content.param = "je suis droite droite ";
+    unite_instruction *content = malloc(sizeof(unite_instruction));
+    content->unite = 1;
+    size_t taille = strlen("je suis droite droite ")+1;
+    content->param = malloc(sizeof(char) * taille);
+    strcpy(content->param, "je suis droite droite ");
 
-    addItem(commonTree->rNode,&content,0);
+    char isSuccess = addItem(commonTree->rNode,content,0);
     Tree* newItem = commonTree->rNode->rNode;
     // on test que le nouvel element est bien ajouté
+    CU_ASSERT_TRUE(isSuccess);
     CU_ASSERT(commonTree->rNode->rNode != NULL);
-    CU_ASSERT(newItem->content->unite == content.unite);
-    CU_ASSERT(strcmp(newItem->content->param,content.param) == 0);
+    CU_ASSERT(newItem->content->unite == content->unite);
+    CU_ASSERT(strcmp(newItem->content->param,content->param) == 0);
     CU_ASSERT(newItem->lNode == NULL);
     CU_ASSERT(newItem->rNode== NULL);
+    free(content->param);
+    free(content);
+    // on s'assure que les valeur sont toujours acessible apres la libération
+    CU_ASSERT(newItem->content->unite == 1);
+    CU_ASSERT(strcmp(newItem->content->param,"je suis droite droite ") == 0);
 }
 
 void test_addParentGDG()
@@ -174,7 +184,8 @@ void test_addParentGDG()
     content.unite = 10;
     content.param = "je suis parent de gauche ";
 
-    addParent(commonTree->lNode,&content,0);
+    char isSucess = addParent(commonTree->lNode,&content,0);
+    CU_ASSERT(isSucess);
     CU_ASSERT(commonTree->lNode != NULL);
     CU_ASSERT(commonTree->lNode->rNode != NULL);
     CU_ASSERT(commonTree->lNode->rNode->lNode != NULL);
@@ -188,7 +199,8 @@ void test_addParentDGD()
     content.unite = 10;
     content.param = "je suis parent de droite ";
 
-    addParent(commonTree->rNode,&content,1);
+    char isSucess = addParent(commonTree->rNode,&content,1);
+    CU_ASSERT(isSucess);
     CU_ASSERT(commonTree->rNode != NULL);
     CU_ASSERT(commonTree->rNode->lNode != NULL);
     CU_ASSERT(commonTree->rNode->lNode->rNode != NULL);
