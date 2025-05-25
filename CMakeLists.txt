@@ -62,3 +62,6 @@ target_include_directories(baguettetest PRIVATE
     utils/include/)
 
 target_include_directories(baguettetest PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
+
+enable_testing()
+ add_test(NAME "Test_Lexer" COMMAND baguettetest ${CMAKE_CURRENT_SOURCE_DIR}/test/lexer/KEYWORD_test.txt ${CMAKE_CURRENT_SOURCE_DIR}/test/lexer/KEYWORD_test_expected.txt ${CMAKE_CTEST_ARGUMENTS})
