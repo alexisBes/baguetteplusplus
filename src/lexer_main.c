@@ -2,8 +2,11 @@
 #include "stdlib.h"
 #include "tools_string.h"
 
-#define _BPP_OPERATEUR_ "-*/+ ;<\n"
+#define _BPP_OPERATEUR_ "-*/+ ;<"
 #define _BPP_OPERATEUR_SIZE sizeof(_BPP_OPERATEUR_)
+
+#define _BPP_TRASH " \t\n"
+#define _BPP_TRASH_SIZE sizeof(_BPP_TRASH)
 
 void recuperationNombre(char *out_param, int *out_index);
 void recuperationIdentifiant(char *out_param, int *out_index);
@@ -29,6 +32,19 @@ void getNextToken(unite_type *out_TypeLexique, char **param)
         return;
     }
     char currentChar = fgetc(fileBaguette);
+    *param == NULL;
+    // si le premier caracteres est a ingorer, on bouclejusqu'a avoir autre chose
+    while (!feof(fileBaguette) && isCharExistInArray(currentChar, _BPP_TRASH, _BPP_TRASH_SIZE))
+    {
+        currentChar = fgetc(fileBaguette);
+    }
+
+    // si on est a la fin du fichier, on arrete tout.
+    if (feof(fileBaguette))
+    {
+        *out_TypeLexique = UNITE_LEXICAL_COUNT;
+        return;
+    }
 
     // le caracter est un chiffre
     if (currentChar >= '0' && currentChar <= '9')
@@ -64,8 +80,8 @@ void getNextToken(unite_type *out_TypeLexique, char **param)
             index++;
             recuperationIdentifiant(ident, &index);
             *out_TypeLexique = IDENTIFIANT;
-            *param = malloc(index * sizeof(char));
-            strncpy(*param, ident, index);
+            *param = malloc((index + 1) * sizeof(char));
+            strncpy(*param, ident, index + 1);
             free(ident);
             return;
         }
@@ -115,7 +131,7 @@ void recuperationIdentifiant(char *out_param, int *out_index)
     {
         currentChar = fgetc(fileBaguette);
         out_param = realloc(out_param, sizeof(char) * (index + 1));
-        if (isCharExistInArray(currentChar, _BPP_OPERATEUR_, _BPP_OPERATEUR_SIZE))
+        if (isCharExistInArray(currentChar, _BPP_OPERATEUR_, _BPP_OPERATEUR_SIZE) ||isCharExistInArray(currentChar, _BPP_TRASH,_BPP_TRASH_SIZE))
         {
             out_param[index] = '\0';
             *out_index = index;
@@ -163,6 +179,6 @@ unite_type recupOperateur(const char current)
     {
         return FIN_INSTRUCTION;
     }
-    printf("tu n'est pas censé allez jusque ici.\n");
+    printf("tu n'est pas censé allez jusque ici, %c-%d.\n", current, current);
     exit(EXIT_FAILURE);
 }
