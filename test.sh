@@ -14,8 +14,12 @@ then
     COMPILER='Ninja'
 fi
 cmake -B tempbuild -S . -G "$COMPILER"
-cmake --build ./tempbuild --target tools_test --config Release
+cmake --build ./tempbuild --target all --config Debug
 
 ./tempbuild/utils/tools_test
+
+cd tempbuild
+ctest
+cd ..
 
 rm -rf tempbuild

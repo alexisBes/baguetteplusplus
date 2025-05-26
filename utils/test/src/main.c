@@ -4,9 +4,9 @@
 #include "suite_toolsTree.h"
 #include "CUnit/Basic.h"
 
-int Test_ToolsString(CU_pSuite suite);
-int Test_ToolsTree_Create(CU_pSuite suite);
-int Test_ToolsTree(CU_pSuite suite);
+static int Test_ToolsString(CU_pSuite suite);
+static int Test_ToolsTree_Create(CU_pSuite suite);
+static int Test_ToolsTree(CU_pSuite suite);
 /* The main() function for setting up and running the tests.
  * Returns a CUE_SUCCESS on successful running, another
  * CUnit error code on failure.

@@ -1,3 +1,7 @@
+
+  ###
+  ### Ce project contien une librairie avec des fonction utile 
+  ###
 add_library(Tools 
     src/tools_string.c
     src/tools_tree.c)
@@ -8,6 +12,9 @@ target_include_directories(Tools PRIVATE
 
   target_link_libraries(Tools INTERFACE bpp_compiler_flag)
 
+  ###
+  ### executable pour test unitaire de la lib
+  ###
     add_executable(tools_test
     test/src/main.c
     test/src/suite_toolsString.c
@@ -15,7 +22,6 @@ target_include_directories(Tools PRIVATE
     src/tools_string.c
     src/tools_tree.c)
     
-    message("${PROJECT_SOURCE_DIR}")
 
     target_include_directories(tools_test PRIVATE
         test/  
