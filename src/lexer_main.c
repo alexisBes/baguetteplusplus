@@ -7,12 +7,31 @@
 
 #define _BPP_TRASH " \t\n"
 #define _BPP_TRASH_SIZE sizeof(_BPP_TRASH)
-
-void recuperationNombre(char *out_param, int *out_index);
-void recuperationIdentifiant(char *out_param, int *out_index);
-unite_type recupOperateur(const char current);
-
+/**
+ * @brief pointeur vers le fichier sources.
+ */
 FILE *fileBaguette = NULL;
+
+/*****
+ * @brief Logique de récupération d'un entier naturel non signée. /!\ fait avancer le stream de fileBaguette
+ * @param out_param le nombre stocké en chaine de cractere
+ * @param out_index la taille du nombre récupére (ne prend pas en compte le \0)
+ */
+void recuperationNombre(char *out_param, int *out_index);
+
+/*****
+ * @brief Logique de récupération d'un identifiant.  /!\ fait avancer le stream de fileBaguette
+ * @param out_param l'identifiant stocké en chaine de caractere
+ * @param out_index la taille de l'identifiant récupére (ne prend pas en compte le \0)
+ */
+void recuperationIdentifiant(char *out_param, int *out_index);
+
+/*****
+ * @brief Logique de récupération d'un opérateur.  /!\ fait avancer le stream de fileBaguette
+ * @param current le caractère en cours d'analyse par le lexer
+ * @return le type d'opérateur récupérer
+ */
+unite_type recupOperateur(const char current);
 
 void initLexer(const char *path)
 {

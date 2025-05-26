@@ -14,7 +14,7 @@ then
     COMPILER='Ninja'
 fi
 cmake -B tempbuild -S . -G "$COMPILER"
-cmake --build ./tempbuild --target all --config Release
+cmake --build ./tempbuild --target all --config Debug
 
 ./tempbuild/utils/tools_test
 
