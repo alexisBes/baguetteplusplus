@@ -41,6 +41,22 @@ void test_isCharExistInArray_KO()
     CU_ASSERT_FALSE_FATAL(isCharExistInArray('T', "toto", 15));
 }
 
+void test_getIndexStringInArray()
+{
+    const char *Dico[3] = {"toto","ToTo", "albert"};
+    CU_ASSERT(getIndexStringInArray("toto", Dico, 3)==0);
+    CU_ASSERT(getIndexStringInArray("ToTo", Dico, 3)==1);
+    CU_ASSERT(getIndexStringInArray("albert", Dico, 3)==2);
+}
+
+void test_getIndexStringInArray_KO()
+{
+    const char *Dico[3] = {"toto","ToTo", "albert"};
+    CU_ASSERT_EQUAL(getIndexStringInArray('t', NULL, 4),-1);
+    CU_ASSERT_EQUAL(getIndexStringInArray(NULL,Dico, 4),-1);
+    CU_ASSERT_EQUAL(getIndexStringInArray('T', Dico, 0),-1);
+}
+
 void test_copyString(){
     char* str = copyString("Joseph Joestar");
     CU_ASSERT(strcmp(str,"Joseph Joestar")==0);

@@ -65,6 +65,8 @@ int Test_ToolsString(CU_pSuite suite)
    result = result || (NULL == CU_add_test(suite, "CountCharInString KO", test_CountCharInString_KO));
    result = result || (NULL == CU_add_test(suite, "isCharExistInArray", test_isCharExistInArray));
    result = result || (NULL == CU_add_test(suite, "isCharExistInArray KO", test_isCharExistInArray_KO));
+   result = result || (NULL == CU_add_test(suite, "getIndexStringInArray", test_getIndexStringInArray));
+   result = result || (NULL == CU_add_test(suite, "getIndexStringInArray KO", test_getIndexStringInArray_KO));
    result = result || (NULL == CU_add_test(suite, "copyString", test_copyString));
    result = result || (NULL == CU_add_test(suite, "copyString KO", test_copyString_KO));
    if (result)

@@ -9,6 +9,9 @@ typedef enum {
  AFFECTATION, //generique sans attribut
  ADDITION, SOUSTRACTION, MULTIPLICATION, DIVISION, // mathématique
  FIN_INSTRUCTION, // structurant fin
+ NONSIGNE,// n'est utile que pour le lexer
+ OCTET, OCTET_Nos, COURT, COURT_Nos,
+ ENTIER , ENTIER_NoS, LONG, LONG_Nos, 
  UNITE_LEXICAL_COUNT // FIN
 } unite_type;
 
