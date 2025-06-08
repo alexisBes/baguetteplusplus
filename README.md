@@ -14,6 +14,20 @@ L'objectif est de proposer un language de programmation français et d'apprendre
 ### compatibilité
 Il y en aura.
 
+# Le language
+## Lexique
+### Type
+TODO
+### Arithmétique
+| Symbole    | Signification |
+| -------- | ------- |
+| + | addition |
+| - | soustraction |
+| * | multiplication |
+| / | division |
+| <- | affectation |
+## Exemple
+
 # Lancement du projet
  Apres aoir cloné le projet, utilisé CMake via les commandes suivantes:
 ```sh
