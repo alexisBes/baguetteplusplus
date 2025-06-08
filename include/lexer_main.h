@@ -2,6 +2,7 @@
 #define MAIN_LEXER
 #include "enum.h"
 #include "stdio.h"
+
 /****
 * @brief initialisation du lexer. A appelé qu'une seul fois. Prépare la lecture du fichier
 * @param path chemin vers le fichier source

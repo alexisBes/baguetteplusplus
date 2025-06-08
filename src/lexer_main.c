@@ -1,6 +1,7 @@
 #include "lexer_main.h"
 #include "stdlib.h"
 #include "tools_string.h"
+#include "lexer_ident.h"
 
 #define _BPP_OPERATEUR_ "-*/+ ;<"
 #define _BPP_OPERATEUR_SIZE sizeof(_BPP_OPERATEUR_)
@@ -98,9 +99,16 @@ void getNextToken(unite_type *out_TypeLexique, char **param)
             ident[index] = currentChar;
             index++;
             recuperationIdentifiant(ident, &index);
-            *out_TypeLexique = IDENTIFIANT;
-            *param = malloc((index + 1) * sizeof(char));
-            strncpy(*param, ident, index + 1);
+            *out_TypeLexique = checkIdentifiant(ident);
+            if (*out_TypeLexique == IDENTIFIANT)
+            {
+                *param = malloc((index + 1) * sizeof(char));
+                strncpy(*param, ident, index + 1);
+            }
+            else
+            {
+                *param = NULL;
+            }
             free(ident);
             return;
         }
@@ -150,7 +158,7 @@ void recuperationIdentifiant(char *out_param, int *out_index)
     {
         currentChar = fgetc(fileBaguette);
         out_param = realloc(out_param, sizeof(char) * (index + 1));
-        if (isCharExistInArray(currentChar, _BPP_OPERATEUR_, _BPP_OPERATEUR_SIZE) ||isCharExistInArray(currentChar, _BPP_TRASH,_BPP_TRASH_SIZE))
+        if (isCharExistInArray(currentChar, _BPP_OPERATEUR_, _BPP_OPERATEUR_SIZE) || isCharExistInArray(currentChar, _BPP_TRASH, _BPP_TRASH_SIZE))
         {
             out_param[index] = '\0';
             *out_index = index;
