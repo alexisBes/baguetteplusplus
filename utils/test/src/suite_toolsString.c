@@ -52,9 +52,9 @@ void test_getIndexStringInArray()
 void test_getIndexStringInArray_KO()
 {
     const char *Dico[3] = {"toto","ToTo", "albert"};
-    CU_ASSERT_EQUAL(getIndexStringInArray('t', NULL, 4),-1);
+    CU_ASSERT_EQUAL(getIndexStringInArray("t", NULL, 4),-1);
     CU_ASSERT_EQUAL(getIndexStringInArray(NULL,Dico, 4),-1);
-    CU_ASSERT_EQUAL(getIndexStringInArray('T', Dico, 0),-1);
+    CU_ASSERT_EQUAL(getIndexStringInArray("T", Dico, 0),-1);
 }
 
 void test_copyString(){
