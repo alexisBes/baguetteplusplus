@@ -17,9 +17,6 @@ int main(int argc, char *argv[])
         // analyse syntaxique.
         parsing(&arbreInstruction);
 
-        // Ajout de la partie lecture semantique 
-        //quand on aura une table des symboles
-        
         // generateur de code
         generate( arbreInstruction);
 
