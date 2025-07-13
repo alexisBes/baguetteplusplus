@@ -1,6 +1,0 @@
-<- + - * /  ;
-TOTO titi TAto
-12345  98745;
-; ENTIER  
-NONSIGNE   COURT
-LONG   OCTET  

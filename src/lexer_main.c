@@ -6,7 +6,7 @@
 #define _BPP_OPERATEUR_ "-*/+ ;<"
 #define _BPP_OPERATEUR_SIZE sizeof(_BPP_OPERATEUR_)
 
-#define _BPP_TRASH " \t\n"
+#define _BPP_TRASH " \r\t\n"
 #define _BPP_TRASH_SIZE sizeof(_BPP_TRASH)
 /**
  * @brief pointeur vers le fichier sources.
@@ -130,7 +130,8 @@ void recuperationNombre(char *out_param, int *out_index)
     {
         currentChar = fgetc(fileBaguette);
         out_param = realloc(out_param, sizeof(char) * (index + 1));
-        if (isCharExistInArray(currentChar, _BPP_OPERATEUR_, _BPP_OPERATEUR_SIZE))
+        if (isCharExistInArray(currentChar, _BPP_OPERATEUR_, _BPP_OPERATEUR_SIZE)
+    || isCharExistInArray(currentChar, _BPP_TRASH, _BPP_TRASH_SIZE))
         {
             out_param[index] = '\0';
             fseek(fileBaguette, -1, SEEK_CUR);
@@ -141,6 +142,7 @@ void recuperationNombre(char *out_param, int *out_index)
         {
             fprintf(stderr, "Erreur, token invalid.\n");
             free(out_param);
+            out_param = NULL;
             return;
         }
 
