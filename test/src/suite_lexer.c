@@ -102,14 +102,66 @@ void test_RetrieveIdent()
 TOO la can OCTET 12345 "
 void test_RetrieveMathOperation()
 {
-    FILE *file = fopen("./TEST.bpp", "w");
-    fprintf(file, CONTENT_RETRIEVE_IDENT);
-}
+    InitForEachTest(CONTENT_RETRIEVE_MATH);
+    verif_Unite(ADDITION, NULL);
+    verif_Unite(DIVISION, NULL);
+    verif_Unite(MULTIPLICATION, NULL);
+    verif_Unite(SOUSTRACTION, NULL);
+    verif_Unite(DIVISION, NULL);
 
+    char *param = NULL;
+    unite_type unite;
+    do
+    {
+        getNextToken(&unite, &param);
+        CU_ASSERT(unite< ADDITION);
+        CU_ASSERT(DIVISION > unite);
+    } while (unite != UNITE_LEXICAL_COUNT);
+
+    closeLexer();
+}
+#define CONTENT_RETRIEVE_TYPE "OCTET COURT\tLONG\nENTIER\r\nNON SIGNE \
+TOO la can 12345 "
 void test_RetrieveType()
 {
+    InitForEachTest(CONTENT_RETRIEVE_TYPE);
+    verif_Unite(OCTET, NULL);
+    verif_Unite(COURT, NULL);
+    verif_Unite(LONG, NULL);
+    verif_Unite(ENTIER, NULL);
+    verif_Unite(NONSIGNE, NULL);
+
+    char *param = NULL;
+    unite_type unite;
+    do
+    {
+        getNextToken(&unite, &param);
+        CU_ASSERT(unite< NONSIGNE);
+        CU_ASSERT(LONG_Nos > unite);
+    } while (unite != UNITE_LEXICAL_COUNT);
+
+    closeLexer();
 }
 
+#define CONTENT_RETRIEVE_OPERATION "<- <-\t<-\n<-\r\n<- \
+TOO la can 12345 "
 void test_RetrieveOperation()
 {
+    InitForEachTest(CONTENT_RETRIEVE_OPERATION);
+    verif_Unite(AFFECTATION, NULL);
+    verif_Unite(AFFECTATION, NULL);
+    verif_Unite(AFFECTATION, NULL);
+    verif_Unite(AFFECTATION, NULL);
+    verif_Unite(AFFECTATION, NULL);
+
+    char *param = NULL;
+    unite_type unite;
+    do
+    {
+        getNextToken(&unite, &param);
+        CU_ASSERT_NOT_EQUAL(unite, AFFECTATION);
+    } while (unite != UNITE_LEXICAL_COUNT);
+
+    closeLexer();
+
 }

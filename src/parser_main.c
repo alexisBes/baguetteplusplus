@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include "bpp_types.h"
 #include "lexer_main.h"
+#include "semer_main.h"
 
 void gestionIdentifiant(Tree **current);
 
@@ -31,7 +32,7 @@ void parsing(Tree **arbreSyntaxique)
         if (NONSIGNE == unite)
         {
             unite_type secondUnite = UNITE_LEXICAL_COUNT;
-            getNextToken(secondUnite, &param);
+            getNextToken(&secondUnite, &param);
             if (OCTET <= unite && unite <= LONG_Nos)
                 unite = secondUnite + 1;
             else
@@ -40,9 +41,9 @@ void parsing(Tree **arbreSyntaxique)
                 exit(-1);
             }
         }
-        
+
         unite_type uniteIdent = UNITE_LEXICAL_COUNT;
-        getNextToken(uniteIdent, &param);
+        getNextToken(&uniteIdent, &param);
         if (IDENTIFIANT != uniteIdent)
         {
             printf("Erreur: Un identifiant est attendu.");
@@ -50,6 +51,7 @@ void parsing(Tree **arbreSyntaxique)
         }
 
         // et on l'ajouter a la tables des symboles.
+        add_symbol(unite,param);
     }
     return;
 }
