@@ -18,8 +18,6 @@ cmake --build ./tempbuild --target all --config Debug
 
 ./tempbuild/utils/tools_test
 
-cd tempbuild
-ctest
-cd ..
+./tempbuild/baguettetest
 
 rm -rf tempbuild

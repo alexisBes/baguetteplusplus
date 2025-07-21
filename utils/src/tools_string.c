@@ -38,7 +38,26 @@ char isCharExistInArray(const char c, const char *array, const int length)
     return 0;
 }
 
-char* copyString(char* ori){
+int getIndexStringInArray(const char *s, const char** array, const int length)
+{
+    if (s == NULL || array == NULL || length <= 0)
+    {
+        return -1;
+    }
+    int i =0;
+    int size = strlen(s);
+    while (i<length)
+    {
+        if ( size == strlen(array[i]) && strncmp(s,array[i],size) == 0)
+        {
+            return i;
+        }
+        i++;
+    }
+    return -1;
+}
+
+char* copyString(const char* ori){
 
     if (ori==NULL)
     {
