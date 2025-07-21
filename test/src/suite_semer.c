@@ -22,7 +22,7 @@ void checkResult(const char *nameVar, const unite_semantique *expectedResult)
     {
         CU_ASSERT(unitSem->taille == expectedResult->taille);
         CU_ASSERT(unitSem->type == expectedResult->type);
-        CU_ASSERT_STRING_EQUAL(unitSem->type, expectedResult->type);
+        CU_ASSERT_STRING_EQUAL(unitSem->name, expectedResult->name);
     }
     else
     {
@@ -44,11 +44,11 @@ void test_nouveauSymbole()
     CU_ASSERT_EQUAL(add_symbol(LONG, "JOJO"),1);
 
     unite_semantique expectedUnit;
-    expectedUnit.name = "TOTO";
+    expectedUnit.name = "toto";
     expectedUnit.taille = 1;
     expectedUnit.type = OCTET;
 
-    expected = isSymbolExist("TOTO");
+    expected = isSymbolExist("toto");
     CU_ASSERT(expected == 1);
     checkResult("toto", &expectedUnit);
 
@@ -76,6 +76,11 @@ void test_nouveauSymbole()
     expected = isSymbolExist("TRUCMuch");
     CU_ASSERT(expected == 0);
     const unite_semantique *unitSem_notFound = getSymbol("TRUCMuch");
+    CU_ASSERT(unitSem_notFound == NULL);
+
+    expected = isSymbolExist("ToTo");
+    CU_ASSERT(expected == 0);
+    const unite_semantique *unitSem_notFound_2 = getSymbol("ToTo");
     CU_ASSERT(unitSem_notFound == NULL);
 }
 

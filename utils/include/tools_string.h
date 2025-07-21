@@ -39,7 +39,7 @@ int getIndexStringInArray(const char *s, const char** array, const int length);
  * @param ori la chaine de caractere d'origine
  * @return return  un pointeur vers la chaine copier. En cas d'erreur, retourne NULL
  */
-char* copyString(char* ori);
+char* copyString(const char* ori);
 
 #endif
 

@@ -57,7 +57,7 @@ int getIndexStringInArray(const char *s, const char** array, const int length)
     return -1;
 }
 
-char* copyString(char* ori){
+char* copyString(const char* ori){
 
     if (ori==NULL)
     {

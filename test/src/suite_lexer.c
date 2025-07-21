@@ -37,6 +37,11 @@ static void verif_Unite(const unite_type expected_type, const char *expected_par
     CU_ASSERT_EQUAL(unite, expected_type);
     if (param != NULL)
     {
+        if(expected_param ==NULL)
+        {
+            free(param);
+            CU_FAIL();
+        }
         CU_ASSERT_STRING_EQUAL(param, expected_param);
 
         free(param);
@@ -114,13 +119,18 @@ void test_RetrieveMathOperation()
     do
     {
         getNextToken(&unite, &param);
-        CU_ASSERT(unite< ADDITION);
-        CU_ASSERT(DIVISION > unite);
+        CU_ASSERT_TRUE(unite < ADDITION || unite >DIVISION );
+
+        if(param != NULL)
+        {
+            free(param);
+            param = NULL;
+        }
     } while (unite != UNITE_LEXICAL_COUNT);
 
     closeLexer();
 }
-#define CONTENT_RETRIEVE_TYPE "OCTET COURT\tLONG\nENTIER\r\nNON SIGNE \
+#define CONTENT_RETRIEVE_TYPE "OCTET COURT\tLONG\nENTIER\r\nNONSIGNE \
 TOO la can 12345 "
 void test_RetrieveType()
 {
@@ -136,8 +146,12 @@ void test_RetrieveType()
     do
     {
         getNextToken(&unite, &param);
-        CU_ASSERT(unite< NONSIGNE);
-        CU_ASSERT(LONG_Nos > unite);
+        CU_ASSERT(unite< NONSIGNE || LONG_Nos < unite);
+        if(param != NULL)
+        {
+            free(param);
+            param = NULL;
+        }
     } while (unite != UNITE_LEXICAL_COUNT);
 
     closeLexer();
@@ -160,6 +174,11 @@ void test_RetrieveOperation()
     {
         getNextToken(&unite, &param);
         CU_ASSERT_NOT_EQUAL(unite, AFFECTATION);
+        if(param != NULL)
+        {
+            free(param);
+            param = NULL;
+        }
     } while (unite != UNITE_LEXICAL_COUNT);
 
     closeLexer();
