@@ -1,17 +1,23 @@
+#!/bin/bash
 
 result=""
-for t in "$(find . -name *.bpp)";
-do 
-./build/baguetteplusplus $t
 
-result="$(diff -q $t.result $t.lexer) $result";
-echo $result
-
-done
-
-if [ -z $result ] 
-then
-echo "Les tests sont ok"
-else
-echo "Les test ont echoué"
+if [ ! -d "$DIRECTORY" ]; then
+    echo "remove old build"
+    rm -rf tempbuild
 fi
+
+mkdir tempbuild
+COMPILER='Unix Makefiles'
+if command -v ninja 2>&1 >/dev/null
+then
+    COMPILER='Ninja'
+fi
+cmake -B tempbuild -S . -G "$COMPILER"
+cmake --build ./tempbuild --target all --config Debug
+
+./tempbuild/utils/tools_test
+
+./tempbuild/baguettetest
+
+rm -rf tempbuild

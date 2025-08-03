@@ -1,53 +1,27 @@
-// baguetteplusplus.cpp : Ce fichier contient la fonction 'main'. L'exécution du programme commence et se termine à cet endroit.
+// baguetteplusplus.cpp : Ce fichier contient la fonction 'main'. L'execution du programme commence et se termine a cet endroit.
 //
 
-#include <stdlib.h>
-#include "bppFile.h"
-#include "mainLexer.h"
-#include "mainParser.h"
+#include "stdlib.h"
+#include "lexer_main.h"
+#include "parser_main.h"
+#include "generateur_main.h"
 
 int main(int argc, char *argv[])
 {
     if (argc > 1)
     {
-        FILE *fileBaguette = fopen(argv[1], "r");
-        if (fileBaguette==NULL)
-        {
-            printf("Impossible d'ouvrir le fichier  %s. Veuillez vérifier que le fichier existe.\n", argv[1]);
-            exit(-1);
-        }
+        initLexer(argv[1]);
         printf("Lancement de la compilation de %s \n", argv[1]);
-        
-        long int length = readSizeFile(fileBaguette);
-        char *input = malloc(sizeof(char) * (length +2));
-        
-        readSourceCode(fileBaguette,input);
 
-        fclose(fileBaguette);
+        Tree* arbreInstruction  =NULL;
+        // analyse syntaxique.
+        parsing(&arbreInstruction);
 
-        LexerData lexerData;
-        short int tokenizeRsult = tokenizeDocument(input, length, &lexerData);
-        
+        // generateur de code
+        generate( arbreInstruction);
 
-        if(tokenizeRsult != 0)
-        {
-            printf("Une erreur est survenue durant l'analyse. Vérifier les logs.\n");
-            printLexer(&lexerData);
-            eraseLexerData(&lexerData);
-            free(input);
-
-            return -1;
-        }
-        #ifdef TESTING
-
-        printLexerToCsv(argv[1], &lexerData);
-        
-
-        #endif
-        //short int parsingResult = parsing(&lexerData);
-
-        eraseLexerData(&lexerData);
-        free(input);
+        // fermeture des fichiers
+        closeLexer();
     }
     return 0;
 }
