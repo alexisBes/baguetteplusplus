@@ -16,6 +16,14 @@
   */
 Tree * _allocItem(Tree *dest, unite_instruction *content);
 
+ /**
+  * @name _printTree
+  * @brief fonction técursive d'affichage d'un arbre
+  * @param tree : un pointeur vers l'element courant a afficher
+  * @param margin : a initialiser a 0
+  */
+void _printTree(Tree *tree, int margin);
+
 /****
  * PUBLIC DEFINITION
  */
@@ -94,6 +102,13 @@ char addParent(Tree *tree, unite_instruction *content,const char isLeft)
     return tree != NULL;
 }
 
+#include "stdio.h"
+void printTree(Tree *tree)
+{
+    printf("o");
+    _printTree(tree, 0);
+}
+
 
 /****
  * PRIVATE DEFINITION
@@ -111,4 +126,24 @@ Tree * _allocItem(Tree *tree, unite_instruction *content)
         return tree;
     }
     return NULL;
+}
+
+void _printTree(Tree *tree, int margin)
+{
+    int newMargin=margin +1;
+    for (int i = 0; i < margin; i++)
+        printf("    ");
+    printf("%d\n", tree->content->unite);
+    if (tree->lNode != NULL)
+    {
+        printf("l");
+        _printTree(tree->lNode, newMargin);
+    }
+    if (tree->rNode != NULL)
+    {
+        printf("r");
+        _printTree(tree->rNode, newMargin);
+    }
+    if (tree->rNode == NULL && tree->lNode == NULL)
+        return;
 }

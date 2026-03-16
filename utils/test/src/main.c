@@ -2,11 +2,13 @@
 #include <stdio.h>
 #include "suite_toolsString.h"
 #include "suite_toolsTree.h"
+#include "suite_toolsStack.h"
 #include "CUnit/Basic.h"
 
 static int Test_ToolsString(CU_pSuite suite);
 static int Test_ToolsTree_Create(CU_pSuite suite);
 static int Test_ToolsTree(CU_pSuite suite);
+static int Test_ToolsStack(CU_pSuite suite);
 /* The main() function for setting up and running the tests.
  * Returns a CUE_SUCCESS on successful running, another
  * CUnit error code on failure.
@@ -31,9 +33,9 @@ int main()
    Test_ToolsString(pSuite);
 
    /* add a suite to the registry */
-   pSuite_Tree_CreateDestruct = CU_add_suite("ToolsTree Creation & Destruction", 
-      Init_ToolsTree_CreateDestruct,
-      Clean_ToolsTree_CreateDestruct);
+   pSuite_Tree_CreateDestruct = CU_add_suite("ToolsTree Creation & Destruction",
+                                             Init_ToolsTree_CreateDestruct,
+                                             Clean_ToolsTree_CreateDestruct);
    if (NULL == pSuite_Tree_CreateDestruct)
    {
       CU_cleanup_registry();
@@ -41,15 +43,25 @@ int main()
    }
    Test_ToolsTree_Create(pSuite_Tree_CreateDestruct);
    /* add a suite to the registry */
-   pSuite_Tree = CU_add_suite("ToolsTree Others", 
-      Init_ToolsTree,
-      Clean_ToolsTree);
-   if (NULL ==pSuite_Tree)
+   pSuite_Tree = CU_add_suite("ToolsTree Others",
+                              Init_ToolsTree,
+                              Clean_ToolsTree);
+   if (NULL == pSuite_Tree)
    {
       CU_cleanup_registry();
       return CU_get_error();
    }
    Test_ToolsTree(pSuite_Tree);
+
+   pSuite_Tree = CU_add_suite("ToolsStack",
+                              Init_ToolsStack,
+                              Clean_ToolsStack);
+   if (NULL == pSuite_Tree)
+   {
+      CU_cleanup_registry();
+      return CU_get_error();
+   }
+   Test_ToolsStack(pSuite_Tree);
    /* Run all tests using the CUnit Basic interface */
    CU_basic_set_mode(CU_BRM_VERBOSE);
    CU_basic_run_tests();
@@ -98,6 +110,23 @@ int Test_ToolsTree(CU_pSuite suite)
    result = result || (NULL == CU_add_test(suite, "Test d'ajout d'item par pointer droite droite ", test_AddItemDD_Pointer));
    result = result || (NULL == CU_add_test(suite, "Test d'ajout parent gauche gauche ", test_addParentGDG));
    result = result || (NULL == CU_add_test(suite, "Test d'ajout parent droite droite ", test_addParentDGD));
+   if (result)
+   {
+      CU_cleanup_registry();
+      return CU_get_error();
+   }
+   return result;
+}
+int Test_ToolsStack(CU_pSuite suite)
+{
+   int result = 0;
+
+   result = (NULL == CU_add_test(suite, "Test création de stack ", test_CreateStack));
+   result = result || (NULL == CU_add_test(suite, "Test push element ", test_pushElement));
+   result = result || (NULL == CU_add_test(suite, "Test push element KO ", test_pushElement_KO));
+   result = result || (NULL == CU_add_test(suite, "Test pop element ", test_popElement));
+   result = result || (NULL == CU_add_test(suite, "Test pop element KO ", test_popElement_KO));
+   result = result || (NULL == CU_add_test(suite, "Test suppression de stack ", test_clearStack));
    if (result)
    {
       CU_cleanup_registry();

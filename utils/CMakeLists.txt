@@ -4,7 +4,8 @@
   ###
 add_library(Tools 
     src/tools_string.c
-    src/tools_tree.c)
+    src/tools_tree.c
+    src/tools_stack.c)
 
 target_include_directories(Tools PRIVATE 
                           ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -19,8 +20,10 @@ target_include_directories(Tools PRIVATE
     test/src/main.c
     test/src/suite_toolsString.c
     test/src/suite_toolsTree.c
+    test/src/suite_toolsStack.c
     src/tools_string.c
-    src/tools_tree.c)
+    src/tools_tree.c
+    src/tools_stack.c)
     
 
     target_include_directories(tools_test PRIVATE

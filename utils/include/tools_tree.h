@@ -49,4 +49,11 @@ char addItem(Tree *tree,unite_instruction *content,const char isLeft);
  */
 char addParent(Tree *tree, unite_instruction *content, const char isLeft);
 
+
+/**
+ * @name printTree
+ * @brief Permet d'afficher un arbre
+ * @param tree le pointeur vers l'arbre a afficher.
+ */
+void printTree(Tree *tree);
 #endif

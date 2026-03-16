@@ -15,4 +15,9 @@ typedef enum {
  UNITE_LEXICAL_COUNT // FIN
 } unite_type;
 
+typedef enum {
+    REGISTRE,
+    DSS
+} unite_asm;
+
 #endif
