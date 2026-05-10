@@ -17,7 +17,8 @@ typedef enum {
 
 typedef enum {
     REGISTRE,
-    DSS
-} unite_asm;
+    DSS,
+    RAW
+} asm_type;
 
 #endif

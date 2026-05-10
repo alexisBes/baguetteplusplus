@@ -1,13 +1,13 @@
-#include "suite_semer.h"
-#include "semer_main.h"
+#include "suite_symbo_table.h"
+#include "symbo_table_main.h"
 #include <CUnit/CUnit.h>
 
-int Init_Semer()
+int Init_Symbo_Table()
 {
     return 0;
 }
 
-int Clean_Semer()
+int Clean_Symbo_Table()
 {
     cleanTable();
     return 0;

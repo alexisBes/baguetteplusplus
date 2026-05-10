@@ -1,7 +1,7 @@
 
 #include <stdio.h>
 #include "suite_lexer.h"
-#include "suite_semer.h"
+#include "suite_symbo_table.h"
 #include "CUnit/Basic.h"
 
 static int Test_Lexer(CU_pSuite suite);
@@ -28,7 +28,7 @@ int main()
 
 
        /* add a suite to the registry */
-   pSuite = CU_add_suite("Semer",Init_Lexer, Clean_Lexer);
+   pSuite = CU_add_suite("Symbolic table",Init_Lexer, Clean_Lexer);
    if (NULL == pSuite)
    {
       CU_cleanup_registry();

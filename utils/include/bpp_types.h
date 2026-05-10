@@ -9,7 +9,7 @@
 typedef struct
 {
     unite_type unite; /** le type de l'instruction (cf enum.h) */
-    char* param; /** parametre qui contient un parametre (utilie pour garder en mémoire la valeur des nombres et identifiant) */ 
+    char *param;      /** parametre qui contient un parametre (utilie pour garder en mémoire la valeur des nombres et identifiant) */
 } unite_instruction;
 
 /**
@@ -23,12 +23,17 @@ typedef struct
     char *name;
 } unite_semantique;
 
-typedef struct 
+typedef struct
+{
+    int idx; // identifiant; 0-n, soit pour la table des symbole, soit poour les registre.
+    asm_type type;
+} unite_asm;
+
+typedef struct
 {
     unite_type type;
-    unite_instruction lValue;
-    unite_instruction rValue;
+    unite_asm lValue;
+    unite_asm rValue;
 } element_pile;
-
 
 #endif

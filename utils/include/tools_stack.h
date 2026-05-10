@@ -7,14 +7,15 @@ typedef struct
 {
     int size;
     element_pile *pile;
-} stack;
+} Stack;
 
-stack createPile(element_pile newElement);
+Stack createPile(element_pile newElement);
 
-void pushElement(stack *stackElement, element_pile elementToPush);
+void pushElement(Stack *stackElement, element_pile elementToPush);
 
-element_pile popElement(stack *stackElement);
+element_pile popElement(Stack *stackElement);
 
-void clearStack(stack *mystack);
+void clearStack(Stack *mystack);
 
+void printStack(Stack *myStack);
 #endif

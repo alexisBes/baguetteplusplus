@@ -121,12 +121,12 @@ int Test_ToolsStack(CU_pSuite suite)
 {
    int result = 0;
 
-   result = (NULL == CU_add_test(suite, "Test création de stack ", test_CreateStack));
+   result = (NULL == CU_add_test(suite, "Test création de Stack ", test_CreateStack));
    result = result || (NULL == CU_add_test(suite, "Test push element ", test_pushElement));
    result = result || (NULL == CU_add_test(suite, "Test push element KO ", test_pushElement_KO));
    result = result || (NULL == CU_add_test(suite, "Test pop element ", test_popElement));
    result = result || (NULL == CU_add_test(suite, "Test pop element KO ", test_popElement_KO));
-   result = result || (NULL == CU_add_test(suite, "Test suppression de stack ", test_clearStack));
+   result = result || (NULL == CU_add_test(suite, "Test suppression de Stack ", test_clearStack));
    if (result)
    {
       CU_cleanup_registry();

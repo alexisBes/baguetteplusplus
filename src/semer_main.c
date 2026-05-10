@@ -1,69 +1,108 @@
 #include "semer_main.h"
+#include "bpp_types.h"
 
-#include "stdio.h"
 #include "stdlib.h"
-#include "string.h"
-#include "tools_string.h"
+// PRIVATE FUNCTION  DEFINITION
+void genericFunction(Tree *, Stack *);
+void generateAffectation(Tree *arbreInstruction, Stack *curStack);
+unite_asm handleLRValue(unite_instruction unite);
 
-static unite_semantique *tableDesSymbole;
-int size = 0;
+typedef void (*generatefunc)(Tree *arbre, Stack *curStack);
 
-char add_symbol(unite_type type, const char *varName)
-{
-    if (isSymbolExist(varName))
+const generatefunc all_Function[UNITE_LEXICAL_COUNT] =
     {
-        fprintf(stderr, "Erreur, la variable %s est déja déclaré.\n", varName);
-        return 0;
+        genericFunction,     // IDENTIFIANT
+        genericFunction,     // NOMBRE
+        generateAffectation, // AFFECTATION
+        genericFunction,     // ADDITION
+        genericFunction,     // SOUSTRACTION
+        genericFunction,     // MULTIPLICATION
+        genericFunction,     // DIVISION
+        genericFunction,     // FIN_INSTRUCTION
+        genericFunction,     // ne devrais pas arriver
+        genericFunction,     // OCTET
+        genericFunction,     // OCTET non signe
+        genericFunction,     // COURT
+        genericFunction,     // COURT signe
+        genericFunction,     // ENTIER
+        genericFunction,     // ENTIER non signe
+        genericFunction,     // LONG
+        genericFunction      // LONG non signe
+
+};
+
+void generateOneInstruction(Tree *arbreInstruction, Stack *curStack);
+
+void generate(Tree *arbreInstruction, Stack *curStack)
+{
+    printTree(arbreInstruction);
+
+    generateOneInstruction(arbreInstruction, curStack);
+}
+
+void generateOneInstruction(Tree *arbreInstruction, Stack *curStack)
+{
+    all_Function[arbreInstruction->content->unite](arbreInstruction, curStack);
+    if (arbreInstruction->lNode != NULL)
+    {
+        generateOneInstruction(arbreInstruction->lNode, curStack);
     }
 
-    if (size == 0)
+    if (arbreInstruction->rNode != NULL)
     {
-        tableDesSymbole = malloc(sizeof(unite_semantique));
+        generateOneInstruction(arbreInstruction->rNode, curStack);
+    }
+}
+
+// PRIVATE FUNCTION DECLARATION
+void genericFunction(Tree *tree, Stack *s)
+{
+    printf("%d\n", tree->content->unite);
+    return;
+}
+
+void generateAffectation(Tree *arbreInstruction, Stack *curStack)
+{
+    if (arbreInstruction->lNode->content->unite != IDENTIFIANT)
+    {
+        printf("Erreur : La valeur est constante, elle ne peut pas etre une déstination d'affectation.");
+        return;
+    }
+
+    Tree *rValue = arbreInstruction->rNode;
+    Tree *lValue = arbreInstruction->lNode;
+    element_pile element;
+    element.rValue= handleLRValue(*rValue->content);
+    element.lValue= handleLRValue(*lValue->content);
+    element.type = AFFECTATION;
+
+    if( curStack->size == 0)
+    {
+        *curStack = createPile(element);
+    }else
+    {
+        pushElement(curStack,element);
+    }
+    
+}
+
+unite_asm handleLRValue(unite_instruction unite)
+{
+    unite_asm asm_return;
+    if (unite.unite == IDENTIFIANT)
+    {
+        asm_return.idx = 0;    // a terme on cherchera dans la table de symbole
+        asm_return.type = DSS; // une variable, on vérifiera en cas de constante
+    }
+    else if (unite.unite== NOMBRE)
+    {
+        asm_return.idx = -1;   // c'est un nombre
+        asm_return.type = RAW; // brut ;)
     }
     else
     {
-        tableDesSymbole = realloc(tableDesSymbole, sizeof(unite_semantique) * (size + 1));
+        asm_return.idx = 1; // franchement la je piffe
+        asm_return.type = REGISTRE;
     }
-    tableDesSymbole[size].type = type;
-    tableDesSymbole[size].name = copyString(varName);
-    // la taille d'une variables dépend de sa position dans l'enum.
-    // l'octet et leplus petit et le long est le plus grand.
-    // donc normalement ca marche
-    tableDesSymbole[size].taille = 1 << ((type - 9) / 2);
-    size++;
-    return 1;
-}
-
-char isSymbolExist(const char *varName)
-{
-    int index = 0;
-    while (index < size)
-    {
-        if (strcmp(varName, tableDesSymbole[index].name) == 0)
-        {
-            return 1;
-        }
-        index++;
-    }
-    return 0;
-}
-
-const unite_semantique *getSymbol(const char *varName)
-{
-
-    int index = 0;
-    while (index < size)
-    {
-        if (strcmp(varName, tableDesSymbole[index].name) == 0)
-        {
-            return &tableDesSymbole[index];
-        }
-        index++;
-    }
-    return NULL;
-}
-
-void cleanTable()
-{
-    free(tableDesSymbole);
+    return asm_return;
 }

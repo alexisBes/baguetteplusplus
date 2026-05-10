@@ -1,7 +1,7 @@
 #include "tools_stack.h"
 #include "CUnit/CUnit.h"
 #include "stdlib.h"
-stack commonStack;
+Stack commonStack;
 
 int Init_ToolsStack()
 {
@@ -15,10 +15,10 @@ int Clean_ToolsStack()
 void test_CreateStack()
 {
     element_pile newEle;
-    newEle.lValue.unite = ADDITION;
-    newEle.lValue.param = NULL;
-    newEle.rValue.unite = ADDITION;
-    newEle.rValue.param = NULL;
+    newEle.lValue.type = DSS;
+    newEle.lValue.idx = -1;
+    newEle.rValue.type = DSS;
+    newEle.rValue.idx = -1;
     newEle.type = AFFECTATION;
     commonStack = createPile(newEle);
 
@@ -28,34 +28,34 @@ void test_CreateStack()
 void test_pushElement()
 {
     element_pile newEle;
-    newEle.lValue.unite = ADDITION;
-    newEle.lValue.param = NULL;
-    newEle.rValue.unite = ADDITION;
-    newEle.rValue.param = NULL;
+    newEle.lValue.type = DSS;
+    newEle.lValue.idx = -1;
+    newEle.rValue.type = DSS;
+    newEle.rValue.idx = -1;
     newEle.type = AFFECTATION;
 
-    element_pile elementWithParam;
-    elementWithParam.lValue.unite = ADDITION;
-    elementWithParam.lValue.param = "ADDITION";
-    elementWithParam.rValue.unite = ADDITION;
-    elementWithParam.rValue.param = "ADDITION";
-    elementWithParam.type = AFFECTATION;
+    element_pile elementWithidx;
+    elementWithidx.lValue.type = DSS;
+    elementWithidx.lValue.idx = 3;
+    elementWithidx.rValue.type = DSS;
+    elementWithidx.rValue.idx = 3;
+    elementWithidx.type = AFFECTATION;
 
     pushElement(&commonStack, newEle);
     CU_ASSERT_EQUAL(commonStack.size, 2);
 
-    pushElement(&commonStack, elementWithParam);
+    pushElement(&commonStack, elementWithidx);
     CU_ASSERT_EQUAL(commonStack.size, 3);
 }
 
 void test_pushElement_KO()
 {
     element_pile newEle;
-    newEle.lValue.unite = ADDITION;
-    newEle.rValue.unite = ADDITION;
+    newEle.lValue.type = DSS;
+    newEle.rValue.type = DSS;
     newEle.type = AFFECTATION;
 
-    stack myStack;
+    Stack myStack;
     myStack.size=0;
     myStack.pile=0;
     pushElement(&myStack, newEle);
@@ -66,30 +66,28 @@ void test_pushElement_KO()
 
 void test_popElement()
 {
-    element_pile elementWithParam = popElement(&commonStack);
+    element_pile elementWithidx = popElement(&commonStack);
 
-    CU_ASSERT_EQUAL(elementWithParam.lValue.unite, ADDITION);
-    CU_ASSERT_STRING_EQUAL(elementWithParam.lValue.param, "ADDITION");
-    CU_ASSERT_EQUAL(elementWithParam.rValue.unite, ADDITION);
-    CU_ASSERT_STRING_EQUAL(elementWithParam.rValue.param, "ADDITION");
-    CU_ASSERT_EQUAL(elementWithParam.type, AFFECTATION);
+    CU_ASSERT_EQUAL(elementWithidx.lValue.type, DSS);
+    CU_ASSERT_EQUAL(elementWithidx.lValue.idx, 3);
+    CU_ASSERT_EQUAL(elementWithidx.rValue.type, DSS);
+    CU_ASSERT_EQUAL(elementWithidx.rValue.idx, 3);
+    CU_ASSERT_EQUAL(elementWithidx.type, AFFECTATION);
     CU_ASSERT_EQUAL(commonStack.size, 2);
-    free(elementWithParam.rValue.param);
-    free(elementWithParam.lValue.param);
-
+    
     element_pile element = popElement(&commonStack);
 
 
-    CU_ASSERT_EQUAL(element.lValue.unite, ADDITION);
-    CU_ASSERT_EQUAL(element.rValue.unite, ADDITION);
+    CU_ASSERT_EQUAL(element.lValue.type, DSS);
+    CU_ASSERT_EQUAL(element.rValue.type, DSS);
     CU_ASSERT_EQUAL(element.type, AFFECTATION);
     CU_ASSERT_EQUAL(commonStack.size, 1);
     
     element = popElement(&commonStack);
 
 
-    CU_ASSERT_EQUAL(element.lValue.unite, ADDITION);
-    CU_ASSERT_EQUAL(element.rValue.unite, ADDITION);
+    CU_ASSERT_EQUAL(element.lValue.type, DSS);
+    CU_ASSERT_EQUAL(element.rValue.type, DSS);
     CU_ASSERT_EQUAL(element.type, AFFECTATION);
     CU_ASSERT_EQUAL(commonStack.size, 0);
 }

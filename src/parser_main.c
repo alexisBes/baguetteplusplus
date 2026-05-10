@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include "bpp_types.h"
 #include "lexer_main.h"
-#include "semer_main.h"
+#include "symbo_table_main.h"
 
 void gestionIdentifiant(Tree **current);
 

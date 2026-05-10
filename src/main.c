@@ -2,9 +2,11 @@
 //
 
 #include "stdlib.h"
+#include "tools_string.h"
+#include "tools_stack.h"
 #include "lexer_main.h"
 #include "parser_main.h"
-#include "generateur_main.h"
+#include "semer_main.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,13 +15,16 @@ int main(int argc, char *argv[])
         initLexer(argv[1]);
         printf("Lancement de la compilation de %s \n", argv[1]);
 
-        Tree* arbreInstruction  =NULL;
+        Tree *arbreInstruction = NULL;
         // analyse syntaxique.
         parsing(&arbreInstruction);
 
+        Stack *pileInstruction = malloc(sizeof(Stack));
+        pileInstruction->size=0;
         // generateur de code
-        generate( arbreInstruction);
+        generate(arbreInstruction, pileInstruction);
 
+        printStack(pileInstruction);
         // fermeture des fichiers
         closeLexer();
     }

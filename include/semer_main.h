@@ -1,13 +1,9 @@
-#ifndef SEMER_MAIN_H
-#define SEMER_MAIN_H
+#ifndef GENERATEUR_MAIN_H
+#define GENERATEUR_MAIN_H
+#include "tools_tree.h"
+#include "tools_stack.h"
+#include "stdio.h"
 
-#include "bpp_types.h"
+void generate( Tree* arbreInstruction, Stack*globalStack);
 
-char add_symbol(unite_type type, const char *varName);
-
-char isSymbolExist(const char *varName);
-
-const unite_semantique *getSymbol(const char *varName);
-
-void cleanTable();
 #endif

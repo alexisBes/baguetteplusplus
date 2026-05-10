@@ -24,7 +24,7 @@ set (SOURCE_LIST
     ${CMAKE_CURRENT_SOURCE_DIR}/src/parser_main.c
     ${CMAKE_CURRENT_SOURCE_DIR}/src/parser_math.c
     ${CMAKE_CURRENT_SOURCE_DIR}/src/semer_main.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/generateur_main.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/symbo_table_main.c
 )
 
 
